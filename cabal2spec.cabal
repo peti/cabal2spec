@@ -1,0 +1,35 @@
+name:                cabal2spec
+version:             2.0.0
+synopsis:            Convert Cabal files into rpm spec files
+homepage:            https://github.com/peti/cabal2spec
+license:             GPL-3
+license-file:        LICENSE
+author:              Peter Simons, Bryan O'Sullivan, Jens Petersen
+maintainer:          simons@cryp.to
+category:            Distribution
+build-type:          Simple
+cabal-version:       >=1.10
+tested-with:         GHC == 7.0.4, GHC == 7.4.2, GHC == 7.6.3, GHC == 7.8.4, GHC == 7.10.3
+                   , GHC == 8.0.2, GHC == 8.2.2
+
+description:
+  Convert Cabal files into a spec file suitable for building the package with
+  the RPM package manager. This tools primarily targets the SUSE/openSUSE
+  familiy of distributions. See <http://hackage.haskell.org/package/cabal-rpm>
+  for a different project that has a more ambitious scope, i.e. it's trying to
+  support other RPM-based distributions, too.
+
+source-repository head
+  type: git
+  location: git://github.com/peti/cabal2spec.git
+
+executable cabal2spec
+  main-is:             Main.hs
+  other-modules:       Cabal2Spec
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+  build-depends:       base <5
+                     , Cabal >2
+                     , directory
+                     , filepath
+                     , time
