@@ -32,4 +32,4 @@ executable cabal2spec
                      , Cabal >2
                      , directory
                      , filepath
-                     , time
+                     , time >= 1.5
