@@ -201,7 +201,7 @@ createSpecFile specFile cabalPath pkgDesc forceBinary flagAssignment = do
   let licensefiles = licenseFiles pkgDesc
 
   -- remove docs from datafiles (#38)
-  docsUnfiltered <- sort <$> findDocs cabalPath licensefiles
+  docsUnfiltered <- fmap sort (findDocs cabalPath licensefiles)
   let datafiles = dataFiles pkgDesc
       dupdocs   = docsUnfiltered `intersect` datafiles
       docs      = docsUnfiltered \\ datafiles
