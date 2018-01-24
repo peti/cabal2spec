@@ -1,0 +1,114 @@
+#
+# spec file for package speedy-slice
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name speedy-slice
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.3.0
+Release:        0
+Summary:        Speedy slice sampling
+Group:          Development/Libraries/Haskell
+
+License:        MIT
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-kan-extensions-devel
+BuildRequires:  ghc-lens-devel
+BuildRequires:  ghc-mcmc-types-devel
+BuildRequires:  ghc-mwc-probability-devel
+BuildRequires:  ghc-pipes-devel
+BuildRequires:  ghc-primitive-devel
+BuildRequires:  ghc-transformers-devel
+%if %{with tests}
+BuildRequires:  ghc-containers-devel
+%endif
+
+%description
+Speedy slice sampling.
+
+This implementation of the slice sampling algorithm uses 'lens' as a means to
+operate over generic indexed traversable functors, so you can expect it to work
+if your target function takes a list, vector, map, sequence, etc. as its
+argument.
+
+Additionally you can sample over anything that's an instance of both 'Num' and
+'Variate', which is useful in the case of discrete parameters.
+
+Exports a 'mcmc' function that prints a trace to stdout, a 'chain' function for
+collecting results in memory, and a 'slice' transition operator that can be
+used more generally.
+
+> import Numeric.MCMC.Slice > import Data.Sequence (Seq, index, fromList) > >
+bnn :: Seq Double -> Double > bnn xs = -0.5 * (x0 ^ 2 * x1 ^ 2 + x0 ^ 2 + x1 ^
+2 - 8 * x0 - 8 * x1) where > x0 = index xs 0 > x1 = index xs 1 > > main :: IO
+() > main = withSystemRandom . asGenIO $ mcmc 10000 1 (fromList [0, 0]) bnn.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

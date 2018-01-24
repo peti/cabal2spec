@@ -1,0 +1,122 @@
+#
+# spec file for package hasql
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name hasql
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        1.1.1
+Release:        0
+Summary:        An efficient PostgreSQL driver and a flexible mapping API
+Group:          Development/Libraries/Haskell
+
+License:        MIT
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-attoparsec-devel
+BuildRequires:  ghc-base-prelude-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-strict-builder-devel
+BuildRequires:  ghc-contravariant-devel
+BuildRequires:  ghc-contravariant-extras-devel
+BuildRequires:  ghc-data-default-class-devel
+BuildRequires:  ghc-dlist-devel
+BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-hashtables-devel
+BuildRequires:  ghc-loch-th-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-placeholders-devel
+BuildRequires:  ghc-postgresql-binary-devel
+BuildRequires:  ghc-postgresql-libpq-devel
+BuildRequires:  ghc-profunctors-devel
+BuildRequires:  ghc-semigroups-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-vector-devel
+%if %{with tests}
+BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-bug-devel
+BuildRequires:  ghc-quickcheck-instances-devel
+BuildRequires:  ghc-rebase-devel
+BuildRequires:  ghc-rerebase-devel
+BuildRequires:  ghc-tasty-devel
+BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-tasty-quickcheck-devel
+%endif
+
+%description
+This package is the root of the "hasql" ecosystem.
+
+The API is completely disinfected from exceptions. All error-reporting is
+explicit and is presented using the 'Either' type.
+
+The version 1 is completely backward-compatible with 0.19.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

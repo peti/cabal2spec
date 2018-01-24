@@ -1,0 +1,103 @@
+#
+# spec file for package s3-signer
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name s3-signer
+
+Name:           %{pkg_name}
+Version:        0.3.0.0
+Release:        0
+Summary:        Pre-signed Amazon S3 URLs
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-base64-bytestring-devel
+BuildRequires:  ghc-cryptohash-devel
+BuildRequires:  ghc-http-types-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-utf8-string-devel
+
+%description
+s3-signer creates cryptographically secure Amazon S3 URLs that expire within a
+user-defined period. It allows uploading and downloading of content from Amazon
+S3. Ideal for AJAX direct-to-s3 uploads via CORS and secure downloads.
+Web framework agnostic with minimal dependencies.
+
+> module Main where > import Network.S3 > main :: IO () > main = print =<<
+generateS3URL credentials request > where > credentials = S3Keys
+"<public-key-goes-here>" "<secret-key-goes-here>" > request = S3Request S3GET
+"application/extension" "bucket-name" "file-name.extension" 3 -- three seconds
+until expiration
+
+Result
+
+> S3URL
+"https://bucket-name.s3.amazonaws.com/file-name.extension?AWSAccessKeyId=<public-key-goes-here>&Expires=1402346638&Signature=1XraY%2Bhp117I5CTKNKPc6%2BiihRA%3D".
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc README.md
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README.md
+
+%changelog

@@ -1,0 +1,91 @@
+#
+# spec file for package system-posix-redirect
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name system-posix-redirect
+
+Name:           %{pkg_name}
+Version:        1.1.0.1
+Release:        0
+Summary:        A toy module to temporarily redirect a program's stdout
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-unix-devel
+
+%description
+Due to the design of POSIX, it is possible to temporarily overload the file
+descriptors corresponding to stdout and stderr to point to an arbitrary pipe.
+It is, however, tricky to get right. This module gets it right, as far as such
+a terrible hack can be made right. It can be used to make misbehaving
+third-party C libraries stop spewing to standard output. Warning: the module
+author has concluded that due to lack of portability, this module should not be
+used in any serious sytem. But, for those who like living dangerously...
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development
+files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

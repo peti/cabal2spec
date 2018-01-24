@@ -1,0 +1,113 @@
+#
+# spec file for package ClustalParser
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name ClustalParser
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        1.2.1
+Release:        0
+Summary:        Libary for parsing Clustal tools output
+Group:          Development/Libraries/Haskell
+
+License:        GPL-3.0+
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  chrpath
+BuildRequires:  ghc-cmdargs-devel
+BuildRequires:  ghc-either-unwrap-devel
+BuildRequires:  ghc-parsec-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-vector-devel
+%if %{with tests}
+BuildRequires:  ghc-hspec-devel
+%endif
+
+%description
+Currently contains parsers and datatypes for: clustalw2, clustalo, mlocarna,
+cmalign
+
+Clustal tools are multiple sequence alignment tools for biological sequence
+like DNA, RNA and Protein. For more information on clustal Tools refer to
+<http://www.clustal.org/>.
+
+Mlocarna is a multiple sequence alignment tool for RNA sequences with secondary
+structure output. For more information on mlocarna refer to
+<http://www.bioinf.uni-freiburg.de/Software/LocARNA/>.
+
+Cmalign is a multiple sequence alignment program based on RNA family models and
+produces ,among others, clustal output. It is part of infernal
+<http://infernal.janelia.org/>.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+%ghc_fix_rpath %{pkg_name}-%{version}
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc README.md changelog
+%{_bindir}/ClustalParserTest
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README.md changelog
+
+%changelog

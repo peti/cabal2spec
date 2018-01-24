@@ -1,0 +1,100 @@
+#
+# spec file for package haskell-tools-refactor
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name haskell-tools-refactor
+
+Name:           %{pkg_name}
+Version:        1.0.0.3
+Release:        0
+Summary:        Refactoring Tool for Haskell
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-ghc-devel
+BuildRequires:  ghc-ghc-paths-devel
+BuildRequires:  ghc-haskell-tools-ast-devel
+BuildRequires:  ghc-haskell-tools-backend-ghc-devel
+BuildRequires:  ghc-haskell-tools-prettyprint-devel
+BuildRequires:  ghc-haskell-tools-rewrite-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-references-devel
+BuildRequires:  ghc-split-devel
+BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-uniplate-devel
+
+%description
+Contains a set of refactorings based on the Haskell-Tools framework to easily
+transform a Haskell program. For the descriptions of the implemented
+refactorings, see the homepage.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development
+files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

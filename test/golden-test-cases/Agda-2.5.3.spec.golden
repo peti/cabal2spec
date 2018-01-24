@@ -1,0 +1,180 @@
+#
+# spec file for package Agda
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name Agda
+
+Name:           %{pkg_name}
+Version:        2.5.3
+Release:        0
+Summary:        A dependently typed functional programming language and proof assistant
+Group:          Development/Libraries/Haskell
+
+License:        Unknown
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  alex
+BuildRequires:  chrpath
+BuildRequires:  cpphs
+BuildRequires:  ghc-EdisonCore-devel
+BuildRequires:  ghc-array-devel
+BuildRequires:  ghc-async-devel
+BuildRequires:  ghc-binary-devel
+BuildRequires:  ghc-blaze-html-devel
+BuildRequires:  ghc-boxes-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-data-hash-devel
+BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-edit-distance-devel
+BuildRequires:  ghc-equivalence-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-geniplate-mirror-devel
+BuildRequires:  ghc-gitrev-devel
+BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-hashtables-devel
+BuildRequires:  ghc-haskeline-devel
+BuildRequires:  ghc-ieee754-devel
+BuildRequires:  ghc-monadplus-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-murmur-hash-devel
+BuildRequires:  ghc-parallel-devel
+BuildRequires:  ghc-pretty-devel
+BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-regex-tdfa-devel
+BuildRequires:  ghc-stm-devel
+BuildRequires:  ghc-strict-devel
+BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-uri-encode-devel
+BuildRequires:  ghc-zlib-devel
+BuildRequires:  happy
+
+%description
+Agda is a dependently typed functional programming language: It has inductive
+families, which are similar to Haskell's GADTs, but they can be indexed by
+values and not just types. It also has parameterised modules, mixfix operators,
+Unicode characters, and an interactive Emacs interface (the type checker can
+assist in the development of your code).
+
+Agda is also a proof assistant: It is an interactive system for writing and
+checking proofs. Agda is based on intuitionistic type theory, a foundational
+system for constructive mathematics developed by the Swedish logician Per
+Martin-L&#xf6;f. It has many similarities with other proof assistants based on
+dependent types, such as Coq, Epigram and NuPRL.
+
+This package includes both a command-line program (agda) and an Emacs mode.
+If you want to use the Emacs mode you can set it up by running 'agda-mode
+setup' (see the README).
+
+Note that the Agda package does not follow the package versioning policy,
+because it is not intended to be used by third-party packages.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+%ghc_fix_rpath %{pkg_name}-%{version}
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG.md README.md
+%{_bindir}/agda
+%{_bindir}/agda-mode
+%dir %{_datadir}/%{name}-%{version}
+%dir %{_datadir}/%{name}-%{version}/emacs-mode
+%dir %{_datadir}/%{name}-%{version}/JS
+%dir %{_datadir}/%{name}-%{version}/lib
+%dir %{_datadir}/%{name}-%{version}/lib/prim
+%dir %{_datadir}/%{name}-%{version}/lib/prim/Agda
+%dir %{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin
+%dir %{_datadir}/%{name}-%{version}/MAlonzo
+%dir %{_datadir}/%{name}-%{version}/MAlonzo/src
+%dir %{_datadir}/%{name}-%{version}/MAlonzo/src/MAlonzo
+%{_datadir}/%{name}-%{version}/Agda.css
+%{_datadir}/%{name}-%{version}/agda.sty
+%{_datadir}/%{name}-%{version}/emacs-mode/*.el
+%{_datadir}/%{name}-%{version}/JS/agda-rts.js
+%{_datadir}/%{name}-%{version}/JS/biginteger.js
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/Bool.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/Char.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/Coinduction.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/Equality.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/Float.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/FromNat.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/FromNeg.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/FromString.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/IO.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/Int.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/List.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/Nat.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/Reflection.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/Size.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/Strict.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/String.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/TrustMe.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Builtin/Unit.agda
+%{_datadir}/%{name}-%{version}/lib/prim/Agda/Primitive.agda
+%{_datadir}/%{name}-%{version}/MAlonzo/src/MAlonzo/*.hs
+%{_datadir}/%{name}-%{version}/postprocess-latex.pl
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.md README.md
+
+%changelog

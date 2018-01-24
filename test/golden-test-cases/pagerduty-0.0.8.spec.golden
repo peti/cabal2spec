@@ -1,0 +1,121 @@
+#
+# spec file for package pagerduty
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name pagerduty
+
+Name:           %{pkg_name}
+Version:        0.0.8
+Release:        0
+Summary:        Client library for PagerDuty Integration and REST APIs
+Group:          Development/Libraries/Haskell
+
+License:        Unknown
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-bifunctors-devel
+BuildRequires:  ghc-bytestring-conversion-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-conduit-devel
+BuildRequires:  ghc-data-default-class-devel
+BuildRequires:  ghc-exceptions-devel
+BuildRequires:  ghc-generics-sop-devel
+BuildRequires:  ghc-http-client-devel
+BuildRequires:  ghc-http-types-devel
+BuildRequires:  ghc-lens-aeson-devel
+BuildRequires:  ghc-lens-devel
+BuildRequires:  ghc-mmorph-devel
+BuildRequires:  ghc-monad-control-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-time-locale-compat-devel
+BuildRequires:  ghc-transformers-base-devel
+BuildRequires:  ghc-transformers-compat-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-unordered-containers-devel
+
+%description
+PagerDuty is an alerting system for IT professionals. PagerDuty connects with a
+variety of systems (including monitoring tools and ticketing systems) and
+dispatches alerts via automated phone call, SMS and email. This library
+implements the full PagerDuty Integration and REST APIs which are documented
+here:
+
+* Integration API - <http://developer.pagerduty.com/documentation/integration>
+
+* REST API - <http://developer.pagerduty.com/documentation/rest>
+
+/Warning:/ This is an experimental preview release which is still under heavy
+development and not intended for public consumption, caveat emptor!
+
+/Note:/ An alternative source for Haddock documentation can be found
+<http://brendanhay.nz/pagerduty here>.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc README.md
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README.md
+
+%changelog

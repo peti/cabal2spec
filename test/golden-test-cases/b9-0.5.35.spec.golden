@@ -1,0 +1,141 @@
+#
+# spec file for package b9
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name b9
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.5.35
+Release:        0
+Summary:        A tool and library for building virtual machine images
+Group:          Development/Libraries/Haskell
+
+License:        MIT
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  chrpath
+BuildRequires:  ghc-ConfigFile-devel
+BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-async-devel
+BuildRequires:  ghc-bifunctors-devel
+BuildRequires:  ghc-binary-devel
+BuildRequires:  ghc-boxes-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-conduit-devel
+BuildRequires:  ghc-conduit-extra-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-free-devel
+BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-optparse-applicative-devel
+BuildRequires:  ghc-parallel-devel
+BuildRequires:  ghc-parsec-devel
+BuildRequires:  ghc-pretty-devel
+BuildRequires:  ghc-pretty-show-devel
+BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-random-devel
+BuildRequires:  ghc-semigroups-devel
+BuildRequires:  ghc-syb-devel
+BuildRequires:  ghc-template-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-vector-devel
+BuildRequires:  ghc-yaml-devel
+%if %{with tests}
+BuildRequires:  ghc-hspec-devel
+BuildRequires:  ghc-hspec-expectations-devel
+%endif
+
+%description
+Build virtual machine images for vm-deployments; resize, un-partition, create
+from scratch or convert disk image files in a variety of formats; assemble and
+generate all associated files from templates and regular files. VM images can
+further be modifed through scripts, which are executed in LXC containers into
+which the vm-images as well as arbitrary directories from the host are mounted.
+All assembled files can also be accessed by vm build scripts through a special
+directory mounted in the build container, and/or can be written to directories,
+ISO- or VFAT-images. The ISO/VFAT images that B9 creates are compatible to
+'cloud-init's 'NoCloud' data source; B9 is also very well suited for compiling
+in a containerized environment. For these applications, the images can be
+marked as 'Transient' to indicate no further interest in the VM-image itself,
+and B9 will discard them after the build. B9 will never over-write source
+files, not even large vm-image files - there is no intended way to modify a
+source vm-image file 'in-place'. B9 operates in random build directories, which
+are discarded when the build exists.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+%ghc_fix_rpath %{pkg_name}-%{version}
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CONTRIBUTORS README.md TODO.org
+%{_bindir}/b9c
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CONTRIBUTORS README.md TODO.org
+
+%changelog

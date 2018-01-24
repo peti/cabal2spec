@@ -1,0 +1,116 @@
+#
+# spec file for package language-docker
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name language-docker
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        1.0.0
+Release:        0
+Summary:        Dockerfile parser, pretty-printer and embedded DSL
+Group:          Development/Libraries/Haskell
+
+License:        GPL-3.0+
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-Glob-devel
+BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-free-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-parsec-devel
+BuildRequires:  ghc-pretty-devel
+BuildRequires:  ghc-split-devel
+BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-th-lift-devel
+BuildRequires:  ghc-th-lift-instances-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-yaml-devel
+%if %{with tests}
+BuildRequires:  ghc-HUnit-devel
+BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-hspec-devel
+BuildRequires:  ghc-process-devel
+%endif
+
+%description
+All functions for parsing, printing and writting Dockerfiles are exported
+through 'Language.Docker'. For more fine-grained operations look for specific
+modules that implement a certain functionality. See the
+<https://github.com/hadolint/language-dockerfile GitHub project> for the
+source-code and examples.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc README.md
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README.md
+
+%changelog

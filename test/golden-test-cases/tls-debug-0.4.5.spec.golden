@@ -1,0 +1,63 @@
+#
+# spec file for package tls-debug
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+Name:           tls-debug
+Version:        0.4.5
+Release:        0
+Summary:        Set of programs for TLS testing and debugging
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-cryptonite-devel
+BuildRequires:  ghc-data-default-class-devel
+BuildRequires:  ghc-network-devel
+BuildRequires:  ghc-pem-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-tls-devel
+BuildRequires:  ghc-x509-devel
+BuildRequires:  ghc-x509-store-devel
+BuildRequires:  ghc-x509-system-devel
+BuildRequires:  ghc-x509-validation-devel
+
+%description
+A set of program to test and debug various aspect of the TLS package.
+.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_bin_build
+
+%install
+%ghc_bin_install
+
+%files
+%doc LICENSE
+%{_bindir}/tls-retrievecertificate
+%{_bindir}/tls-simpleclient
+%{_bindir}/tls-simpleserver
+%{_bindir}/tls-stunnel
+
+%changelog

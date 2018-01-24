@@ -1,0 +1,77 @@
+#
+# spec file for package intero
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%bcond_with tests
+
+Name:           intero
+Version:        0.1.24
+Release:        0
+Summary:        Complete interactive development program for Haskell
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-array-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-ghc-boot-th-devel
+BuildRequires:  ghc-ghc-devel
+BuildRequires:  ghc-ghc-paths-devel
+BuildRequires:  ghc-ghci-devel
+BuildRequires:  ghc-haskeline-devel
+BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-syb-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-unix-devel
+%if %{with tests}
+BuildRequires:  ghc-hspec-devel
+BuildRequires:  ghc-regex-compat-devel
+BuildRequires:  ghc-temporary-devel
+%endif
+
+%description
+Complete interactive development program for Haskell.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_bin_build
+
+%install
+%ghc_bin_install
+
+%check
+%cabal_test
+
+%files
+%doc LICENSE
+%doc CHANGELOG README.md
+%{_bindir}/%{name}
+%dir %{_datadir}/%{name}-%{version}
+%dir %{_datadir}/%{name}-%{version}/elisp
+%{_datadir}/%{name}-%{version}/elisp/*.el
+
+%changelog

@@ -1,0 +1,241 @@
+#
+# spec file for package ghcjs-codemirror
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name ghcjs-codemirror
+
+Name:           %{pkg_name}
+Version:        0.0.0.1
+Release:        0
+Summary:        Installs CodeMirror JavaScript files
+Group:          Development/Libraries/Haskell
+
+License:        MIT
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+
+%description
+CodeMirror is a versatile text editor implemented in JavaScript for the
+browser. It is specialized for editing code, and comes with a number of
+language modes and addons that implement more advanced editing functionaly.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%dir %{_datadir}/%{name}-%{version}
+%dir %{_datadir}/%{name}-%{version}/lib
+%dir %{_datadir}/%{name}-%{version}/keymap
+%dir %{_datadir}/%{name}-%{version}/mode
+%dir %{_datadir}/%{name}-%{version}/mode/verilog
+%dir %{_datadir}/%{name}-%{version}/mode/pascal
+%dir %{_datadir}/%{name}-%{version}/mode/rst
+%dir %{_datadir}/%{name}-%{version}/mode/vbscript
+%dir %{_datadir}/%{name}-%{version}/mode/q
+%dir %{_datadir}/%{name}-%{version}/mode/yaml
+%dir %{_datadir}/%{name}-%{version}/mode/velocity
+%dir %{_datadir}/%{name}-%{version}/mode/d
+%dir %{_datadir}/%{name}-%{version}/mode/clojure
+%dir %{_datadir}/%{name}-%{version}/mode/asterisk
+%dir %{_datadir}/%{name}-%{version}/mode/xml
+%dir %{_datadir}/%{name}-%{version}/mode/clike
+%dir %{_datadir}/%{name}-%{version}/mode/tcl
+%dir %{_datadir}/%{name}-%{version}/mode/tiki
+%dir %{_datadir}/%{name}-%{version}/mode/less
+%dir %{_datadir}/%{name}-%{version}/mode/sql
+%dir %{_datadir}/%{name}-%{version}/mode/stex
+%dir %{_datadir}/%{name}-%{version}/mode/coffeescript
+%dir %{_datadir}/%{name}-%{version}/mode/python
+%dir %{_datadir}/%{name}-%{version}/mode/diff
+%dir %{_datadir}/%{name}-%{version}/mode/go
+%dir %{_datadir}/%{name}-%{version}/mode/scheme
+%dir %{_datadir}/%{name}-%{version}/mode/jinja2
+%dir %{_datadir}/%{name}-%{version}/mode/smarty
+%dir %{_datadir}/%{name}-%{version}/mode/sass
+%dir %{_datadir}/%{name}-%{version}/mode/http
+%dir %{_datadir}/%{name}-%{version}/mode/gfm
+%dir %{_datadir}/%{name}-%{version}/mode/shell
+%dir %{_datadir}/%{name}-%{version}/mode/haxe
+%dir %{_datadir}/%{name}-%{version}/mode/turtle
+%dir %{_datadir}/%{name}-%{version}/mode/rust
+%dir %{_datadir}/%{name}-%{version}/mode/apl
+%dir %{_datadir}/%{name}-%{version}/mode/markdown
+%dir %{_datadir}/%{name}-%{version}/mode/ntriples
+%dir %{_datadir}/%{name}-%{version}/mode/lua
+%dir %{_datadir}/%{name}-%{version}/mode/haskell
+%dir %{_datadir}/%{name}-%{version}/mode/tiddlywiki
+%dir %{_datadir}/%{name}-%{version}/mode/xquery
+%dir %{_datadir}/%{name}-%{version}/mode/ruby
+%dir %{_datadir}/%{name}-%{version}/mode/css
+%dir %{_datadir}/%{name}-%{version}/mode/htmlembedded
+%dir %{_datadir}/%{name}-%{version}/mode/smalltalk
+%dir %{_datadir}/%{name}-%{version}/mode/vb
+%dir %{_datadir}/%{name}-%{version}/mode/sieve
+%dir %{_datadir}/%{name}-%{version}/mode/z80
+%dir %{_datadir}/%{name}-%{version}/mode/erlang
+%dir %{_datadir}/%{name}-%{version}/mode/commonlisp
+%dir %{_datadir}/%{name}-%{version}/mode/properties
+%dir %{_datadir}/%{name}-%{version}/mode/perl
+%dir %{_datadir}/%{name}-%{version}/mode/pig
+%dir %{_datadir}/%{name}-%{version}/mode/ecl
+%dir %{_datadir}/%{name}-%{version}/mode/r
+%dir %{_datadir}/%{name}-%{version}/mode/rpm
+%dir %{_datadir}/%{name}-%{version}/mode/rpm/changes
+%dir %{_datadir}/%{name}-%{version}/mode/rpm/spec
+%dir %{_datadir}/%{name}-%{version}/mode/javascript
+%dir %{_datadir}/%{name}-%{version}/mode/mirc
+%dir %{_datadir}/%{name}-%{version}/mode/php
+%dir %{_datadir}/%{name}-%{version}/mode/ocaml
+%dir %{_datadir}/%{name}-%{version}/mode/htmlmixed
+%dir %{_datadir}/%{name}-%{version}/mode/sparql
+%dir %{_datadir}/%{name}-%{version}/mode/groovy
+%dir %{_datadir}/%{name}-%{version}/theme
+%{_datadir}/%{name}-%{version}/lib/codemirror.js
+%{_datadir}/%{name}-%{version}/lib/codemirror.css
+%{_datadir}/%{name}-%{version}/keymap/vim.js
+%{_datadir}/%{name}-%{version}/keymap/emacs.js
+%{_datadir}/%{name}-%{version}/mode/verilog/verilog.js
+%{_datadir}/%{name}-%{version}/mode/pascal/pascal.js
+%{_datadir}/%{name}-%{version}/mode/rst/rst.js
+%{_datadir}/%{name}-%{version}/mode/vbscript/vbscript.js
+%{_datadir}/%{name}-%{version}/mode/q/q.js
+%{_datadir}/%{name}-%{version}/mode/yaml/yaml.js
+%{_datadir}/%{name}-%{version}/mode/velocity/velocity.js
+%{_datadir}/%{name}-%{version}/mode/d/d.js
+%{_datadir}/%{name}-%{version}/mode/clojure/clojure.js
+%{_datadir}/%{name}-%{version}/mode/meta.js
+%{_datadir}/%{name}-%{version}/mode/asterisk/asterisk.js
+%{_datadir}/%{name}-%{version}/mode/xml/xml.js
+%{_datadir}/%{name}-%{version}/mode/clike/clike.js
+%{_datadir}/%{name}-%{version}/mode/tcl/tcl.js
+%{_datadir}/%{name}-%{version}/mode/tiki/tiki.js
+%{_datadir}/%{name}-%{version}/mode/less/less.js
+%{_datadir}/%{name}-%{version}/mode/sql/sql.js
+%{_datadir}/%{name}-%{version}/mode/stex/stex.js
+%{_datadir}/%{name}-%{version}/mode/stex/test.js
+%{_datadir}/%{name}-%{version}/mode/coffeescript/coffeescript.js
+%{_datadir}/%{name}-%{version}/mode/python/python.js
+%{_datadir}/%{name}-%{version}/mode/diff/diff.js
+%{_datadir}/%{name}-%{version}/mode/go/go.js
+%{_datadir}/%{name}-%{version}/mode/scheme/scheme.js
+%{_datadir}/%{name}-%{version}/mode/jinja2/jinja2.js
+%{_datadir}/%{name}-%{version}/mode/smarty/smarty.js
+%{_datadir}/%{name}-%{version}/mode/sass/sass.js
+%{_datadir}/%{name}-%{version}/mode/http/http.js
+%{_datadir}/%{name}-%{version}/mode/gfm/gfm.js
+%{_datadir}/%{name}-%{version}/mode/gfm/test.js
+%{_datadir}/%{name}-%{version}/mode/shell/shell.js
+%{_datadir}/%{name}-%{version}/mode/haxe/haxe.js
+%{_datadir}/%{name}-%{version}/mode/turtle/turtle.js
+%{_datadir}/%{name}-%{version}/mode/rust/rust.js
+%{_datadir}/%{name}-%{version}/mode/apl/apl.js
+%{_datadir}/%{name}-%{version}/mode/markdown/markdown.js
+%{_datadir}/%{name}-%{version}/mode/markdown/test.js
+%{_datadir}/%{name}-%{version}/mode/ntriples/ntriples.js
+%{_datadir}/%{name}-%{version}/mode/lua/lua.js
+%{_datadir}/%{name}-%{version}/mode/haskell/haskell.js
+%{_datadir}/%{name}-%{version}/mode/tiddlywiki/tiddlywiki.js
+%{_datadir}/%{name}-%{version}/mode/xquery/xquery.js
+%{_datadir}/%{name}-%{version}/mode/xquery/test.js
+%{_datadir}/%{name}-%{version}/mode/ruby/ruby.js
+%{_datadir}/%{name}-%{version}/mode/css/css.js
+%{_datadir}/%{name}-%{version}/mode/css/test.js
+%{_datadir}/%{name}-%{version}/mode/htmlembedded/htmlembedded.js
+%{_datadir}/%{name}-%{version}/mode/smalltalk/smalltalk.js
+%{_datadir}/%{name}-%{version}/mode/vb/vb.js
+%{_datadir}/%{name}-%{version}/mode/sieve/sieve.js
+%{_datadir}/%{name}-%{version}/mode/z80/z80.js
+%{_datadir}/%{name}-%{version}/mode/erlang/erlang.js
+%{_datadir}/%{name}-%{version}/mode/commonlisp/commonlisp.js
+%{_datadir}/%{name}-%{version}/mode/properties/properties.js
+%{_datadir}/%{name}-%{version}/mode/perl/perl.js
+%{_datadir}/%{name}-%{version}/mode/pig/pig.js
+%{_datadir}/%{name}-%{version}/mode/ecl/ecl.js
+%{_datadir}/%{name}-%{version}/mode/r/r.js
+%{_datadir}/%{name}-%{version}/mode/rpm/changes/changes.js
+%{_datadir}/%{name}-%{version}/mode/rpm/spec/spec.js
+%{_datadir}/%{name}-%{version}/mode/javascript/javascript.js
+%{_datadir}/%{name}-%{version}/mode/mirc/mirc.js
+%{_datadir}/%{name}-%{version}/mode/php/php.js
+%{_datadir}/%{name}-%{version}/mode/ocaml/ocaml.js
+%{_datadir}/%{name}-%{version}/mode/htmlmixed/htmlmixed.js
+%{_datadir}/%{name}-%{version}/mode/sparql/sparql.js
+%{_datadir}/%{name}-%{version}/mode/groovy/groovy.js
+%{_datadir}/%{name}-%{version}/mode/tiki/tiki.css
+%{_datadir}/%{name}-%{version}/mode/tiddlywiki/tiddlywiki.css
+%{_datadir}/%{name}-%{version}/mode/rpm/spec/spec.css
+%{_datadir}/%{name}-%{version}/theme/monokai.css
+%{_datadir}/%{name}-%{version}/theme/neat.css
+%{_datadir}/%{name}-%{version}/theme/blackboard.css
+%{_datadir}/%{name}-%{version}/theme/erlang-dark.css
+%{_datadir}/%{name}-%{version}/theme/elegant.css
+%{_datadir}/%{name}-%{version}/theme/xq-dark.css
+%{_datadir}/%{name}-%{version}/theme/solarized.css
+%{_datadir}/%{name}-%{version}/theme/night.css
+%{_datadir}/%{name}-%{version}/theme/ambiance.css
+%{_datadir}/%{name}-%{version}/theme/rubyblue.css
+%{_datadir}/%{name}-%{version}/theme/vibrant-ink.css
+%{_datadir}/%{name}-%{version}/theme/twilight.css
+%{_datadir}/%{name}-%{version}/theme/eclipse.css
+%{_datadir}/%{name}-%{version}/theme/ambiance-mobile.css
+%{_datadir}/%{name}-%{version}/theme/lesser-dark.css
+%{_datadir}/%{name}-%{version}/theme/cobalt.css
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

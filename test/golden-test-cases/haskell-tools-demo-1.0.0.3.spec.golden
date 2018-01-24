@@ -1,0 +1,119 @@
+#
+# spec file for package haskell-tools-demo
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name haskell-tools-demo
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        1.0.0.3
+Release:        0
+Summary:        A web-based demo for Haskell-tools Refactor
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  chrpath
+BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-ghc-devel
+BuildRequires:  ghc-ghc-paths-devel
+BuildRequires:  ghc-haskell-tools-ast-devel
+BuildRequires:  ghc-haskell-tools-backend-ghc-devel
+BuildRequires:  ghc-haskell-tools-builtin-refactorings-devel
+BuildRequires:  ghc-haskell-tools-prettyprint-devel
+BuildRequires:  ghc-haskell-tools-refactor-devel
+BuildRequires:  ghc-http-types-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-references-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-wai-devel
+BuildRequires:  ghc-wai-websockets-devel
+BuildRequires:  ghc-warp-devel
+BuildRequires:  ghc-websockets-devel
+%if %{with tests}
+BuildRequires:  ghc-HUnit-devel
+BuildRequires:  ghc-network-devel
+BuildRequires:  ghc-tasty-devel
+BuildRequires:  ghc-tasty-hunit-devel
+%endif
+
+%description
+Allows websocket clients to connect and performs refactorings on demand.
+The clients maintain a continous connection with the server, sending changes in
+the source files. When a refactor request is received, it performs the changes
+and sends the modified source files to the client.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+%ghc_fix_rpath %{pkg_name}-%{version}
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%{_bindir}/ht-demo
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

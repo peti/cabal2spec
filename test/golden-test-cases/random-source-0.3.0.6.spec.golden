@@ -1,0 +1,105 @@
+#
+# spec file for package random-source
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name random-source
+
+Name:           %{pkg_name}
+Version:        0.3.0.6
+Release:        0
+Summary:        Generic basis for random number generators
+Group:          Development/Libraries/Haskell
+
+License:        SUSE-Public-Domain
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-flexible-defaults-devel
+BuildRequires:  ghc-mersenne-random-pure64-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-mwc-random-devel
+BuildRequires:  ghc-random-devel
+BuildRequires:  ghc-stateref-devel
+BuildRequires:  ghc-syb-devel
+BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-th-extras-devel
+
+%description
+Random number generation based on entropy sources able to produce a small but
+well-defined set of primitive variates. Also includes facilities for
+"completing" partial implementations, making it easy to define new entropy
+sources in a way that is naturally forward-compatible.
+
+Changes in 0.3.0.6: Fixed overzealous fix in 0.3.0.5. The people responsible
+for sacking the people who have been sacked, etc., have been sacked.
+
+Changes in 0.3.0.5: Renamed some internal modules and accidentally some
+external ones too. Whoops. Please don't use this version, it will only end in
+tears.
+
+Changes in 0.3.0.4: Fixed a typo that broke building with MTL-1
+
+Changes in 0.3.0.3: Fixes for GHC's deprecation of Foreign.unsafePerformIO
+
+Changes in 0.3.0.2: Fixes for GHC 7.2.*'s crazy Template Haskell changes.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

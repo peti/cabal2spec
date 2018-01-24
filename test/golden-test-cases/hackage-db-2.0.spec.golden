@@ -1,0 +1,105 @@
+#
+# spec file for package hackage-db
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name hackage-db
+
+Name:           %{pkg_name}
+Version:        2.0
+Release:        0
+Summary:        Access Hackage's package database via Data.Map
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  chrpath
+BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-tar-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-utf8-string-devel
+
+%description
+This is an early and mostly undocumented release of the 2.x version of
+hackage-db that's intended mostly for experimenting with and testing of the new
+API. Porting code from 1.x to 2.x is pretty simple, but if you do that at this
+point, please expect minor details of this API to change in forthcoming
+releases. For production code, you are probably better off with the 1.x release
+for now.
+
+Check out https://github.com/peti/hackage-db/tree/master/example/ for a
+collection of simple example programs that demonstrate how to use this code.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+%ghc_fix_rpath %{pkg_name}-%{version}
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc example
+%{_bindir}/list-known-versions
+%{_bindir}/show-meta-data
+%{_bindir}/show-package-versions
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc example
+
+%changelog

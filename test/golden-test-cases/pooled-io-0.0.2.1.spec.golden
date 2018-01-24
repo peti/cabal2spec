@@ -1,0 +1,130 @@
+#
+# spec file for package pooled-io
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name pooled-io
+
+Name:           %{pkg_name}
+Version:        0.0.2.1
+Release:        0
+Summary:        Run jobs on a limited number of threads and support data dependencies
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-concurrent-split-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-unsafe-devel
+BuildRequires:  ghc-utility-ht-devel
+
+%description
+The motivation for this package was to run computations on multiple cores that
+need to write intermediate results to disk. The functions restrict the number
+of simultaneously running jobs to a user given number or to the number of
+capabilities the Haskell program was started with, i.e. the number after the
+RTS option '-N'.
+
+There are some flavors of this functionality:
+
+* "Control.Concurrent.PooledIO.Independent": run independent actions without
+results in parallel
+
+* "Control.Concurrent.PooledIO.Final": run independent actions with a final
+result in parallel
+
+* "Control.Concurrent.PooledIO.InOrder": run jobs in parallel with data
+dependencies like 'make -j n'
+
+Additionally there is the module "Control.Concurrent.PooledIO.Sequence" that
+helps to serialize I/O actions from multiple threads. It is certainly most
+useful in connection with "Control.Concurrent.PooledIO.Independent".
+
+Related packages:
+
+* 'lazyio': interleave IO actions in a single thread
+
+* 'async': start threads and wait for their results, forward exceptions, but do
+not throttle concurrency with respect to number of available cores
+
+* 'parallel-tasks':
+
+* 'parallel-io':
+
+* 'threadPool':
+
+* 'threads-pool':
+
+* 'cio':
+
+* 'Control-Engine':
+
+* 'taskpool', 'async-pool':.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc example
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc example
+
+%changelog

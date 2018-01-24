@@ -1,0 +1,134 @@
+#
+# spec file for package hedis
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name hedis
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.9.12
+Release:        0
+Summary:        Client library for the Redis datastore: supports full command set, pipelining
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-async-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-lexing-devel
+BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-network-devel
+BuildRequires:  ghc-resource-pool-devel
+BuildRequires:  ghc-scanner-devel
+BuildRequires:  ghc-stm-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-vector-devel
+%if %{with tests}
+BuildRequires:  ghc-HUnit-devel
+BuildRequires:  ghc-slave-thread-devel
+BuildRequires:  ghc-test-framework-devel
+BuildRequires:  ghc-test-framework-hunit-devel
+%endif
+
+%description
+Redis is an open source, advanced key-value store. It is often referred to as a
+data structure server since keys can contain strings, hashes, lists, sets and
+sorted sets. This library is a Haskell client for the Redis datastore.
+Compared to other Haskell client libraries it has some advantages:
+
+[Compatibility with Latest Stable Redis:] Hedis is intended to be used with the
+latest stable version of Redis (currently 3.2). Most redis commands
+(<http://redis.io/commands>) are available as haskell functions, although
+MONITOR and SYNC are intentionally omitted. Additionally, a low-level API is
+exposed that makes it easy for the library user to implement further commands,
+such as new commands from an experimental Redis version.
+
+[Automatic Optimal Pipelining:] Commands are pipelined
+(<http://redis.io/topics/pipelining>) as much as possible without any work by
+the user. See <http://informatikr.com/2012/redis-pipelining.html> for a
+technical explanation of automatic optimal pipelining.
+
+[Enforced Pub/Sub semantics:] When subscribed to the Redis Pub/Sub server
+(<http://redis.io/topics/pubsub>), clients are not allowed to issue commands
+other than subscribing to or unsubscribing from channels. This library uses the
+type system to enforce the correct behavior.
+
+[Connect via TCP or Unix Domain Socket:] TCP sockets are the default way to
+connect to a Redis server. For connections to a server on the same machine,
+Unix domain sockets offer higher performance than the standard TCP connection.
+
+For detailed documentation, see the "Database.Redis" module. .
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG
+
+%changelog

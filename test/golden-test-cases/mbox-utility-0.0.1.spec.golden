@@ -1,0 +1,57 @@
+#
+# spec file for package mbox-utility
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+Name:           mbox-utility
+Version:        0.0.1
+Release:        0
+Summary:        List contents of an mbox file containing e-mails
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-hsemail-devel
+BuildRequires:  ghc-non-empty-devel
+BuildRequires:  ghc-old-time-devel
+BuildRequires:  ghc-parsec-devel
+BuildRequires:  ghc-spreadsheet-devel
+BuildRequires:  ghc-utility-ht-devel
+
+%description
+List contents of an mbox file containing e-mails. This is intended for
+post-processing by the 'cutter' command. See
+<http://hackage.haskell.org/package/cutter>.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_bin_build
+
+%install
+%ghc_bin_install
+
+%files
+%doc LICENSE
+%{_bindir}/lsmbox
+
+%changelog

@@ -1,0 +1,110 @@
+#
+# spec file for package tasty-discover
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name tasty-discover
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        4.1.3
+Release:        0
+Summary:        Test discovery for the tasty framework
+Group:          Development/Libraries/Haskell
+
+License:        MIT
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  chrpath
+BuildRequires:  ghc-Glob-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+%if %{with tests}
+BuildRequires:  ghc-hedgehog-devel
+BuildRequires:  ghc-tasty-devel
+BuildRequires:  ghc-tasty-hedgehog-devel
+BuildRequires:  ghc-tasty-hspec-devel
+BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-tasty-quickcheck-devel
+BuildRequires:  ghc-tasty-smallcheck-devel
+%endif
+
+%description
+Automatic test discovery and runner for the tasty framework. Prefix your test
+case names and tasty-discover will discover, collect and run them. All popular
+test libraries are covered. Configure once and then just write your tests.
+Avoid forgetting to add test modules to your Cabal/Hpack files. Tasty
+ingredients are included along with various configuration options for different
+use cases. Please see the `README.md` below for how to get started.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+%ghc_fix_rpath %{pkg_name}-%{version}
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG.md README.md
+%{_bindir}/%{name}
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.md README.md
+
+%changelog

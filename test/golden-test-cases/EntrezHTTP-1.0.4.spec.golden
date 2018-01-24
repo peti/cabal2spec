@@ -1,0 +1,107 @@
+#
+# spec file for package EntrezHTTP
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name EntrezHTTP
+
+Name:           %{pkg_name}
+Version:        1.0.4
+Release:        0
+Summary:        Libary to interface with the NCBI Entrez REST service
+Group:          Development/Libraries/Haskell
+
+License:        GPL-3.0+
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-HTTP-devel
+BuildRequires:  ghc-Taxonomy-devel
+BuildRequires:  ghc-biocore-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-conduit-devel
+BuildRequires:  ghc-http-conduit-devel
+BuildRequires:  ghc-hxt-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-network-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-transformers-devel
+
+%description
+EntrezHTTP provides functions to query the NCBI entrez REST interface.
+
+There are multiple different databases and tools, so called eutils, provided by
+the service.
+
+For more information on Entrez refer to: <http://www.ncbi.nlm.nih.gov/gquery/>.
+
+Information on the webservice can be found at:
+<http://www.ncbi.nlm.nih.gov/books/NBK25497/>.
+
+If you plan to include the library in a tool, register it as explained
+<http://www.ncbi.nlm.nih.gov/books/NBK25497/#chapter2.Usage_Guidelines_and_Requiremen
+here>.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc README.md changelog
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README.md changelog
+
+%changelog

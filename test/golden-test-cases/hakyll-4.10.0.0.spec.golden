@@ -1,0 +1,175 @@
+#
+# spec file for package hakyll
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name hakyll
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        4.10.0.0
+Release:        0
+Summary:        A static website compiler library
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  chrpath
+BuildRequires:  ghc-binary-devel
+BuildRequires:  ghc-blaze-html-devel
+BuildRequires:  ghc-blaze-markup-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-cryptohash-devel
+BuildRequires:  ghc-data-default-devel
+BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-fsnotify-devel
+BuildRequires:  ghc-http-conduit-devel
+BuildRequires:  ghc-http-types-devel
+BuildRequires:  ghc-lrucache-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-network-devel
+BuildRequires:  ghc-network-uri-devel
+BuildRequires:  ghc-optparse-applicative-devel
+BuildRequires:  ghc-pandoc-citeproc-devel
+BuildRequires:  ghc-pandoc-devel
+BuildRequires:  ghc-parsec-devel
+BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-random-devel
+BuildRequires:  ghc-regex-base-devel
+BuildRequires:  ghc-regex-tdfa-devel
+BuildRequires:  ghc-resourcet-devel
+BuildRequires:  ghc-scientific-devel
+BuildRequires:  ghc-system-filepath-devel
+BuildRequires:  ghc-tagsoup-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-time-locale-compat-devel
+BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-vector-devel
+BuildRequires:  ghc-wai-app-static-devel
+BuildRequires:  ghc-wai-devel
+BuildRequires:  ghc-warp-devel
+BuildRequires:  ghc-yaml-devel
+%if %{with tests}
+BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-tasty-devel
+BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-tasty-quickcheck-devel
+%endif
+
+%description
+Hakyll is a static website compiler library. It provides you with the tools to
+create a simple or advanced static website using a Haskell DSL and formats such
+as markdown or RST. You can find more information, including a tutorial, on the
+website:
+
+* <http://jaspervdj.be/hakyll>
+
+If you seek assistance, there's:
+
+* A google group: <http://groups.google.com/group/hakyll>
+
+* An IRC channel, '#hakyll' on freenode
+
+Additionally, there's the Haddock documentation in the different modules, meant
+as a reference.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+%ghc_fix_rpath %{pkg_name}-%{version}
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG.md
+%{_bindir}/hakyll-init
+%dir %{_datadir}/%{name}-%{version}
+%dir %{_datadir}/%{name}-%{version}/example
+%dir %{_datadir}/%{name}-%{version}/example/posts
+%dir %{_datadir}/%{name}-%{version}/example/images
+%dir %{_datadir}/%{name}-%{version}/example/templates
+%dir %{_datadir}/%{name}-%{version}/example/css
+%dir %{_datadir}/%{name}-%{version}/templates
+%{_datadir}/%{name}-%{version}/example/posts/2015-11-28-carpe-diem.markdown
+%{_datadir}/%{name}-%{version}/example/posts/2015-10-07-rosa-rosa-rosam.markdown
+%{_datadir}/%{name}-%{version}/example/posts/2015-12-07-tu-quoque.markdown
+%{_datadir}/%{name}-%{version}/example/posts/2015-08-12-spqr.markdown
+%{_datadir}/%{name}-%{version}/example/site.hs
+%{_datadir}/%{name}-%{version}/example/images/haskell-logo.png
+%{_datadir}/%{name}-%{version}/example/templates/post-list.html
+%{_datadir}/%{name}-%{version}/example/templates/default.html
+%{_datadir}/%{name}-%{version}/example/templates/archive.html
+%{_datadir}/%{name}-%{version}/example/templates/post.html
+%{_datadir}/%{name}-%{version}/example/css/default.css
+%{_datadir}/%{name}-%{version}/example/index.html
+%{_datadir}/%{name}-%{version}/example/about.rst
+%{_datadir}/%{name}-%{version}/example/contact.markdown
+%{_datadir}/%{name}-%{version}/templates/atom-item.xml
+%{_datadir}/%{name}-%{version}/templates/atom.xml
+%{_datadir}/%{name}-%{version}/templates/rss-item.xml
+%{_datadir}/%{name}-%{version}/templates/rss.xml
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.md
+
+%changelog

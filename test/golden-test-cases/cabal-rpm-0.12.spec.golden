@@ -1,0 +1,66 @@
+#
+# spec file for package cabal-rpm
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+Name:           cabal-rpm
+Version:        0.12
+Release:        0
+Summary:        RPM packaging tool for Haskell Cabal-based packages
+Group:          Development/Libraries/Haskell
+
+License:        GPL-3.0+
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-http-client-devel
+BuildRequires:  ghc-http-client-tls-devel
+BuildRequires:  ghc-http-conduit-devel
+BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-unix-devel
+
+%description
+This package provides a RPM packaging tool for Haskell Cabal-based packages.
+
+cblrpm has commands to generate a RPM spec file and srpm for a package.
+It can rpmbuild packages, yum/dnf install their dependencies, prep packages,
+and install them. There are commands to list package dependencies and missing
+dependencies. The diff command compares the current spec file with a freshly
+generated one, the update command updates the spec file to latest version from
+Stackage or Hackage, and the refresh command updates the spec file to the
+current cabal-rpm packaging.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_bin_build
+
+%install
+%ghc_bin_install
+
+%files
+%doc COPYING
+%doc ChangeLog README.md
+%{_bindir}/%{name}
+
+%changelog

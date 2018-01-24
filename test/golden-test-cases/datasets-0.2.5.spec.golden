@@ -1,0 +1,114 @@
+#
+# spec file for package datasets
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name datasets
+
+Name:           %{pkg_name}
+Version:        0.2.5
+Release:        0
+Summary:        Classical data sets for statistics and machine learning
+Group:          Development/Libraries/Haskell
+
+License:        MIT
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-attoparsec-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-cassava-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-file-embed-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-microlens-devel
+BuildRequires:  ghc-stringsearch-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-vector-devel
+BuildRequires:  ghc-wreq-devel
+
+%description
+Classical machine learning and statistics datasets from the UCI Machine
+Learning Repository and other sources.
+
+The datasets package defines two different kinds of datasets:
+
+* small data sets which are directly (or indirectly with `file-embed`) embedded
+in the package as pure values and do not require network or IO to download the
+data set. This includes Iris, Anscombe and OldFaithful.
+
+* other data sets which need to be fetched over the network with
+`Numeric.Datasets.getDataset` and are cached in a local temporary directory.
+
+> import Numeric.Datasets (getDataset) > import Numeric.Datasets.Iris (iris) >
+import Numeric.Datasets.Abalone (abalone) > > main = do > -- The Iris data set
+is embedded > print (length iris) > print (head iris) > -- The Abalone dataset
+is fetched > abas <- getDataset abalone > print (length abas) > print (head
+abas).
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc changelog.md
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc changelog.md
+
+%changelog

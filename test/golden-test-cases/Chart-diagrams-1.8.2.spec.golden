@@ -1,0 +1,112 @@
+#
+# spec file for package Chart-diagrams
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name Chart-diagrams
+
+Name:           %{pkg_name}
+Version:        1.8.2
+Release:        0
+Summary:        Diagrams backend for Charts
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-Chart-devel
+BuildRequires:  ghc-SVGFonts-devel
+BuildRequires:  ghc-blaze-markup-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-colour-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-data-default-class-devel
+BuildRequires:  ghc-diagrams-core-devel
+BuildRequires:  ghc-diagrams-lib-devel
+BuildRequires:  ghc-diagrams-postscript-devel
+BuildRequires:  ghc-diagrams-svg-devel
+BuildRequires:  ghc-lens-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-old-locale-devel
+BuildRequires:  ghc-operational-devel
+BuildRequires:  ghc-svg-builder-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-time-devel
+
+%description
+Diagrams backend for Charts.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%dir %{_datadir}/%{name}-%{version}
+%dir %{_datadir}/%{name}-%{version}/fonts
+%{_datadir}/%{name}-%{version}/fonts/LinLibertine_R.svg
+%{_datadir}/%{name}-%{version}/fonts/LinLibertine_RB.svg
+%{_datadir}/%{name}-%{version}/fonts/LinLibertine_RBI.svg
+%{_datadir}/%{name}-%{version}/fonts/LinLibertine_RI.svg
+%{_datadir}/%{name}-%{version}/fonts/SourceSansPro_R.svg
+%{_datadir}/%{name}-%{version}/fonts/SourceSansPro_RB.svg
+%{_datadir}/%{name}-%{version}/fonts/SourceSansPro_RBI.svg
+%{_datadir}/%{name}-%{version}/fonts/SourceSansPro_RI.svg
+%{_datadir}/%{name}-%{version}/fonts/SourceCodePro_R.svg
+%{_datadir}/%{name}-%{version}/fonts/SourceCodePro_RB.svg
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

@@ -1,0 +1,104 @@
+#
+# spec file for package prompt
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name prompt
+
+Name:           %{pkg_name}
+Version:        0.1.1.2
+Release:        0
+Summary:        Monad (and transformer) for deferred-effect pure prompt-response queries
+Group:          Development/Libraries/Haskell
+
+License:        MIT
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-base-compat-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-transformers-compat-devel
+BuildRequires:  ghc-transformers-devel
+
+%description
+Monad (and transformer) for delayed-effect "pure" prompt-and-response queries.
+
+Allows you to specify programs that might query a database, talk to stdio,
+etc., without ever involving IO or opening the door to arbitrary IO.
+Write a potentially pure computation describing prompting interactions, etc.,
+without having your type actually do any IO or involve itself with IO or any
+effectful context.
+
+Useful as a source of "things from IO", without ever actually involving IO or
+arbitrary IO itself; only executing a specific subset of IO (or State, etc.)
+that you yourself, the caller, specifies explicitly. Safer and more meaningful
+type.
+
+For more information and instructions on usage with examples, see
+<https://github.com/mstksg/prompt the README>.
+
+Not quite related to the /MonadPrompt/ library.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG.md README.md
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.md README.md
+
+%changelog

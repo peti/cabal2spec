@@ -1,0 +1,115 @@
+#
+# spec file for package diagrams-builder
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name diagrams-builder
+
+Name:           %{pkg_name}
+Version:        0.8.0.1
+Release:        0
+Summary:        Hint-based build service for the diagrams graphics EDSL
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-base-orphans-devel
+BuildRequires:  ghc-cmdargs-devel
+BuildRequires:  ghc-diagrams-lib-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-exceptions-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-haskell-src-exts-devel
+BuildRequires:  ghc-haskell-src-exts-simple-devel
+BuildRequires:  ghc-hint-devel
+BuildRequires:  ghc-lens-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-split-devel
+BuildRequires:  ghc-transformers-devel
+
+%description
+'diagrams-builder' provides backend-agnostic tools for dynamically turning code
+into rendered diagrams, using the 'hint' wrapper to the GHC API. It supports
+conditional recompilation using hashing of diagrams source code, to avoid
+recompiling code that has not changed. It is useful for creating tools which
+compile diagrams code embedded in other documents. For example, it is used by
+the 'BlogLiterately-diagrams' package (a plugin for 'BlogLiterately') to
+compile diagrams embedded in Markdown-formatted blog posts.
+
+Executables specific to the cairo, SVG, postscript, and rasterific backends are
+included (more executables specific to other backends may be included in the
+future). All take an input file and an expression to render, and output an
+image file. If you want these executables you must explicitly enable the
+'-fcairo', '-fsvg', '-fpostscript', or '-frasterific' flags.
+
+A LaTeX package, 'diagrams-latex.sty', is also provided in the 'latex/'
+directory of the source distribution, which renders diagrams code found within
+'diagram' environments. Note that 'diagrams-latex.sty' is licensed under the
+GPL.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGES.markdown README.markdown
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGES.markdown README.markdown
+
+%changelog

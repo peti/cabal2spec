@@ -1,0 +1,129 @@
+#
+# spec file for package fb
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name fb
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        1.1.1
+Release:        0
+Summary:        Bindings to Facebook's API
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-attoparsec-devel
+BuildRequires:  ghc-base16-bytestring-devel
+BuildRequires:  ghc-base64-bytestring-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-cereal-devel
+BuildRequires:  ghc-conduit-devel
+BuildRequires:  ghc-conduit-extra-devel
+BuildRequires:  ghc-crypto-api-devel
+BuildRequires:  ghc-cryptohash-cryptoapi-devel
+BuildRequires:  ghc-cryptohash-devel
+BuildRequires:  ghc-data-default-devel
+BuildRequires:  ghc-http-client-devel
+BuildRequires:  ghc-http-conduit-devel
+BuildRequires:  ghc-http-types-devel
+BuildRequires:  ghc-lifted-base-devel
+BuildRequires:  ghc-monad-control-devel
+BuildRequires:  ghc-monad-logger-devel
+BuildRequires:  ghc-old-locale-devel
+BuildRequires:  ghc-resourcet-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-transformers-base-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-unordered-containers-devel
+%if %{with tests}
+BuildRequires:  ghc-HUnit-devel
+BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-hspec-devel
+%endif
+
+%description
+This package exports bindings to Facebook's APIs (see
+<http://developers.facebook.com/>). Does not have any external dependencies and
+tries to use as little resources (such as memory, sockets and CPU) as possible
+by using packages such as 'aeson', 'attoparsec', 'bytestring', 'conduit',
+'http-conduit', 'text' and others.
+
+While we would like to have a complete binding to Facebook's API, this package
+is being developed on demand. If you need something that has not been
+implemented yet, please send a pull request or file an issue on GitHub
+(<https://github.com/psibi/fb/issues>).
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG.md README.md example.hs
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.md README.md example.hs
+
+%changelog

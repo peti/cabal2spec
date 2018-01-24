@@ -1,0 +1,130 @@
+#
+# spec file for package TCache
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name TCache
+
+Name:           %{pkg_name}
+Version:        0.12.1
+Release:        0
+Summary:        A Transactional cache with user-defined persistence
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-RefSerialize-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-hashtables-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-old-time-devel
+BuildRequires:  ghc-stm-devel
+BuildRequires:  ghc-text-devel
+
+%description
+TCache is a transactional cache with configurable persitence. It allows
+conventional STM transactions for objects that syncronize with their
+user-defined storages. State in memory and into permanent storage is
+transactionally coherent.
+
+It has interface defined for Amazon WS and Yesod Persistent backends defined in
+tcache-<backend> packages. Persistent is a multi-backend interface for SQL and
+non SQL databases such in Mongo-db
+
+The package implements serializable STM references, access by key and by record
+field value, triggers, full text and field indexation, default serialization
+and a query language based on record fields
+
+Since the STM references can be included in data structures and serialized,
+this is right for graph databases and other NoSQL databases.
+
+0.12.0 space in index data in indexQuery.hs and IndexText.hs triggered errors
+in the AWS backend. The space has been changed by '-'. So rename the "index *"
+files in the TCache folder in order to be recognized.
+
+0.11.0.0 added setIndexParsist to define persistence for indexes by type.
+started the addition of readDBRefs, readResources and so on for simultaneous
+read, writes and deletes of objects of the same type.
+
+0.10.2.0 Added setDefaultPersist and modified the signature of setPersist in
+Data.TCache.DefaultPersistence. Fixed issues with ghc 7.6.3
+
+0.10 version add memoization and a persistent and transactional
+collection/queue.
+
+0.10.0.8 subversion add cachedByKeySTM
+
+0.10.0.9 fixed an error in clearSyncChacheProc and SynWrite Asyncronous that
+checked the cache continuously
+
+See "Data.TCache" for details
+
+In this release:
+
+Dropped Data.Hashtable (deprecated). Now it uses the package hashtables.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

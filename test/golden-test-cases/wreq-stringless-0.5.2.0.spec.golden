@@ -1,0 +1,111 @@
+#
+# spec file for package wreq-stringless
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name wreq-stringless
+
+Name:           %{pkg_name}
+Version:        0.5.2.0
+Release:        0
+Summary:        Simple wrapper to use wreq without Strings
+Group:          Development/Libraries/Haskell
+
+License:        MIT
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-utf8-string-devel
+BuildRequires:  ghc-wreq-devel
+
+%description
+This library wraps all functions from 'Network.Wreq' which expects a 'String'
+and replaces the 'String' Type with the "Network.Wreq.StringLess.StringLike"
+Type-Class.
+
+Instances for "Network.Wreq.StringLess.StringLike" are given for:
+
+* "Data.Text"
+
+* "Data.Text.Lazy"
+
+* "Data.ByteString.UTF8"
+
+* "Data.ByteString.Lazy.UTF8"
+
+So you can use any of this types instead of 'String'.
+
+To use this library, replace your the 'wreq' dependency from your 'cabal' file
+with 'wreq-stringless' and import "Network.Wreq.StringLess" instead of
+'Network.Wreq'.
+
+The versions of this library correspond with the version of 'wreq'.
+
+see <https://github.com/j-keck/wreq-stringless/tree/master/examples> for
+examples.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc README.md examples
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README.md examples
+
+%changelog

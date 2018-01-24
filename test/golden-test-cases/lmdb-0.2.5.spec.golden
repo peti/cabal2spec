@@ -1,0 +1,95 @@
+#
+# spec file for package lmdb
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name lmdb
+
+Name:           %{pkg_name}
+Version:        0.2.5
+Release:        0
+Summary:        Lightning MDB bindings
+Group:          Development/Libraries/Haskell
+
+License:        BSD-2-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-array-devel
+BuildRequires:  lmdb-devel
+
+%description
+LMDB is a read-optimized Berkeley DB replacement developed by Symas for the
+OpenLDAP project. LMDB has impressive performance characteristics and a
+friendly BSD-style OpenLDAP license. See <http://symas.com/mdb/>.
+
+This library has Haskell bindings to the LMDB library. You must install the
+lmdb development files before installing this library, e.g. `sudo apt-get
+install liblmdb-dev` works for Ubuntu 14.04.
+
+For now, only a low level interface is provided, and the author is moving on to
+use LMDB rather than further develop its bindings. If a higher level API is
+desired, please consider contributing, or develop a separate package.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+Requires:       lmdb-devel
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

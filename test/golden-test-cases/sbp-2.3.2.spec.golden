@@ -1,0 +1,117 @@
+#
+# spec file for package sbp
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name sbp
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        2.3.2
+Release:        0
+Summary:        SwiftNav's SBP Library
+Group:          Development/Libraries/Haskell
+
+License:        LGPL-3.0+
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  chrpath
+BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-array-devel
+BuildRequires:  ghc-base64-bytestring-devel
+BuildRequires:  ghc-basic-prelude-devel
+BuildRequires:  ghc-binary-conduit-devel
+BuildRequires:  ghc-binary-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-conduit-devel
+BuildRequires:  ghc-conduit-extra-devel
+BuildRequires:  ghc-data-binary-ieee754-devel
+BuildRequires:  ghc-lens-aeson-devel
+BuildRequires:  ghc-lens-devel
+BuildRequires:  ghc-monad-loops-devel
+BuildRequires:  ghc-resourcet-devel
+BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-yaml-devel
+%if %{with tests}
+BuildRequires:  ghc-tasty-devel
+BuildRequires:  ghc-tasty-hunit-devel
+%endif
+
+%description
+Haskell bindings for Swift Navigation Binary Protocol (SBP), a fast, simple,
+and minimal binary protocol for communicating with Swift devices. It is the
+native binary protocol used by the Piksi GPS receiver to transmit solutions,
+observations, status and debugging messages, as well as receive messages from
+the host operating system, such as differential corrections and the almanac.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+%ghc_fix_rpath %{pkg_name}-%{version}
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc README.md
+%{_bindir}/json2sbp
+%{_bindir}/sbp2json
+%{_bindir}/sbp2yaml
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README.md
+
+%changelog

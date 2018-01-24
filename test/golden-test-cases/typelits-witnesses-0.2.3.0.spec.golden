@@ -1,0 +1,109 @@
+#
+# spec file for package typelits-witnesses
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name typelits-witnesses
+
+Name:           %{pkg_name}
+Version:        0.2.3.0
+Release:        0
+Summary:        Existential witnesses, singletons, and classes for operations on GHC TypeLits
+Group:          Development/Libraries/Haskell
+
+License:        MIT
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-base-compat-devel
+BuildRequires:  ghc-constraints-devel
+BuildRequires:  ghc-reflection-devel
+BuildRequires:  ghc-transformers-devel
+
+%description
+Provides witnesses for 'KnownNat' and 'KnownSymbol' instances for various
+operations on GHC TypeLits - in particular, the arithmetic operations defined
+in "GHC.TypeLits", and also for type-level lists of 'KnownNat' and
+'KnownSymbol' instances.
+
+This is useful for situations where you have ''KnownNat' n', and you want to
+prove to GHC ''KnownNat' (n + 3)', or ''KnownNat' (2*n + 4)', or when
+constraints on the lower or upper limits of 'n' are needed.
+
+It's also useful for when you want to work with type level lists of 'KnownNat'
+or 'KnownSymbol' instances and singletons for traversing them, and be able to
+apply analogies of 'natVal' and 'symbolVal' to lists with analogies for
+'SomeNat' and 'SomeSymbol'.
+
+Note that most of the functionality in this library can be reproduced in a more
+generic way using the great <https://hackage.haskell.org/package/singletons
+singletons> library. The versions here are provided as a "plumbing included"
+alternative that makes some commonly found design patterns involving GHC's
+TypeLits functionality a little smoother, especially when working with external
+libraries or GHC TypeLit's Nat comparison API.
+
+See README for more information.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG.md README.md
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.md README.md
+
+%changelog

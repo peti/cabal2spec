@@ -1,0 +1,129 @@
+#
+# spec file for package hflags
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name hflags
+
+Name:           %{pkg_name}
+Version:        0.4.3
+Release:        0
+Summary:        Command line flag parser, very similar to Google's gflags
+Group:          Development/Libraries/Haskell
+
+License:        Apache-2.0
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-text-devel
+
+%description
+The 'HFlags' library supports easy definition of command line flags,
+reimplementing the ideas from Google's 'gflags'
+(<http://code.google.com/p/gflags>).
+
+Command line flags can be declared in any file at the toplevel, using
+'defineFlag'. At runtime, the actual values are assigned to the toplevel
+'flags_name' constants. Those can be used purely throughout the program.
+
+At the beginning of the 'main' function, '$initHFlags "program description"'
+has to be called to initialize the flags. All flags will be initialized that
+are transitively reachable via imports from 'main'. This means, that any
+Haskell package can easily define command line flags with 'HFlags'.
+This feature is demonstrated by
+<http://github.com/errge/hflags/blob/master/examples/ImportExample.hs> and
+<http://github.com/errge/hflags/tree/master/examples/package>.
+
+A simple example (more in the
+<http://github.com/errge/hflags/tree/master/examples> directory):
+
+' #!/usr/bin/env runhaskell
+
+&#x7b;-# LANGUAGE TemplateHaskell #-&#x7d;
+
+import HFlags
+
+'defineFlag' "name" "Indiana Jones" "Who to greet." 'defineFlag' "r:repeat" (3
++ 4 :: Int) "Number of times to repeat the message."
+
+main = do s <- $initHFlags "Simple program v0.1" &#x20; sequence_ $ replicate
+flags_repeat greet &#x20; putStrLn $ "Your additional arguments were: " ++ show
+s &#x20; putStrLn $ "Which is the same as: " ++ show HFlags.arguments &#x20;
+where &#x20; greet = putStrLn $ "Hello " ++ flags_name ++ ", very nice to meet
+you!" '
+
+At 'initHFlags' time, the library also tries to gather flags out of environment
+variables. 'HFLAGS_verbose=True' is equivalent to specify --verbose=True.
+This environment feature only works with long options and the user has to
+specify a value even for Bools.
+
+/Since version 0.2, you mustn't put the initHFlags in a parentheses with the
+program description. Just/ '$initHFlags', /it's cleaner./
+
+See <http://github.com/errge/hflags/tree/master/changelog> for recent changes.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc COPYING
+%doc README.md changelog examples
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc COPYING
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README.md changelog examples
+
+%changelog

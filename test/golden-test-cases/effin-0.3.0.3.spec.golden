@@ -1,0 +1,104 @@
+#
+# spec file for package effin
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name effin
+
+Name:           %{pkg_name}
+Version:        0.3.0.3
+Release:        0
+Summary:        A Typeable-free implementation of extensible effects
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-mtl-devel
+
+%description
+This package implements extensible effects, an alternative to monad
+transformers. The original paper can be found at
+<http://okmij.org/ftp/Haskell/extensible/exteff.pdf>. The main differences
+between this library and the one described in the paper are that this library
+does not use the Typeable type class, does not require that effects implement
+the Functor type class, and has a simpler API for handling effects.
+
+For example, the following code implements a handler for exceptions:
+
+> newtype Exception e = Throw e > > runException :: Effect (Exception e :+ es)
+a -> Effect es (Either e a) > runException = eliminate > (x -> return (Right
+x)) > ((Throw e) k -> return (Left e))
+
+Compare this to the corresponding code in extensible-effects
+(<http://hackage.haskell.org/package/extensible-effects>):
+
+> runExc :: Typeable e => Eff (Exc e :> r) a -> Eff r (Either e a) > runExc =
+loop . admin > where > loop (Val x) = return (Right x) > loop (E u) =
+handleRelay u loop ((Exc e) -> return (Left e))
+
+In particular, effect implementors are not required to do any recursion,
+thereby making effect handlers more composeable.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

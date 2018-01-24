@@ -1,0 +1,127 @@
+#
+# spec file for package declarative
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name declarative
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.5.1
+Release:        0
+Summary:        DIY Markov Chains
+Group:          Development/Libraries/Haskell
+
+License:        MIT
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-hasty-hamiltonian-devel
+BuildRequires:  ghc-kan-extensions-devel
+BuildRequires:  ghc-lens-devel
+BuildRequires:  ghc-mcmc-types-devel
+BuildRequires:  ghc-mighty-metropolis-devel
+BuildRequires:  ghc-mwc-probability-devel
+BuildRequires:  ghc-pipes-devel
+BuildRequires:  ghc-primitive-devel
+BuildRequires:  ghc-speedy-slice-devel
+BuildRequires:  ghc-transformers-devel
+
+%description
+This package presents a simple combinator language for Markov transition
+operators that are useful in MCMC.
+
+Any transition operators sharing the same stationary distribution and obeying
+the Markov and reversibility properties can be combined in a couple of ways,
+such that the resulting operator preserves the stationary distribution and
+desirable properties amenable for MCMC.
+
+We can deterministically concatenate operators end-to-end, or sample from a
+collection of them according to some probability distribution. See
+<http://www.stat.umn.edu/geyer/f05/8931/n1998.pdf Geyer, 2005> for details.
+
+A useful strategy is to hedge one's 'sampling risk' by occasionally
+interleaving a computationally-expensive transition (such as a gradient-based
+algorithm like Hamiltonian Monte Carlo or NUTS) with cheap Metropolis
+transitions.
+
+> transition = frequency [ > (9, metropolis 1.0) > , (1, hamiltonian 0.05 20) >
+]
+
+Alternatively: sample consecutively using the same algorithm, but over a range
+of different proposal distributions.
+
+> transition = concatAllT [ > slice 0.5 > , slice 1.0 > , slice 2.0 > ]
+
+Or just mix and match and see what happens!
+
+> transition = > sampleT > (sampleT (metropolis 0.5) (slice 0.1)) > (sampleT
+(hamiltonian 0.01 20) (metropolis 2.0))
+
+Check the test suite for example usage.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

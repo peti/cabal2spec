@@ -1,0 +1,133 @@
+#
+# spec file for package simple
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name simple
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.11.2
+Release:        0
+Summary:        A minimalist web framework for the WAI server interface
+Group:          Development/Libraries/Haskell
+
+License:        LGPL-3.0+
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-attoparsec-devel
+BuildRequires:  ghc-base64-bytestring-devel
+BuildRequires:  ghc-blaze-builder-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-cmdargs-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-http-types-devel
+BuildRequires:  ghc-mime-types-devel
+BuildRequires:  ghc-monad-control-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-setenv-devel
+BuildRequires:  ghc-simple-templates-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-transformers-base-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-vector-devel
+BuildRequires:  ghc-wai-devel
+BuildRequires:  ghc-wai-extra-devel
+%if %{with tests}
+BuildRequires:  ghc-hspec-contrib-devel
+BuildRequires:  ghc-hspec-devel
+%endif
+
+%description
+Simple is "framework-less" web framework for Haskell web applications based on
+the WAI server interface (e.g. for use with the warp server). Simple does not
+enforce a particular structure or paradigm for web applications.
+Rather, Simple contains tools to help you create your own patterns (or
+re-create existing ones). Simple is minimalist, providing a lightweight base -
+the most basic Simple app is little more than a WAI `Application` with some
+routing logic. Everything else (e.g. authentication, controllers, persistence,
+caching etc') is provided in composable units, so you can include only the ones
+you need in your app, and easily replace with your own components.
+
+To get started, create an app skeleton with the `smpl` utility:
+
+' $ cabal install simple $ smpl create my_app_name $ cd my_app_name $ smpl '
+
+See "Web.Simple" for a more detailed introduction.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG.md
+%{_bindir}/smpl
+%dir %{_datadir}/%{name}-%{version}
+%dir %{_datadir}/%{name}-%{version}/template
+%{_datadir}/%{name}-%{version}/template/*.tmpl
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.md
+
+%changelog

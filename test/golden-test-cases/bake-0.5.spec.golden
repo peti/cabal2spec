@@ -1,0 +1,127 @@
+#
+# spec file for package bake
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name bake
+
+Name:           %{pkg_name}
+Version:        0.5
+Release:        0
+Summary:        Continuous integration system
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-HTTP-devel
+BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-cmdargs-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-direct-sqlite-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-disk-free-space-devel
+BuildRequires:  ghc-extra-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-http-client-devel
+BuildRequires:  ghc-http-conduit-devel
+BuildRequires:  ghc-http-types-devel
+BuildRequires:  ghc-old-locale-devel
+BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-random-devel
+BuildRequires:  ghc-safe-devel
+BuildRequires:  ghc-shake-devel
+BuildRequires:  ghc-smtp-mail-devel
+BuildRequires:  ghc-sqlite-simple-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-wai-devel
+BuildRequires:  ghc-wai-extra-devel
+BuildRequires:  ghc-warp-devel
+
+%description
+Bake is a continuous integration server, designed for large, productive,
+semi-trusted teams.
+
+* /Large teams/ where there are at least several contributors working full-time
+on a single code base.
+
+* /Productive teams/ which are regularly pushing code, many times a day.
+
+* /Semi-trusted teams/ where code does not go through manual code review, but
+code does need to pass a test suite and perhaps some static analysis.
+People are assumed not to be malicious, but are fallible.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGES.txt README.md
+%{_bindir}/bake-test
+%dir %{_datadir}/%{name}-%{version}
+%dir %{_datadir}/%{name}-%{version}/html
+%{_datadir}/%{name}-%{version}/html/favicon.ico
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGES.txt README.md
+
+%changelog

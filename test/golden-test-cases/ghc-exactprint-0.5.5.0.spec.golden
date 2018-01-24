@@ -1,0 +1,125 @@
+#
+# spec file for package ghc-exactprint
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name ghc-exactprint
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.5.5.0
+Release:        0
+Summary:        ExactPrint for GHC
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-free-devel
+BuildRequires:  ghc-ghc-boot-devel
+BuildRequires:  ghc-ghc-devel
+BuildRequires:  ghc-ghc-paths-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-syb-devel
+%if %{with tests}
+BuildRequires:  ghc-Diff-devel
+BuildRequires:  ghc-HUnit-devel
+BuildRequires:  ghc-filemanip-devel
+BuildRequires:  ghc-silently-devel
+%endif
+
+%description
+Using the API Annotations available from GHC 7.10.2, this library provides a
+means to round trip any code that can be compiled by GHC, currently excluding
+lhs files.
+
+It does this with a phased approach
+
+* Delta - converts GHC API Annotations into relative offsets, indexed by
+SrcSpan
+
+* Transform - functions to facilitate changes to the AST, adjusting the
+annotations generated in the Delta phase to suit the changes.
+
+* Print - converts an AST and its annotations to properly formatted source
+text.
+
+* Pretty - adds annotations to an AST (fragment) so that the output can be
+parsed back to the same AST.
+
+
+
+Note: requires GHC 7.10.2 or later.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc ChangeLog
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc ChangeLog
+
+%changelog

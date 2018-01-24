@@ -1,0 +1,56 @@
+#
+# spec file for package docker-build-cacher
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+Name:           docker-build-cacher
+Version:        1.8.2
+Release:        0
+Summary:        Builds a services with docker and caches all of its intermediate stages
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-foldl-devel
+BuildRequires:  ghc-language-docker-devel
+BuildRequires:  ghc-system-filepath-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-turtle-devel
+
+%description
+A CLI tool to speed up multi-stage docker file builds by caching intermediate
+stages separately, so the can be used in successive builds.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_bin_build
+
+%install
+%ghc_bin_install
+
+%files
+%doc LICENSE
+%doc README.md docker-build-cacher.cabal docker-build-cacher.spec
+%{_bindir}/%{name}
+
+%changelog

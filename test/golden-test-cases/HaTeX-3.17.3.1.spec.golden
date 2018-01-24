@@ -1,0 +1,129 @@
+#
+# spec file for package HaTeX
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name HaTeX
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        3.17.3.1
+Release:        0
+Summary:        The Haskell LaTeX library
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-matrix-devel
+BuildRequires:  ghc-parsec-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-wl-pprint-extras-devel
+%if %{with tests}
+BuildRequires:  ghc-tasty-devel
+BuildRequires:  ghc-tasty-quickcheck-devel
+%endif
+
+%description
+This library implements the LaTeX syntax and provides some useful abstractions.
+
+Some of the things you can do with HaTeX are:
+
+* Write LaTeX documents with all the advantages you already have in Haskell:
+recursion, type system, high order functions, ...
+
+* Create a LaTeX backend for your own program.
+
+* Parse a LaTeX file and obtain its Abstract Syntax Tree (AST).
+
+* Pretty-print Haskell values in LaTeX.
+
+* Generate TikZ scripts (images!) easily.
+
+Browse the 'examples' directory in the source distribution to see some simple
+examples. It might help you to get started. The HaTeX User's Guide is available
+at <https://github.com/Daniel-Diaz/hatex-guide/blob/master/README.md>.
+We also have a mailing list
+(<http://projects.haskell.org/cgi-bin/mailman/listinfo/hatex>) and an IRC
+channel ('#hatex'). If you just want to read a short introduction, read the
+"Text.LaTeX" module.
+
+If you prefer to write in LaTeX and all you want is to /program/ some parts of
+the document, or if you already have the LaTeX document written and you just
+want to add some automatically generated LaTeX code somewhere, check haskintex:
+<http://daniel-diaz.github.io/projects/haskintex>. It allows you to embed
+Haskell in LaTeX. It also makes you easy to use HaTeX within a LaTeX document.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc license
+%doc CHANGELOG.md Examples README.md docfiles
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc license
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.md Examples README.md docfiles
+
+%changelog

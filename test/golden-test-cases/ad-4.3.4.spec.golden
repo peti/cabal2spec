@@ -1,0 +1,165 @@
+#
+# spec file for package ad
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name ad
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        4.3.4
+Release:        0
+Summary:        Automatic Differentiation
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-array-devel
+BuildRequires:  ghc-cabal-doctest-devel
+BuildRequires:  ghc-comonad-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-data-reify-devel
+BuildRequires:  ghc-erf-devel
+BuildRequires:  ghc-free-devel
+BuildRequires:  ghc-nats-devel
+BuildRequires:  ghc-reflection-devel
+BuildRequires:  ghc-transformers-devel
+%if %{with tests}
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-doctest-devel
+BuildRequires:  ghc-filepath-devel
+%endif
+
+%description
+Forward-, reverse- and mixed- mode automatic differentiation combinators with a
+common API.
+
+Type-level "branding" is used to both prevent the end user from confusing
+infinitesimals and to limit unsafe access to the implementation details of each
+Mode.
+
+Each mode has a separate module full of combinators.
+
+* 'Numeric.AD.Mode.Forward' provides basic forward-mode AD. It is good for
+computing simple derivatives.
+
+* 'Numeric.AD.Mode.Reverse' uses benign side-effects to compute reverse-mode
+AD. It is good for computing gradients in one pass. It generates a Wengert list
+(linear tape) using 'Data.Reflection'.
+
+* 'Numeric.AD.Mode.Kahn' uses benign side-effects to compute reverse-mode AD.
+It is good for computing gradients in one pass. It generates a tree-like tape
+that needs to be topologically sorted in the end.
+
+* 'Numeric.AD.Mode.Sparse' computes a sparse forward-mode AD tower. It is good
+for higher derivatives or large numbers of outputs.
+
+* 'Numeric.AD.Mode.Tower' computes a dense forward-mode AD tower useful for
+higher derivatives of single input functions.
+
+* 'Numeric.AD' computes using whichever mode or combination thereof is suitable
+to each individual combinator.
+
+While not every mode can provide all operations, the following basic operations
+are supported, modified as appropriate by the suffixes below:
+
+* 'grad' computes the gradient (partial derivatives) of a function at a point.
+
+* 'jacobian' computes the Jacobian matrix of a function at a point.
+
+* 'diff' computes the derivative of a function at a point.
+
+* 'du' computes a directional derivative of a function at a point.
+
+* 'hessian' computes the Hessian matrix (matrix of second partial derivatives)
+of a function at a point.
+
+The following suffixes alter the meanings of the functions above as follows:
+
+* ''' -- also return the answer
+
+* 'With' lets the user supply a function to blend the input with the output
+
+* 'F' is a version of the base function lifted to return a 'Traversable' (or
+'Functor') result
+
+* 's' means the function returns all higher derivatives in a list or
+f-branching 'Stream'
+
+* 'T' means the result is transposed with respect to the traditional
+formulation.
+
+* '0' means that the resulting derivative list is padded with 0s at the end.
+
+* 'NoEq' means that an infinite list of converging values is returned rather
+than truncating the list when they become constant.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG.markdown README.markdown
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.markdown README.markdown
+
+%changelog

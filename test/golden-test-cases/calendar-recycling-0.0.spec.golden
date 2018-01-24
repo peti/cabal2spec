@@ -1,0 +1,54 @@
+#
+# spec file for package calendar-recycling
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+Name:           calendar-recycling
+Version:        0.0
+Release:        0
+Summary:        List years with the same calendars
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-html-devel
+BuildRequires:  ghc-old-time-devel
+BuildRequires:  ghc-utility-ht-devel
+
+%description
+Generate a partial HTML document grouping years by the pattern of the calender.
+The program respects the starting weekday of a year and the existence of a leap
+day, but it ignores the date of the Easter festival.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_bin_build
+
+%install
+%ghc_bin_install
+
+%files
+%doc LICENSE
+%{_bindir}/%{name}
+
+%changelog

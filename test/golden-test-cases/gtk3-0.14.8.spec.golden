@@ -1,0 +1,178 @@
+#
+# spec file for package gtk3
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name gtk3
+
+Name:           %{pkg_name}
+Version:        0.14.8
+Release:        0
+Summary:        Binding to the Gtk+ 3 graphical user interface library
+Group:          Development/Libraries/Haskell
+
+License:        LGPL-2.1+
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-array-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-cairo-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-gio-devel
+BuildRequires:  ghc-glib-devel
+BuildRequires:  ghc-gtk2hs-buildtools-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-pango-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  pkgconfig(gthread-2.0)
+BuildRequires:  pkgconfig(gtk+-3.0)
+
+%description
+This is the core library of the Gtk2Hs suite of libraries for Haskell based on
+Gtk+. Gtk+ is an extensive and mature multi-platform toolkit for creating
+graphical user interfaces.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+Requires:       pkgconfig
+Requires:       pkgconfig(gthread-2.0)
+Requires:       pkgconfig(gtk+-3.0)
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc COPYING
+%dir %{_datadir}/%{name}-%{version}
+%dir %{_datadir}/%{name}-%{version}/actionMenu
+%dir %{_datadir}/%{name}-%{version}/buttonbox
+%dir %{_datadir}/%{name}-%{version}/carsim
+%dir %{_datadir}/%{name}-%{version}/concurrent
+%dir %{_datadir}/%{name}-%{version}/embedded
+%dir %{_datadir}/%{name}-%{version}/fastdraw
+%dir %{_datadir}/%{name}-%{version}/filechooser
+%dir %{_datadir}/%{name}-%{version}/fonts
+%dir %{_datadir}/%{name}-%{version}/graphic
+%dir %{_datadir}/%{name}-%{version}/gtkbuilder
+%dir %{_datadir}/%{name}-%{version}/hello
+%dir %{_datadir}/%{name}-%{version}/inputmethod
+%dir %{_datadir}/%{name}-%{version}/menu
+%dir %{_datadir}/%{name}-%{version}/notebook
+%dir %{_datadir}/%{name}-%{version}/statusicon
+%dir %{_datadir}/%{name}-%{version}/treelist
+%dir %{_datadir}/%{name}-%{version}/treelist/resListDND
+%dir %{_datadir}/%{name}-%{version}/unicode
+%{_datadir}/%{name}-%{version}/actionMenu/ActionMenu.hs
+%{_datadir}/%{name}-%{version}/actionMenu/Makefile
+%{_datadir}/%{name}-%{version}/buttonbox/ButtonBox.hs
+%{_datadir}/%{name}-%{version}/buttonbox/Makefile
+%{_datadir}/%{name}-%{version}/carsim/CarSim.hs
+%{_datadir}/%{name}-%{version}/carsim/Makefile
+%{_datadir}/%{name}-%{version}/concurrent/Makefile
+%{_datadir}/%{name}-%{version}/concurrent/Progress.hs
+%{_datadir}/%{name}-%{version}/concurrent/ProgressThreadedRTS.hs
+%{_datadir}/%{name}-%{version}/embedded/Embedded.hs
+%{_datadir}/%{name}-%{version}/embedded/Makefile
+%{_datadir}/%{name}-%{version}/embedded/MPlayer.hs
+%{_datadir}/%{name}-%{version}/embedded/Notes.txt
+%{_datadir}/%{name}-%{version}/embedded/Uzbl.hs
+%{_datadir}/%{name}-%{version}/fastdraw/FastDraw.hs
+%{_datadir}/%{name}-%{version}/fastdraw/Makefile
+%{_datadir}/%{name}-%{version}/filechooser/FileChooserDemo.glade
+%{_datadir}/%{name}-%{version}/filechooser/FileChooserDemo.hs
+%{_datadir}/%{name}-%{version}/filechooser/Makefile
+%{_datadir}/%{name}-%{version}/fonts/Fonts.hs
+%{_datadir}/%{name}-%{version}/fonts/Makefile
+%{_datadir}/%{name}-%{version}/graphic/Drawing.hs
+%{_datadir}/%{name}-%{version}/graphic/Makefile
+%{_datadir}/%{name}-%{version}/gtkbuilder/GtkBuilderTest.hs
+%{_datadir}/%{name}-%{version}/gtkbuilder/Makefile
+%{_datadir}/%{name}-%{version}/gtkbuilder/simple.ui
+%{_datadir}/%{name}-%{version}/hello/Makefile
+%{_datadir}/%{name}-%{version}/hello/World.hs
+%{_datadir}/%{name}-%{version}/inputmethod/Layout.hs
+%{_datadir}/%{name}-%{version}/inputmethod/Makefile
+%{_datadir}/%{name}-%{version}/menu/ComboDemo.hs
+%{_datadir}/%{name}-%{version}/menu/Makefile
+%{_datadir}/%{name}-%{version}/menu/MenuDemo.hs
+%{_datadir}/%{name}-%{version}/notebook/Notebook.hs
+%{_datadir}/%{name}-%{version}/notebook/Makefile
+%{_datadir}/%{name}-%{version}/statusicon/Makefile
+%{_datadir}/%{name}-%{version}/statusicon/StatusIcon.hs
+%{_datadir}/%{name}-%{version}/treelist/Completion.hs
+%{_datadir}/%{name}-%{version}/treelist/DirList.hs
+%{_datadir}/%{name}-%{version}/treelist/FilterDemo.hs
+%{_datadir}/%{name}-%{version}/treelist/ListDemo.hs
+%{_datadir}/%{name}-%{version}/treelist/ListDND.hs
+%{_datadir}/%{name}-%{version}/treelist/ListTest.glade
+%{_datadir}/%{name}-%{version}/treelist/ListTest.hs
+%{_datadir}/%{name}-%{version}/treelist/ListText.hs
+%{_datadir}/%{name}-%{version}/treelist/Makefile
+%{_datadir}/%{name}-%{version}/treelist/rgb.txt
+%{_datadir}/%{name}-%{version}/treelist/TreeDemo.hs
+%{_datadir}/%{name}-%{version}/treelist/TreeSort.hs
+%{_datadir}/%{name}-%{version}/treelist/TreeTest.glade
+%{_datadir}/%{name}-%{version}/treelist/TreeTest.hs
+%{_datadir}/%{name}-%{version}/treelist/resListDND/desktop.png
+%{_datadir}/%{name}-%{version}/treelist/resListDND/laptop.png
+%{_datadir}/%{name}-%{version}/treelist/resListDND/laptopSmall.png
+%{_datadir}/%{name}-%{version}/treelist/resListDND/printer.png
+%{_datadir}/%{name}-%{version}/treelist/resListDND/server.png
+%{_datadir}/%{name}-%{version}/treelist/resListDND/tower.png
+%{_datadir}/%{name}-%{version}/unicode/Arabic.hs
+%{_datadir}/%{name}-%{version}/unicode/Makefile
+%{_datadir}/%{name}-%{version}/demos.txt
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc COPYING
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

@@ -1,0 +1,134 @@
+#
+# spec file for package text-generic-pretty
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name text-generic-pretty
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        1.2.1
+Release:        0
+Summary:        A generic, derivable, haskell pretty printer
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-groom-devel
+BuildRequires:  ghc-ixset-typed-devel
+BuildRequires:  ghc-protolude-devel
+BuildRequires:  ghc-string-conversions-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-wl-pprint-text-devel
+%if %{with tests}
+BuildRequires:  ghc-tasty-devel
+BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-tasty-quickcheck-devel
+%endif
+
+%description
+GenericPretty is a Haskell library that supports automatic derivation of pretty
+printing functions on user defined data types.
+
+The form of geenrics used is based on that introduced in the paper: Magalhaes,
+Dijkstra, Jeuring, and Loh, A Generic Deriving Mechanism for Haskell, 3'rd ACM
+Symposium on Haskell, pp. 37-48, September 2010,
+<http://dx.doi.org/10.1145/1863523.1863529>. Changes from the original paper in
+the GHC implementation are described here:
+<http://www.haskell.org/haskellwiki/GHC.Generics#Changes_from_the_paper>.
+
+This package requires the use of the new GHC.Generics features
+<http://www.haskell.org/haskellwiki/GHC.Generics>, present from GHC 7.2.
+Use of these features is indicated by the DeriveGeneric pragma. or the flag
+-XDeriveGeneric.
+
+Pretty printing produces values of type Text.PrettyPrint.Doc, using the
+Text.PrettyPrint library
+<http://www.haskell.org/ghc/docs/latest/html/libraries/pretty-1.1.1.0/Text-PrettyPrint.html>.
+
+The output provided is a pretty printed version of that provided by
+Prelude.show. That is, rendering the document provided by this pretty printer
+yields an output identical to that of Prelude.show, except for extra
+whitespace.
+
+For information about the functions exported by the package please see the API
+linked further down this page. For examples of usage, both basic and more
+complex see the README file and the haskell source code files in the TestSuite
+folder, both included in the package. Finally for installation instructions
+also see the README file or this page:
+<http://www.haskell.org/haskellwiki/Cabal/How_to_install_a_Cabal_package>.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development
+files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc README
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README
+
+%changelog

@@ -1,0 +1,112 @@
+#
+# spec file for package MissingH
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name MissingH
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        1.4.0.1
+Release:        0
+Summary:        Large utility library
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-HUnit-devel
+BuildRequires:  ghc-array-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-hslogger-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-network-devel
+BuildRequires:  ghc-old-locale-devel
+BuildRequires:  ghc-old-time-devel
+BuildRequires:  ghc-parsec-devel
+BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-random-devel
+BuildRequires:  ghc-regex-compat-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-unix-devel
+%if %{with tests}
+BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-errorcall-eq-instance-devel
+BuildRequires:  ghc-testpack-devel
+%endif
+
+%description
+MissingH is a library of all sorts of utility functions for Haskell
+programmers. It is written in pure Haskell and thus should be extremely
+portable and easy to use.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc TODO examples
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc TODO examples
+
+%changelog

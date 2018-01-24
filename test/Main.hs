@@ -2,21 +2,26 @@ module Main ( main ) where
 
 import Cabal2Spec
 
+import Data.Maybe
 import Distribution.Compiler
 import Distribution.System
+import Distribution.Text
+import Distribution.Types.PackageId
+import Distribution.Types.PackageName
+import System.FilePath
 import Test.Tasty
 import Test.Tasty.Golden
-import System.FilePath
 
 main :: IO ()
-main = defaultMain tests
+main = do
+  testCases <- findByExtension [".golden"] "test/golden-test-cases"
+  defaultMain $ testGroup "regressions" (map regressionTest testCases)
 
-tests :: TestTree
-tests = testGroup "regressions"
-  [ regressionTest "cabal2spec.cabal" "cabal2spec.spec"
-  ]
-
-regressionTest :: FilePath -> FilePath -> TestTree
-regressionTest cabalFile specFile =
-  goldenVsFile cabalFile (specFile <.> "golden") specFile
+regressionTest :: String -> TestTree
+regressionTest goldenFile = do
+  let pid = takeBaseName (dropExtension goldenFile)
+      PackageIdentifier pn _ = fromMaybe (error ("invalid package id " ++ show pid)) (simpleParse pid)
+      cabalFile = "test" </> "golden-test-cases" </> pid </> unPackageName pn <.> "cabal"
+      specFile = cabalFile -<.> ".spec"
+  goldenVsFile pid goldenFile specFile
                (cabal2spec buildPlatform buildCompilerId [] True cabalFile specFile)

@@ -1,0 +1,309 @@
+#
+# spec file for package haskell-names
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name haskell-names
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.9.0
+Release:        0
+Summary:        Name resolution library for Haskell
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-data-lens-light-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-haskell-src-exts-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-traverse-with-class-devel
+BuildRequires:  ghc-uniplate-devel
+%if %{with tests}
+BuildRequires:  ghc-filemanip-devel
+BuildRequires:  ghc-pretty-show-devel
+BuildRequires:  ghc-tasty-devel
+BuildRequires:  ghc-tasty-golden-devel
+%endif
+
+%description
+This package takes modules parsed with `haskell-src-exts`, resolves used names
+and annotates the parsed module with scoping information.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc CHANGELOG.md README.md
+%dir %{_datadir}/%{name}-%{version}
+%dir %{_datadir}/%{name}-%{version}/data
+%dir %{_datadir}/%{name}-%{version}/data/baseEnvironment
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Applicative.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Arrow.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Category.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Concurrent.Chan.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Concurrent.MVar.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Concurrent.QSem.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Concurrent.QSemN.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Concurrent.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Exception.Base.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Exception.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Monad.Fix.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Monad.Instances.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Monad.ST.Imp.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Monad.ST.Lazy.Imp.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Monad.ST.Lazy.Safe.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Monad.ST.Lazy.Unsafe.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Monad.ST.Lazy.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Monad.ST.Safe.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Monad.ST.Strict.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Monad.ST.Unsafe.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Monad.ST.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Monad.Zip.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Control.Monad.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Bits.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Bool.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Char.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Complex.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Data.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Dynamic.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Either.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Eq.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Fixed.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Foldable.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Function.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Functor.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.IORef.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Int.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Ix.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.List.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Maybe.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Monoid.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.OldTypeable.Internal.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.OldTypeable.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Ord.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Ratio.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.STRef.Lazy.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.STRef.Strict.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.STRef.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.String.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Traversable.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Tuple.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Typeable.Internal.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Typeable.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Unique.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Version.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Data.Word.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Debug.Trace.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.C.Error.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.C.String.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.C.Types.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.C.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.Concurrent.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.ForeignPtr.Imp.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.ForeignPtr.Safe.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.ForeignPtr.Unsafe.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.ForeignPtr.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.Marshal.Alloc.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.Marshal.Array.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.Marshal.Error.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.Marshal.Pool.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.Marshal.Safe.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.Marshal.Unsafe.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.Marshal.Utils.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.Marshal.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.Ptr.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.Safe.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.StablePtr.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.Storable.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Foreign.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Arr.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Base.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.CString.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Char.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Classes.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Conc.IO.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Conc.Signal.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Conc.Sync.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Conc.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.ConsoleHandler.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Constants.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Debug.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Desugar.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Enum.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Environment.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Err.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.Array.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.Clock.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.Control.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.EPoll.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.IntMap.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.Internal.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.KQueue.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.Manager.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.PSQ.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.Poll.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.Thread.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.TimerManager.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.Unique.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Event.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Exception.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Exts.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Fingerprint.Type.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Fingerprint.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Float.ConversionUtils.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Float.RealFracMethods.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Float.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Foreign.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.ForeignPtr.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.GHCi.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Generics.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Buffer.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.BufferedIO.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Device.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Encoding.CodePage.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Encoding.Failure.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Encoding.Iconv.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Encoding.Latin1.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Encoding.Types.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Encoding.UTF16.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Encoding.UTF32.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Encoding.UTF8.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Encoding.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Exception.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.FD.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Handle.FD.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Handle.Internals.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Handle.Text.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Handle.Types.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.Handle.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.IOMode.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IO.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IOArray.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IORef.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IP.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Int.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.IntWord64.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Integer.Logarithms.Internals.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Integer.Logarithms.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Integer.Simple.Internals.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Integer.Type.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Integer.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.List.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.MVar.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Magic.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Num.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.PArr.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Pack.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Prim.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.PrimopWrappers.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Profiling.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Ptr.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Read.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Real.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.ST.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.STRef.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Show.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Stable.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Stack.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Stats.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Storable.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.TopHandler.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Tuple.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.TypeLits.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Types.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Unicode.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Weak.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/GHC.Word.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Numeric.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Prelude.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.CPUTime.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.Console.GetOpt.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.Environment.ExecutablePath.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.Environment.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.Exit.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.IO.Error.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.IO.Unsafe.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.IO.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.Info.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.Mem.StableName.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.Mem.Weak.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.Mem.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.Posix.Internals.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.Posix.Types.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/System.Timeout.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Text.ParserCombinators.ReadP.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Text.ParserCombinators.ReadPrec.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Text.Printf.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Text.Read.Lex.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Text.Read.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Text.Show.Functions.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Text.Show.symbols
+%{_datadir}/%{name}-%{version}/data/baseEnvironment/Unsafe.Coerce.symbols
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.md README.md
+
+%changelog

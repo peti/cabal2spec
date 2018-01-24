@@ -1,0 +1,150 @@
+#
+# spec file for package swish
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name swish
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.9.1.10
+Release:        0
+Summary:        A semantic web toolkit
+Group:          Development/Libraries/Haskell
+
+License:        LGPL-2.0+
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  chrpath
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-intern-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-network-uri-devel
+BuildRequires:  ghc-old-locale-devel
+BuildRequires:  ghc-polyparse-devel
+BuildRequires:  ghc-semigroups-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-time-devel
+%if %{with tests}
+BuildRequires:  ghc-HUnit-devel
+BuildRequires:  ghc-test-framework-devel
+BuildRequires:  ghc-test-framework-hunit-devel
+%endif
+
+%description
+Swish is a framework, written in the purely functional programming language
+Haskell, for performing deductions in RDF data using a variety of techniques.
+Swish is conceived as a toolkit for experimenting with RDF inference, and for
+implementing stand-alone RDF file processors (usable in similar style to CWM,
+but with a view to being extensible in declarative style through added Haskell
+function and data value declarations). It explores Haskell as "a scripting
+language for the Semantic Web".
+
+Swish is a work-in-progress, and currently incorporates:
+
+* Turtle, Notation3 and NTriples input and output. The N3 support is incomplete
+(no handling of '@forAll').
+
+* RDF graph isomorphism testing and merging.
+
+* Display of differences between RDF graphs.
+
+* Inference operations in forward chaining, backward chaining and
+proof-checking modes.
+
+* Simple Horn-style rule implementations, extendable through variable binding
+modifiers and filters.
+
+* Class restriction rule implementation, primarily for datatype inferences.
+
+* RDF formal semantics entailment rule implementation.
+
+* Complete, ready-to-run, command-line and script-driven programs.
+
+Changes are given in the
+<https://bitbucket.org/doug_burke/swish/src/tip/CHANGELOG>.
+
+References:
+
+- <http://www.ninebynine.org/RDFNotes/Swish/Intro.html>
+
+- <http://www.ninebynine.org/Software/swish-0.2.1.html>
+
+- CWM: <http://www.w3.org/2000/10/swap/doc/cwm.html> .
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+%ghc_fix_rpath %{pkg_name}-%{version}
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG README.md
+%{_bindir}/Swish
+%dir %{_datadir}/%{name}-%{version}
+%dir %{_datadir}/%{name}-%{version}/scripts
+%{_datadir}/%{name}-%{version}/scripts/*.ss
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG README.md
+
+%changelog

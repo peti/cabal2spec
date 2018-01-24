@@ -1,0 +1,112 @@
+#
+# spec file for package audacity
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name audacity
+
+Name:           %{pkg_name}
+Version:        0.0.1.2
+Release:        0
+Summary:        Interchange with the Audacity sound signal editor
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-explicit-exception-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-non-empty-devel
+BuildRequires:  ghc-storable-record-devel
+BuildRequires:  ghc-storablevector-devel
+BuildRequires:  ghc-tagchup-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-utility-ht-devel
+BuildRequires:  ghc-xml-basic-devel
+
+%description
+This package provides functions for interchange with the Audacity sound signal
+editor. Currently we support import and export of label tracks, export of
+Audacity projects and limited import of tracks from Audacity projects.
+
+We provide some examples that are useful on its own:
+
+* 'sox-concat': Concatenate a sequence of sound files with matching sampling
+rates and numbers of channels using SoX and generate an Audacity label track
+file that shows the origins of the parts.
+
+* 'audacity-concat': Create an Audacity project file containing a virtual
+concatenation of the input sound files and a label track showing the origins of
+the sound files.
+
+* 'audacity-combine': Put several audio and label files into tracks of a new
+Audacity project. Opening one or even multiple such projects is much easier
+than loading individual tracks into Audacity.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc example
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc example
+
+%changelog

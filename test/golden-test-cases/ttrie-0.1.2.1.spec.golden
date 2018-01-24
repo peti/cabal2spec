@@ -1,0 +1,107 @@
+#
+# spec file for package ttrie
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name ttrie
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.1.2.1
+Release:        0
+Summary:        Contention-free STM hash map
+Group:          Development/Libraries/Haskell
+
+License:        MIT
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-atomic-primops-devel
+BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-primitive-devel
+BuildRequires:  ghc-stm-devel
+%if %{with tests}
+BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-test-framework-devel
+BuildRequires:  ghc-test-framework-quickcheck2-devel
+%endif
+
+%description
+A contention-free STM hash map. "Contention-free" means that the map will never
+cause spurious conflicts. A transaction operating on the map will only ever
+have to retry if another transaction is operating on the same key at the same
+time.
+
+This is an implementation of the /transactional trie/, which is basically a
+/lock-free concurrent hash trie/ lifted into STM. For a detailed discussion,
+including an evaluation of its performance, see Chapter 4 of
+<https://github.com/mcschroeder/thesis my master's thesis>.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc README.md changelog.md
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README.md changelog.md
+
+%changelog

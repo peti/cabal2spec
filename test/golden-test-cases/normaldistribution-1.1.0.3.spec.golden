@@ -1,0 +1,114 @@
+#
+# spec file for package normaldistribution
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name normaldistribution
+
+Name:           %{pkg_name}
+Version:        1.1.0.3
+Release:        0
+Summary:        Minimum fuss normally distributed random values
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-random-devel
+
+%description
+This purpose of this library is to have a simple API and no dependencies beyond
+Haskell 98 in order to let you produce normally distributed random values with
+a minimum of fuss. This library does /not/ attempt to be blazingly fast nor to
+pass stringent tests of randomness. It attempts to be very easy to install and
+use while being "good enough" for many applications (simulations, games, etc.).
+The API builds upon and is largely analogous to that of the Haskell 98 'Random'
+module (more recently 'System.Random').
+
+Pure:
+
+> (sample,g) = normal myRandomGen -- using a Random.RandomGen > samples =
+normals myRandomGen -- infinite list > samples2 = mkNormals 10831452 --
+infinite list using a seed
+
+In the IO monad:
+
+> sample <- normalIO > samples <- normalsIO -- infinite list
+
+With custom mean and standard deviation:
+
+> (sample,g) = normal' (mean,sigma) myRandomGen > samples = normals'
+(mean,sigma) myRandomGen > samples2 = mkNormals' (mean,sigma) 10831452
+
+> sample <- normalIO' (mean,sigma) > samples <- normalsIO' (mean,sigma)
+
+Internally the library uses the Box-Muller method to generate normally
+distributed values from uniformly distributed random values. If more than one
+sample is needed taking samples off an infinite list (created by e.g.
+'normals') will be roughly twice as efficient as repeatedly generating
+individual samples with e.g. 'normal'.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc README
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README
+
+%changelog

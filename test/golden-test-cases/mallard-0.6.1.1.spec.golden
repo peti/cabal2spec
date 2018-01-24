@@ -1,0 +1,108 @@
+#
+# spec file for package mallard
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name mallard
+
+Name:           %{pkg_name}
+Version:        0.6.1.1
+Release:        0
+Summary:        Database migration and testing as a library
+Group:          Development/Libraries/Haskell
+
+License:        MIT
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  chrpath
+BuildRequires:  ghc-Interpolation-devel
+BuildRequires:  ghc-byteable-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-cryptohash-devel
+BuildRequires:  ghc-exceptions-devel
+BuildRequires:  ghc-fgl-devel
+BuildRequires:  ghc-file-embed-devel
+BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-hasql-devel
+BuildRequires:  ghc-hasql-optparse-applicative-devel
+BuildRequires:  ghc-hasql-pool-devel
+BuildRequires:  ghc-hasql-transaction-devel
+BuildRequires:  ghc-lens-devel
+BuildRequires:  ghc-megaparsec-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-optparse-applicative-devel
+BuildRequires:  ghc-optparse-text-devel
+BuildRequires:  ghc-path-devel
+BuildRequires:  ghc-path-io-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-unordered-containers-devel
+
+%description
+Database migration and testing as a library.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+%ghc_fix_rpath %{pkg_name}-%{version}
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc README.md
+%{_bindir}/%{name}
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README.md
+
+%changelog

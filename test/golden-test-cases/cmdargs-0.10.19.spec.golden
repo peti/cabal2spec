@@ -1,0 +1,105 @@
+#
+# spec file for package cmdargs
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name cmdargs
+
+Name:           %{pkg_name}
+Version:        0.10.19
+Release:        0
+Summary:        Command line argument processing
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-transformers-devel
+
+%description
+This library provides an easy way to define command line parsers. Most users
+will want to use the "System.Console.CmdArgs.Implicit" module, whose
+documentation contains an example.
+
+* "System.Console.CmdArgs.Explicit" provides a way to write command line
+parsers for both single mode programs (most programs) and multiple mode
+programs (e.g. darcs or cabal). Parsers are defined by constructing a data
+structure.
+
+* "System.Console.CmdArgs.Implicit" provides a way to concisely define command
+line parsers, up to three times shorter than getopt. These parsers are
+translated into the Explicit data type.
+
+* "System.Console.CmdArgs.GetOpt" provides a wrapper allowing compatiblity with
+existing getopt parsers, mapping to the Explicit data type.
+
+For a general reference on what command line flags are commonly used, see
+<http://www.faqs.org/docs/artu/ch10s05.html>.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGES.txt README.md
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGES.txt README.md
+
+%changelog

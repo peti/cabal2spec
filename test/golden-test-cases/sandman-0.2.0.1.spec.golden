@@ -1,0 +1,61 @@
+#
+# spec file for package sandman
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+Name:           sandman
+Version:        0.2.0.1
+Release:        0
+Summary:        Manages Cabal sandboxes to avoid rebuilding packages
+Group:          Development/Libraries/Haskell
+
+License:        MIT
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-optparse-applicative-devel
+BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-unix-compat-devel
+
+%description
+Sandman aims to reduce the amount of time spent rebuilding commonly used
+Hackage packages by managing a global set of Cabal sandboxes that can be mixed
+into any project's Cabal sandbox.
+
+For more information, check the
+<https://github.com/abhinav/sandman/blob/master/README.md README>.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_bin_build
+
+%install
+%ghc_bin_install
+
+%files
+%doc LICENSE
+%doc CHANGES.md README.md
+%{_bindir}/%{name}
+
+%changelog

@@ -1,0 +1,136 @@
+#
+# spec file for package pathtype
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name pathtype
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.8
+Release:        0
+Summary:        Type-safe replacement for System.FilePath etc
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-old-time-devel
+BuildRequires:  ghc-tagged-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-utility-ht-devel
+%if %{with tests}
+BuildRequires:  ghc-random-devel
+%endif
+
+%description
+This package provides type-safe access to filepath manipulations.
+
+"System.Path" is designed to be used instead of "System.FilePath". (It is
+intended to provide versions of functions from that module which have
+equivalent functionality but are more typesafe).
+"System.Path.Directory" is a companion module providing a type-safe alternative
+to "System.Directory".
+
+The heart of this package is the ''Path' ar fd' abstract type which represents
+file and directory paths. The idea is that there are two type parameters - the
+first should be 'Abs' or 'Rel', and the second 'File' or 'Dir'. A number of
+type synonyms are provided for common types:
+
+> type Path.AbsFile = Path Abs File > type Path.RelFile = Path Rel File > type
+Path.AbsDir = Path Abs Dir > type Path.RelDir = Path Rel Dir > > type Path.Abs
+fd = Path Abs fd > type Path.Rel fd = Path Rel fd > type Path.File ar = Path ar
+File > type Path.Dir ar = Path ar Dir
+
+The type of the 'combine' (aka '</>') function gives the idea:
+
+> (</>) :: Path.Dir ar -> Path.Rel fd -> Path ar fd
+
+Together this enables us to give more meaningful types to a lot of the
+functions, and (hopefully) catch a bunch more errors at compile time.
+
+For more details see the README.md file.
+
+Related packages:
+
+* 'filepath': The API of Neil Mitchell's "System.FilePath" module (and
+properties satisfied) heavily influenced our package.
+
+* 'path': Provides a wrapper type around 'FilePath' and maps to functions from
+'filepath' package. This warrants consistency with 'filepath' functions.
+Requires Template Haskell.
+
+* 'data-filepath': Requires 'Typeable' and Template Haskell.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG README.md
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG README.md
+
+%changelog

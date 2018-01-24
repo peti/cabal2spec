@@ -1,0 +1,107 @@
+#
+# spec file for package hspec-pg-transact
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name hspec-pg-transact
+
+Name:           %{pkg_name}
+Version:        0.1.0.2
+Release:        0
+Summary:        Helpers for creating database tests with hspec and pg-transact
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-hspec-devel
+BuildRequires:  ghc-pg-transact-devel
+BuildRequires:  ghc-postgresql-simple-devel
+BuildRequires:  ghc-resource-pool-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-tmp-postgres-devel
+
+%description
+Helpers for creating database tests with hspec and pg-transact
+
+'hspec-pg-transact' utilizes 'tmp-postgres' to automatically and connect to a
+temporary instance of 'postgres' on a random port.
+
+> > describeDB migrate "Query” $ > itDB "work" $ do > execute_ [sql| > INSERT
+INTO things > VALUES (‘me’) |] > query_ [sql| > SELECT name > FROM things |] >
+`shouldReturn` [Only "me"]
+
+In the example above 'describeDB' wraps 'describe' with a 'beforeAll' hook for
+creating a db and a 'afterAll' hook for stopping a db.
+
+Tests can be written with 'itDB' which is wrapper around 'it' that uses the
+passed in 'Connection' to run a db transaction automatically for the test.
+
+The libary also provides a few other functions for more fine grained control
+over running transactions in tests. .
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc README.md
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README.md
+
+%changelog

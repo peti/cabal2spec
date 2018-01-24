@@ -1,0 +1,128 @@
+#
+# spec file for package ghc-heap-view
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name ghc-heap-view
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.5.10
+Release:        0
+Summary:        Extract the heap representation of Haskell values and thunks
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-binary-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-ghc-devel
+BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-transformers-devel
+%if %{with tests}
+BuildRequires:  ghc-deepseq-devel
+%endif
+
+%description
+This library provides functions to introspect the Haskell heap, for example to
+investigate sharing and lazy evaluation. As this is tied to the internals of
+the compiler, it only works with specific versions. Currently, GHC 7.4 through
+7.10 should be supported.
+
+It has been inspired by (and taken code from) the vacuum package and the GHCi
+debugger, but also allows to investigate thunks and other closures.
+
+This package also provides a new GHCi-command, ':printHeap', which allows you
+to inspect the current heap representation of a value, including sharing and
+cyclic references. To enable the command, you need to load the included ghci
+script or add it to '~/.ghci', as explained by 'cabal install'. Once it is set
+up, you can do this:
+
+>> let value = "A Value" >> let x = (value, if head value == 'A' then value
+else "", cycle [True, False]) >> :printHeap x >let x1 = _bco > x21 = [] >in
+(x1,_bco,_bco) >> length (take 100 (show x)) `seq` return () -- evaluate
+everything >> :printHeap x >let x1 = "A Value" > x16 = True : False : x16 >in
+(x1,x1,x16)
+
+You can change the maximum recursion depth using ':setPrintHeapDepth':
+
+>> :setPrintHeapDepth 3 >> :printHeap x >let x1 = C# 'A' : ... : ...
+>in (x1,x1,True : ... : ...)
+
+If the view is impaired by blackholes (written '_bh'), running
+'System.Mem.performGC' usually helps.
+
+The work on this package has been supported by the Deutsche Telekom Stiftung
+(<http://telekom-stiftung.de>).
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%dir %{_datadir}/%{name}-%{version}
+%{_datadir}/%{name}-%{version}/ghci
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

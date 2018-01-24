@@ -1,0 +1,79 @@
+#
+# spec file for package equal-files
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+Name:           equal-files
+Version:        0.0.5.3
+Release:        0
+Summary:        Shell command for finding equal files
+Group:          Development/Libraries/Haskell
+
+License:        GPL-1.0+
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-explicit-exception-devel
+BuildRequires:  ghc-filemanip-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-utility-ht-devel
+
+%description
+Shell command that finds files with equal content in a given set of files.
+This is useful for finding duplicates in a set of documents where the same
+document might have been stored by accident with different names. Use it like
+
+> equal-files `find my_dir -type f`
+
+or
+
+> find my_dir -type f | xargs equal-files
+
+If the file names contain spaces, better use
+
+> find my_dir -type f -printf "'%p'n" | xargs equal-files
+
+or
+
+> equal_files -r my_dir
+
+The program reads all input files simultaneously, driven by sorting and
+grouping of their content. However be prepared that due to the simultaneous
+access you may exceed the admissible number of opened files. Thus you may
+prefer to run it like
+
+> equal_files -r -p 512 my_dir
+
+The program can be used as a nice example of a declarative yet efficient
+implementation of a non-trivial algorithm, that is enabled by lazy evaluation.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_bin_build
+
+%install
+%ghc_bin_install
+
+%files
+%doc LICENSE
+%{_bindir}/%{name}
+
+%changelog

@@ -1,0 +1,115 @@
+#
+# spec file for package diagrams-svg
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name diagrams-svg
+
+Name:           %{pkg_name}
+Version:        1.4.1.1
+Release:        0
+Summary:        SVG backend for diagrams drawing EDSL
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-JuicyPixels-devel
+BuildRequires:  ghc-base64-bytestring-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-colour-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-diagrams-core-devel
+BuildRequires:  ghc-diagrams-lib-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-lens-devel
+BuildRequires:  ghc-monoid-extras-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-optparse-applicative-devel
+BuildRequires:  ghc-semigroups-devel
+BuildRequires:  ghc-split-devel
+BuildRequires:  ghc-svg-builder-devel
+BuildRequires:  ghc-text-devel
+
+%description
+This package provides a modular backend for rendering diagrams created with the
+diagrams EDSL to SVG files. It uses 'lucid-svg' to be a native Haskell backend,
+making it suitable for use on any platform.
+
+The package provides the following modules:
+
+* "Diagrams.Backend.SVG.CmdLine" - if you're just getting started with
+diagrams, begin here.
+
+* "Diagrams.Backend.SVG" - look at this next. The general API for the SVG
+backend.
+
+Additional documentation can be found in the README file distributed with the
+source tarball or viewable on GitHub:
+<https://github.com/diagrams/diagrams-svg/blob/master/README.md>.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG.md README.md
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.md README.md
+
+%changelog

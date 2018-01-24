@@ -1,0 +1,102 @@
+#
+# spec file for package th-to-exp
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name th-to-exp
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.0.1.1
+Release:        0
+Summary:        Provides a way to persist data from compile-time to runtime
+Group:          Development/Libraries/Haskell
+
+License:        ISC
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-template-haskell-devel
+%if %{with tests}
+BuildRequires:  ghc-hspec-devel
+%endif
+
+%description
+This package provides a way to persist data from compile-time to runtime by
+producing Template Haskell expressions that evaluate to particular values.
+For example, if you have a value 'Just 1', then 'toExp (Just 1)' will produce
+the /expression/ '[e| Just 1 |]', which can be used in a splice. For a more
+direct example, here’s what that looks like without the quasiquote notation:
+
+>>> toExp (Just 1) AppE (ConE GHC.Base.Just) (LitE (IntegerL 1))
+
+This is done by using a typeclass, 'ToExp', that can be automatically derived
+for types that have a 'Generic' instance.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG.md README.md
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.md README.md
+
+%changelog

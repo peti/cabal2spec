@@ -1,0 +1,132 @@
+#
+# spec file for package hpqtypes
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name hpqtypes
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        1.5.1.1
+Release:        0
+Summary:        Haskell bindings to libpqtypes
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-data-default-class-devel
+BuildRequires:  ghc-exceptions-devel
+BuildRequires:  ghc-lifted-base-devel
+BuildRequires:  ghc-monad-control-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-resource-pool-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-show-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-transformers-base-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-vector-devel
+BuildRequires:  postgresql-devel
+%if %{with tests}
+BuildRequires:  ghc-HUnit-devel
+BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-random-devel
+BuildRequires:  ghc-scientific-devel
+BuildRequires:  ghc-test-framework-devel
+BuildRequires:  ghc-test-framework-hunit-devel
+BuildRequires:  ghc-unordered-containers-devel
+%endif
+
+%description
+Efficient and easy-to-use bindings to (slightly modified) libpqtypes, lipq
+extension that adds support for binary transport format and composite types.
+
+Since modified libpqtypes is used, its source code is bundled along with the
+bindings. The differences between verbatim libpqtypes and the one used by this
+package:
+
+* per-thread global error structures were replaced by explicit passing of these
+structures around so that there is no need to use bound threads.
+
+* handlers that take values to be put into the database were modified to always
+expect pointers to objects, as opposed to previous situation where primitives
+were being taken by value (which was convenient if the library was used
+directly from C, but created inconsistency problems while trying to define
+bindings in a sensible way).
+
+Examples can be found in the
+<https://github.com/scrive/hpqtypes/tree/master/examples examples> directory.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+Requires:       postgresql-devel
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG.md README.md examples
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.md README.md examples
+
+%changelog

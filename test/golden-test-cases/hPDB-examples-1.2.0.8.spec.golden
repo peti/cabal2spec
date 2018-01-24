@@ -1,0 +1,84 @@
+#
+# spec file for package hPDB-examples
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%bcond_with tests
+
+Name:           hPDB-examples
+Version:        1.2.0.8
+Release:        0
+Summary:        Examples for hPDB library
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-AC-Vector-devel
+BuildRequires:  ghc-GLUT-devel
+BuildRequires:  ghc-Octree-devel
+BuildRequires:  ghc-OpenGL-devel
+BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-hPDB-devel
+BuildRequires:  ghc-iterable-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-format-devel
+BuildRequires:  ghc-vector-devel
+%if %{with tests}
+BuildRequires:  ghc-IfElse-devel
+BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-time-devel
+%endif
+
+%description
+Examples for handling Protein Data Bank file format.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_bin_build
+
+%install
+%ghc_bin_install
+
+%check
+%cabal_test
+
+%files
+%doc LICENSE
+%doc AUTHORS README.md examples
+%{_bindir}/CanonicalAxes
+%{_bindir}/CleanPDB
+%{_bindir}/PDB2Fasta
+%{_bindir}/PrintEvents
+%{_bindir}/PrintStructureObject
+%{_bindir}/Rg
+%{_bindir}/ShiftToCenter
+%{_bindir}/SplitModels
+%{_bindir}/StericClashCheck
+%{_bindir}/Viewer
+
+%changelog

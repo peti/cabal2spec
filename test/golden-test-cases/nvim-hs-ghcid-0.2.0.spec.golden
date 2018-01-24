@@ -1,0 +1,111 @@
+#
+# spec file for package nvim-hs-ghcid
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name nvim-hs-ghcid
+
+Name:           %{pkg_name}
+Version:        0.2.0
+Release:        0
+Summary:        Neovim plugin that runs ghcid to update the quickfix list
+Group:          Development/Libraries/Haskell
+
+License:        Apache-2.0
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-ghcid-devel
+BuildRequires:  ghc-nvim-hs-contrib-devel
+BuildRequires:  ghc-nvim-hs-devel
+BuildRequires:  ghc-resourcet-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-yaml-devel
+
+%description
+This plugin uses the nvim-hs plugin backend for neovim and fills the quickfix
+list on file-saves with the errors and warnings that ghcid determines.
+
+The only limitation for this tool is that it needs a .cabal file to work.
+
+This plugin provides 3 commands:
+
+':GhcidStart' will prompt you for the configuration you want to use.
+It should guess a reasonable option based on the files present in your project
+directory and so you will just have to press enter all the time. If you provide
+a bang, these questions will not be asked.
+
+':GhcidStop' stops the current ghcid process.
+
+':GhcidRestart' combines the two previous commands.
+
+Simply import the 'plugin' definition from "Neovim.Ghcid" and add it to your
+plugin list.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc README.md
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc README.md
+
+%changelog

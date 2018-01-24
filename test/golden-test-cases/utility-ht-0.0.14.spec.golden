@@ -1,0 +1,102 @@
+#
+# spec file for package utility-ht
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name utility-ht
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.0.14
+Release:        0
+Summary:        Various small helper functions for Lists, Maybes, Tuples, Functions
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+%if %{with tests}
+BuildRequires:  ghc-QuickCheck-devel
+%endif
+
+%description
+Various small helper functions for Lists, Maybes, Tuples, Functions.
+Some of these functions are improved implementations of standard functions.
+They have the same name as their standard counterparts. Others are equivalent
+to functions from the 'base' package, but if you import them from this utility
+package then you can write code that runs on older GHC versions or other
+compilers like Hugs and JHC.
+
+All modules are plain Haskell 98. The package depends exclusively on the 'base'
+package and only that portions of 'base' that are simple to port. Thus you do
+not risk a dependency avalanche by importing it. However, further splitting the
+base package might invalidate this statement.
+
+Alternative packages: 'Useful', 'MissingH'.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+
+%changelog

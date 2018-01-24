@@ -1,0 +1,126 @@
+#
+# spec file for package bound
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name bound
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        2.0.1
+Release:        0
+Summary:        Making de Bruijn Succ Less
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-bifunctors-devel
+BuildRequires:  ghc-binary-devel
+BuildRequires:  ghc-bytes-devel
+BuildRequires:  ghc-cabal-doctest-devel
+BuildRequires:  ghc-cereal-devel
+BuildRequires:  ghc-comonad-devel
+BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-mmorph-devel
+BuildRequires:  ghc-profunctors-devel
+BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-transformers-compat-devel
+BuildRequires:  ghc-transformers-devel
+%if %{with tests}
+BuildRequires:  ghc-deriving-compat-devel
+BuildRequires:  ghc-doctest-devel
+BuildRequires:  ghc-functor-classes-compat-devel
+BuildRequires:  ghc-vector-devel
+BuildRequires:  ghc-void-devel
+%endif
+
+%description
+We represent the target language itself as an ideal monad supplied by the user,
+and provide a 'Scope' monad transformer for introducing bound variables in user
+supplied terms. Users supply a 'Monad' and 'Traversable' instance, and we
+traverse to find free variables, and use the Monad to perform substitution that
+avoids bound variables.
+
+Slides describing and motivating this approach to name binding are available
+online at:
+
+<http://www.slideshare.net/ekmett/bound-making-de-bruijn-succ-less>
+
+The goal of this package is to make it as easy as possible to deal with name
+binding without forcing an awkward monadic style on the user.
+
+With generalized de Bruijn term you can 'lift' whole trees instead of just
+applying 'succ' to individual variables, weakening the all variables bound by a
+scope and greatly speeding up instantiation. By giving binders more structure
+we permit easy simultaneous substitution and further speed up instantiation.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc AUTHORS.markdown CHANGELOG.markdown README.markdown examples
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc AUTHORS.markdown CHANGELOG.markdown README.markdown examples
+
+%changelog

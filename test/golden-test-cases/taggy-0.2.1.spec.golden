@@ -1,0 +1,135 @@
+#
+# spec file for package taggy
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name taggy
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        0.2.1
+Release:        0
+Summary:        Efficient and simple HTML/XML parsing library
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  chrpath
+BuildRequires:  ghc-attoparsec-devel
+BuildRequires:  ghc-blaze-html-devel
+BuildRequires:  ghc-blaze-markup-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-vector-devel
+%if %{with tests}
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-hspec-attoparsec-devel
+BuildRequires:  ghc-hspec-devel
+%endif
+
+%description
+/taggy/ is a simple package for parsing HTML (and should work with XML) written
+on top of the <http://hackage.haskell.org/package/attoparsec attoparsec>
+library, which makes it one of the most efficient (space and time consumption
+wise) on hackage.
+
+This is the root module of /taggy/. It reexports everything from the package.
+See each module's docs for details about the functions and types involved in
+/taggy/.
+
+While we've been testing the parser on /many/ pages, it may still be a bit
+rough around the edges. Let us know on
+<http://github.com/alpmestan/taggy/issues github> if you have any problem.
+
+If you like to look at your HTML through various optical instruments, feel free
+to take a look at the companion <http://hackage.haskell.org/package/taggy-lens
+taggy-lens> package we've put up together. It makes HTML parsing a piece of
+cake.
+
+If you want to parse a document as list of tags and go through it as some kind
+of stream by just picking what you need, head to "Text.Taggy.Parser" and take a
+look at 'Text.Taggy.Parser.taggyWith' and 'Text.Taggy.Parser.run'.
+
+If you want to parse the document as a DOM tree and traverse it to find the
+information you need, use 'Text.Taggy.DOM.parseDOM'. This is especially useful
+when used in conjunction with <http://hackage.haskell.org/package/taggy-lens
+taggy-lens>.
+
+If you build some HTML manually or just transform some existing DOM tree and
+want to turn it into a 'Data.Text.Lazy.Text' head to "Text.Taggy.Renderer" and
+look at 'Text.Taggy.Renderer.render'.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+%ghc_fix_rpath %{pkg_name}-%{version}
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc example
+%{_bindir}/%{name}
+%dir %{_datadir}/%{name}-%{version}
+%dir %{_datadir}/%{name}-%{version}/html_files
+%{_datadir}/%{name}-%{version}/html_files/*.html
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc example
+
+%changelog

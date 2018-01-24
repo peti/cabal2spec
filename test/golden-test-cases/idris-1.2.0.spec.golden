@@ -1,0 +1,205 @@
+#
+# spec file for package idris
+#
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%global pkg_name idris
+
+%bcond_with tests
+
+Name:           %{pkg_name}
+Version:        1.2.0
+Release:        0
+Summary:        Functional Programming Language with Dependent Types
+Group:          Development/Libraries/Haskell
+
+License:        BSD-3-Clause
+Url:            https://hackage.haskell.org/package/%{name}
+Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-rpm-macros
+BuildRequires:  chrpath
+BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-annotated-wl-pprint-devel
+BuildRequires:  ghc-ansi-terminal-devel
+BuildRequires:  ghc-ansi-wl-pprint-devel
+BuildRequires:  ghc-array-devel
+BuildRequires:  ghc-async-devel
+BuildRequires:  ghc-base64-bytestring-devel
+BuildRequires:  ghc-binary-devel
+BuildRequires:  ghc-blaze-html-devel
+BuildRequires:  ghc-blaze-markup-devel
+BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-cheapskate-devel
+BuildRequires:  ghc-code-page-devel
+BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-fingertree-devel
+BuildRequires:  ghc-fsnotify-devel
+BuildRequires:  ghc-haskeline-devel
+BuildRequires:  ghc-ieee754-devel
+BuildRequires:  ghc-megaparsec-devel
+BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-network-devel
+BuildRequires:  ghc-optparse-applicative-devel
+BuildRequires:  ghc-pretty-devel
+BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-regex-tdfa-devel
+BuildRequires:  ghc-safe-devel
+BuildRequires:  ghc-split-devel
+BuildRequires:  ghc-terminal-size-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-uniplate-devel
+BuildRequires:  ghc-unix-devel
+BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-utf8-string-devel
+BuildRequires:  ghc-vector-binary-instances-devel
+BuildRequires:  ghc-vector-devel
+BuildRequires:  ghc-zip-archive-devel
+%if %{with tests}
+BuildRequires:  ghc-tagged-devel
+BuildRequires:  ghc-tasty-devel
+BuildRequires:  ghc-tasty-golden-devel
+BuildRequires:  ghc-tasty-rerun-devel
+%endif
+
+%description
+Idris is a general purpose language with full dependent types. It is compiled,
+with eager evaluation. Dependent types allow types to be predicated on values,
+meaning that some aspects of a program's behaviour can be specified precisely
+in the type. The language is closely related to Epigram and Agda.
+There is a tutorial at <http://www.idris-lang.org/documentation>.
+Features include:
+
+* Full, first class, dependent types with dependent pattern matching
+
+* where clauses, with rule, case expressions, pattern matching let and lambda
+bindings
+
+* Interfaces (similar to type classes), monad comprehensions
+
+* do notation, idiom brackets, syntactic conveniences for lists, tuples,
+dependent pairs
+
+* Totality checking
+
+* Coinductive types
+
+* Indentation significant syntax, extensible syntax
+
+* Cumulative universes
+
+* Simple foreign function interface (to C)
+
+* Hugs style interactive environment.
+
+
+%package -n ghc-%{name}
+Summary:        Haskell %{name} library
+Group:          System/Libraries
+
+%description -n ghc-%{name}
+This package provides the Haskell %{name} shared library.
+
+
+%package -n ghc-%{name}-devel
+Summary:        Haskell %{name} library development files
+Group:          Development/Libraries/Haskell
+Requires:       ghc-compiler = %{ghc_version}
+Requires(post): ghc-compiler = %{ghc_version}
+Requires(postun): ghc-compiler = %{ghc_version}
+Requires:       ghc-%{name} = %{version}-%{release}
+
+%description -n ghc-%{name}-devel
+This package provides the Haskell %{name} library development files.
+
+
+%prep
+%setup -q
+
+%build
+%ghc_lib_build
+
+%install
+%ghc_lib_install
+%ghc_fix_rpath %{pkg_name}-%{version}
+
+%check
+%cabal_test
+
+%post -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%postun -n ghc-%{name}-devel
+%ghc_pkg_recache
+
+%files
+%doc LICENSE
+%doc CHANGELOG.md CONTRIBUTORS README.md docs
+%{_bindir}/%{name}
+%{_bindir}/idris-codegen-c
+%{_bindir}/idris-codegen-javascript
+%{_bindir}/idris-codegen-node
+%dir %{_datadir}/%{name}-%{version}
+%dir %{_datadir}/%{name}-%{version}/idrisdoc
+%dir %{_datadir}/%{name}-%{version}/jsrts
+%dir %{_datadir}/%{name}-%{version}/jsrts/jsbn
+%dir %{_datadir}/%{name}-%{version}/rts
+%dir %{_datadir}/%{name}-%{version}/rts/arduino
+%{_datadir}/%{name}-%{version}/idrisdoc/styles.css
+%{_datadir}/%{name}-%{version}/jsrts/jsbn/jsbn-browser.js
+%{_datadir}/%{name}-%{version}/jsrts/jsbn/jsbn-node.js
+%{_datadir}/%{name}-%{version}/jsrts/Runtime-common.js
+%{_datadir}/%{name}-%{version}/jsrts/Runtime-javascript.js
+%{_datadir}/%{name}-%{version}/jsrts/Runtime-node.js
+%{_datadir}/%{name}-%{version}/jsrts/jsbn/LICENSE
+%{_datadir}/%{name}-%{version}/rts/arduino/idris_main.c
+%{_datadir}/%{name}-%{version}/rts/idris_bitstring.c
+%{_datadir}/%{name}-%{version}/rts/idris_bitstring.h
+%{_datadir}/%{name}-%{version}/rts/idris_gc.c
+%{_datadir}/%{name}-%{version}/rts/idris_gc.h
+%{_datadir}/%{name}-%{version}/rts/idris_gmp.c
+%{_datadir}/%{name}-%{version}/rts/idris_gmp.h
+%{_datadir}/%{name}-%{version}/rts/idris_heap.c
+%{_datadir}/%{name}-%{version}/rts/idris_heap.h
+%{_datadir}/%{name}-%{version}/rts/idris_main.c
+%{_datadir}/%{name}-%{version}/rts/idris_net.c
+%{_datadir}/%{name}-%{version}/rts/idris_net.h
+%{_datadir}/%{name}-%{version}/rts/idris_opts.c
+%{_datadir}/%{name}-%{version}/rts/idris_opts.h
+%{_datadir}/%{name}-%{version}/rts/idris_rts.c
+%{_datadir}/%{name}-%{version}/rts/idris_rts.h
+%{_datadir}/%{name}-%{version}/rts/idris_stats.c
+%{_datadir}/%{name}-%{version}/rts/idris_stats.h
+%{_datadir}/%{name}-%{version}/rts/idris_stdfgn.c
+%{_datadir}/%{name}-%{version}/rts/idris_stdfgn.h
+%{_datadir}/%{name}-%{version}/rts/mini-gmp.c
+%{_datadir}/%{name}-%{version}/rts/mini-gmp.h
+%{_datadir}/%{name}-%{version}/rts/libtest.c
+
+%files -n ghc-%{name} -f ghc-%{name}.files
+%defattr(-,root,root,-)
+%doc LICENSE
+
+%files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+%defattr(-,root,root,-)
+%doc CHANGELOG.md CONTRIBUTORS README.md docs
+
+%changelog
