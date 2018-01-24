@@ -12,5 +12,5 @@ main :: IO ()
 main = do
   args <- getArgs
   forM_ args $ \cabalFile -> do
-    let specFile = cabalFile -<.> "spec"
+    let specFile = cabalFile `replaceExtension` "spec"
     cabal2spec buildPlatform buildCompilerId [] True cabalFile specFile
