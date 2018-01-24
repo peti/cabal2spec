@@ -1,0 +1,66 @@
+name: test-framework-th
+version: 0.2.4
+cabal-version: >= 1.6
+build-type: Simple
+license: BSD3
+license-file: BSD3.txt
+maintainer: Oscar Finnsson
+homepage: http://github.com/finnsson/test-generator
+synopsis: Automagically generate the HUnit- and Quickcheck-bulk-code using Template Haskell.
+description:
+   @test-framework-th@ contains two interesting functions: @defaultMainGenerator@ and @testGroupGenerator@.
+   .
+   @defaultMainGenerator@ will extract all functions beginning with case_, prop_ or test_in the module and put them in a testGroup.
+   .
+   > -- file SomeModule.hs
+   > ( -# LANGUAGE TemplateHaskell #- )
+   > module SomeModule where
+   > import Test.Framework.TH
+   > import Test.Framework
+   > import Test.HUnit
+   > import Test.Framework.Providers.HUnit
+   > import Test.Framework.Providers.QuickCheck2
+   >
+   > -- observe this line! 
+   > main = $(defaultMainGenerator)
+   > case_1 = do 1 @=? 1
+   > case_2 = do 2 @=? 2
+   > prop_reverse xs = reverse (reverse xs) == xs
+   >    where types = xs::[Int]
+   .
+   is the same as
+   .
+   > -- file SomeModule.hs
+   > ( -# LANGUAGE TemplateHaskell #- )
+   > module SomeModule where
+   > import Test.Framework.TH
+   > import Test.Framework
+   > import Test.HUnit
+   > import Test.Framework.Providers.HUnit
+   > import Test.Framework.Providers.QuickCheck2
+   >
+   > -- observe this line! 
+   > main =
+   >   defaultMain [
+   >     testGroup "SomeModule" [ testCase "1" case_1, testCase "2" case_2, testProperty "reverse" prop_reverse]
+   >     ]
+   > 
+   > case_1 = do 1 @=? 1
+   > case_2 = do 2 @=? 2
+   > prop_reverse xs = reverse (reverse xs) == xs
+   >    where types = xs::[Int]
+   .
+   @testGroupGenerator@ is like @defaultMainGenerator@ but without @defaultMain@. It is useful if you need a function for the testgroup
+   (e.g. if you want to be able to call the testgroup from another module).
+category: Testing
+author: Oscar Finnsson & Emil Nordling
+
+library
+  exposed-modules: Test.Framework.TH 
+  build-depends: base >= 4 && < 5, test-framework, language-haskell-extract >= 0.2, haskell-src-exts, regex-posix, template-haskell
+  hs-source-dirs: src
+
+
+source-repository head
+  type:     git
+  location: https://github.com/finnsson/test-generator.git

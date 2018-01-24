@@ -1,0 +1,55 @@
+name:          dyre
+version:       0.8.12
+category:      Development, Configuration
+synopsis:      Dynamic reconfiguration in Haskell
+
+description:   Dyre implements dynamic reconfiguration facilities after the
+               style of Xmonad. Dyre aims to be as simple as possible without
+               sacrificing features, and places an emphasis on simplicity of
+               integration with an application.
+
+               A full introduction with a complete example project can be found
+               in the documentation for 'Config.Dyre'
+
+homepage:      http://github.com/willdonnelly/dyre
+bug-reports:   http://github.com/willdonnelly/dyre/issues
+stability:     beta
+author:        Will Donnelly
+maintainer:    Will Donnelly <will.donnelly@gmail.com>
+copyright:     (c) 2011 Will Donnelly
+license:       BSD3
+license-file:  LICENSE
+
+build-type:    Simple
+cabal-version: >= 1.6
+
+extra-source-files:
+    Tests/README.mkd
+    Tests/allTests.sh
+    Tests/basic/*.hs
+    Tests/basic/*.sh
+    Tests/config-check/*.hs
+    Tests/config-check/*.sh
+    Tests/recompile-relaunch/*.hs
+    Tests/recompile-relaunch/*.sh
+
+library
+  exposed-modules: Config.Dyre,
+                   Config.Dyre.Paths,
+                   Config.Dyre.Compat,
+                   Config.Dyre.Params,
+                   Config.Dyre.Options,
+                   Config.Dyre.Compile,
+                   Config.Dyre.Relaunch
+  build-depends:   base >= 4 && < 5, process, filepath,
+                   directory, ghc-paths, time, binary,
+                   executable-path, xdg-basedir, io-storage
+
+  if os(windows)
+      build-depends: Win32
+  else
+      build-depends: unix
+
+source-repository head
+  type:      git
+  location:  git://github.com/willdonnelly/dyre.git

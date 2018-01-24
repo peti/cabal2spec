@@ -1,0 +1,64 @@
+name:                base64-bytestring
+version:             1.0.0.1
+synopsis:            Fast base64 encoding and decoding for ByteStrings
+description:         Fast base64 encoding and decoding for ByteStrings
+homepage:            https://github.com/bos/base64-bytestring
+bug-reports:         https://github.com/bos/base64-bytestring/issues
+license:             BSD3
+license-file:        LICENSE
+author:              Bryan O'Sullivan <bos@serpentine.com>
+maintainer:          Bryan O'Sullivan <bos@serpentine.com>
+copyright:           2010-2012 Bryan O'Sullivan
+category:            Data
+build-type:          Simple
+cabal-version:       >=1.8
+
+extra-source-files:
+  README.markdown
+  benchmarks/BM.hs
+  tests/Transcode.hs
+  tests/transcode.py
+
+library
+  exposed-modules:
+    Data.ByteString.Base64
+    Data.ByteString.Base64.URL
+    Data.ByteString.Base64.Lazy
+    Data.ByteString.Base64.URL.Lazy
+  
+  other-modules:
+    Data.ByteString.Base64.Internal
+
+  build-depends:
+    base == 4.*,
+    bytestring >= 0.9.0
+
+  ghc-options: -Wall -funbox-strict-fields
+  ghc-prof-options: -auto-all
+
+test-suite tests
+  type: exitcode-stdio-1.0
+  hs-source-dirs: tests
+  main-is: Tests.hs
+
+  ghc-options:
+    -Wall -threaded -rtsopts
+
+  build-depends:
+    QuickCheck,
+    HUnit,
+    base64-bytestring,
+    base,
+    containers,
+    bytestring,
+    test-framework,
+    test-framework-quickcheck2,
+    test-framework-hunit
+
+source-repository head
+  type:     git
+  location: git://github.com/bos/base64-bytestring
+
+source-repository head
+  type:     mercurial
+  location: https://bitbucket.org/bos/base64-bytestring

@@ -1,0 +1,38 @@
+name:                osdkeys
+version:             0.0
+synopsis:            Show keys pressed with an on-screen display (Linux only)
+description:         This program uses the xinput program to get a stream of key presses
+                     and uses the libnotify library to display them on-screen.
+                     .
+                     Currently supported display notations are: Emacs
+license:             BSD3
+license-file:        LICENSE
+author:              Chris Done
+maintainer:          chrisdone@gmail.com
+copyright:           2014 Chris Done
+category:            Screencast
+build-type:          Simple
+cabal-version:       >=1.8
+
+library
+  hs-source-dirs:    src/
+  ghc-options:       -Wall -O2
+  exposed-modules:   OSDKeys, OSDKeys.Types, OSDKeys.XInput
+  other-modules:     OSDKeys.Mappings
+  build-depends:     base >= 4 && <5
+                   , bytestring
+                   , conduit
+                   , conduit-extra
+                   , containers
+                   , libnotify
+                   , resourcet
+                   , time
+                   , transformers
+
+executable osdkeys
+  hs-source-dirs:    src/main/
+  ghc-options:       -Wall -O2 -threaded
+  main-is:           Main.hs
+  build-depends:     base >= 4 && < 5
+                   , osdkeys
+                   , process

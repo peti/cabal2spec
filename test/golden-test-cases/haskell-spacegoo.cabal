@@ -1,0 +1,35 @@
+name:                haskell-spacegoo
+version:             0.2.0.1
+synopsis:            Client API for Rocket Scissor Spacegoo
+description:         Using this package you can quickly create code to take
+                     part in a game of Rocket Scissor Spacegoo; see
+                     <https://bitbucket.org/dividuum/rocket-scissor-spacegoo> for more details on the
+                     game.
+license:             MIT
+license-file:        LICENSE
+author:              Joachim Breitner
+maintainer:          Joachim Breitner <mail@joachim-breitner.de>
+copyright:           2013 Joachim Breitner 
+category:            Game
+build-type:          Simple
+cabal-version:       >=1.8
+
+library
+  exposed-modules:     
+        Game.Spacegoo
+  build-depends:
+        base == 4.*
+        , vector
+        , pretty
+        , pretty-show
+        , aeson
+        , mtl
+        , bytestring
+        , text
+        , conduit-extra
+        , conduit
+        , vector-space
+
+source-repository head
+  type:     git
+  location: https://bitbucket.org/nomeata/haskell-spacegoo

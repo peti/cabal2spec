@@ -1,0 +1,29 @@
+name          : time-compat
+version       : 0.1.0.3
+homepage      : http://hub.darcs.net/dag/time-compat
+bug-reports   : http://hub.darcs.net/dag/time-compat/issues
+category      : System
+cabal-version : >= 1.10
+build-type    : Simple
+
+license       : BSD3
+license-file  : LICENSE
+author        : Dag Odenhall
+maintainer    : dag.odenhall@gmail.com
+
+synopsis      : Compatibility with old-time for the time package
+description   : Compatibility with the <old-time> package for the \"new\"
+                <time> package.
+
+source-repository head
+  type     : darcs
+  location : http://hub.darcs.net/dag/time-compat
+
+library
+  hs-source-dirs   : src
+  default-language : Haskell2010
+  ghc-options      : -Wall -fno-warn-type-defaults
+  exposed-modules  : Data.Time.Compat
+  build-depends    : base == 4.*,
+                     old-time,
+                     time

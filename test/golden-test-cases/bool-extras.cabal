@@ -1,0 +1,39 @@
+name:                bool-extras
+version:             0.4.0
+synopsis:            A fold function for Bool
+description:         The `bool' function allows folding over boolean values.
+                     .
+                     This is comparable to the `maybe' or `either' functions
+                     on their respective types.
+                     .
+                     The `bool' function is a replacement for the build-in
+                     @if then else@-syntax. However, since it is a function, it
+                     can be partially applied and passed around to higher order
+                     functions, like so:
+                     .
+                     > ghci> :m + Data.Bool.Extras
+                     > ghci> let yesOrNo = bool "no" "yes"
+                     > ghci> map yesOrNo [True, False, True]
+                     > ["yes", "no", "yes"]
+                     .
+                     Note that the arguments to `bool' are in the opposite order
+                     of the @if then else@-syntax; First the false value, then
+                     the true value, and finally the boolean.
+license:             BSD3
+license-file:        LICENSE
+author:              Erik Hesselink,
+                     Jeroen Leeuwestein,
+                     Tom Lokhorst,
+                     Sebastiaan Visser
+maintainer:          Tom Lokhorst <tom@lokhorst.eu>
+homepage:            http://tom.lokhorst.eu/bool-extras
+stability:           Stable
+category:            Data
+build-type:          Simple
+cabal-version:       >= 1.6
+extra-source-files:  examples/*.hs
+
+library
+  build-depends:       base >= 3 && < 5
+  hs-source-dirs:      src
+  exposed-modules:     Data.Bool.Extras

@@ -1,0 +1,50 @@
+Name:                json-builder
+Version:             0.3
+Synopsis:            Data structure agnostic JSON serialization
+License:             BSD3
+License-file:        LICENSE
+Author:              Leon P Smith
+Maintainer:          leon@melding-monads.com
+Stability:           experimental
+Copyright:           (c) 2011-2012 Leon P Smith
+Category:            JSON
+Build-type:          Simple
+Cabal-version:       >= 1.6
+homepage:            http://github.com/lpsmith/json-builder
+bug-reports:         http://github.com/lpsmith/json-builder/issues
+description:
+    Most json packages dictate a data structure that corresponds to json values.
+    To serialize other values to json, then that value must be marshalled into
+    the specified structure.
+    .
+    This library avoids this marshalling step, and is thus potentially more
+    efficient when serializing arbitrary data structures.  Unfortunately
+    json-builder cannot yet read or process json data,  and it's not clear
+    to me yet how pull a similar kind of trick to avoid unnecessary data
+    structures when parsing json data into arbitrary data types.
+
+Library
+  hs-source-dirs: src
+  Exposed-modules:     Data.Json.Builder
+                       Data.Json.Builder.Internal
+
+  Other-modules:       Data.Json.Builder.Implementation
+
+  Build-depends:       base >= 4 && < 5,
+                       blaze-builder,
+                       blaze-textual,
+                       bytestring,
+                       containers,
+                       text,
+                       unordered-containers,
+                       utf8-string,
+                       vector
+
+source-repository head
+  type:     git
+  location: http://github.com/lpsmith/json-builder
+
+source-repository this
+  type:     git
+  location: http://github.com/lpsmith/json-builder
+  tag:      v0.3

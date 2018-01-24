@@ -1,0 +1,38 @@
+name:                spool
+version:             0.1
+license:             BSD3
+license-file:        LICENSE
+synopsis:            Convert between ByteString and Vector.Storable without copying
+category:            Data Structures
+author:              Keegan McAllister <mcallister.keegan@gmail.com>
+maintainer:          Keegan McAllister <mcallister.keegan@gmail.com>
+build-type:          Simple
+cabal-version:       >=1.6
+description:
+  This library allows conversion between the types from @Data.ByteString@
+  (package @bytestring@) and @Data.Vector.Storable@ (package @vector@) without
+  copying the underlying data.  This is useful, for example, when @ByteString@
+  IO produces or consumes vectors of numbers in native byte order.
+  .
+  This trick relies on the fact that @ByteString@ and @Vector@ use their
+  respective @ForeignPtr@s in compatible ways.  It works with
+  @bytestring-0.9.1.10@ and @vector-0.9@ on GHC 7.0.  It may break with future
+  releases of these packages.  Depending on this library should be seen as a
+  way to document and standardize an existing hack, and not as an absolute
+  guarantee of correct behavior.
+
+extra-source-files:
+    test/test.hs
+  , README
+
+library
+  exposed-modules:  Data.Vector.Storable.ByteString
+  ghc-options:      -Wall
+  build-depends:
+      base       >= 3 && < 5
+    , bytestring >= 0.9
+    , vector     >= 0.7
+
+source-repository head
+    type:     git
+    location: git://github.com/kmcallister/spool.git

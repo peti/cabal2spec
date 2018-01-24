@@ -1,0 +1,40 @@
+Name:            union-find
+Version:         0.2
+License:         BSD3
+License-File:    LICENSE
+Author:          Thomas Schilling <nominolo@googlemail.com>
+Maintainer:      Thomas Schilling <nominolo@googlemail.com>
+Homepage:        http://github.com/nominolo/union-find
+Synopsis:        Efficient union and equivalence testing of sets.
+Description:
+  The Union\/Find algorithm implements these operations in
+  (effectively) constant-time:
+  .
+    1. Check whether two elements are in the same equivalence class.
+  .
+    2. Create a union of two equivalence classes.
+  .
+    3. Look up the descriptor of the equivalence class.
+  
+Category:        Algorithms, Data
+Stability:       provisional
+Build-Type:      Simple
+Cabal-Version:   >= 1.6
+Extra-Source-Files: README.md
+Bug-Reports:     http://github.com/nominolo/union-find/issues
+Source-Repository head
+  Type: git
+  Location: git://github.com/nominolo/union-find
+
+Library
+  Build-Depends:
+    base >= 4 && < 5, containers >= 0.3, transformers >= 0.2
+  GHC-Options:
+    -Wall
+  Exposed-Modules:
+    Control.Monad.Trans.UnionFind
+    Data.UnionFind.IO
+    Data.UnionFind.ST
+    Data.UnionFind.IntMap
+  Hs-Source-Dirs: src
+

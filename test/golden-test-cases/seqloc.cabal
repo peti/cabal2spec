@@ -1,0 +1,47 @@
+Name:                seqloc
+Version:             0.6.1.1
+Cabal-Version:       >= 1.14
+Synopsis:            Handle sequence locations for bioinformatics
+Description:         Handle sequence locations for bioinformatics
+Homepage:            http://www.ingolia-lab.org/seqloc-tutorial.html
+License:             MIT
+License-file:        LICENSE
+Author:              Nick Ingolia
+Maintainer:          nick@ingolia.org
+Build-Type:          Simple
+Category:            Bioinformatics
+
+Source-Repository head
+  type: git
+  location: http://github.com/ingolia/seqloc
+  subdir: seqloc
+
+Test-Suite test-seqloc
+  Type: exitcode-stdio-1.0
+  Main-is:             TestMain.hs
+  Other-modules:       Bio.SeqLoc.Strand, Bio.SeqLoc.Position,
+                       Bio.SeqLoc.SeqLike, Bio.SeqLoc.Location,
+                       Bio.SeqLoc.SpliceLocation,
+                       Bio.SeqLoc.OnSeq,
+                       Bio.SeqLoc.LocRepr,
+                       Bio.SeqLoc.ShiftedVector,
+                       Bio.SeqLoc.LocMap
+  Build-depends:       base >= 4.2 && < 5, bytestring, attoparsec >= 0.8.5,
+                       QuickCheck, random, biocore >= 0.2, unordered-containers, vector, hashable
+  Hs-Source-Dirs:      src, test
+  Default-Language:    Haskell2010
+
+Library
+  Exposed-modules:     Bio.SeqLoc.Strand, Bio.SeqLoc.Position,
+                       Bio.SeqLoc.SeqLike, Bio.SeqLoc.Location,
+                       Bio.SeqLoc.SpliceLocation,
+                       Bio.SeqLoc.OnSeq,
+                       Bio.SeqLoc.LocRepr,
+                       Bio.SeqLoc.Transcript,
+                       Bio.SeqLoc.ShiftedVector,
+                       Bio.SeqLoc.LocMap
+  Build-depends:       base >= 4.2 && < 5, bytestring, attoparsec >= 0.8.5, biocore >= 0.2, unordered-containers, vector, hashable
+  Hs-Source-Dirs:      src
+  Ghc-options:         -Wall
+  Default-Language:    Haskell2010
+

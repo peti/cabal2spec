@@ -1,0 +1,60 @@
+name: language-haskell-extract
+version: 0.2.4
+cabal-version: >=1.6
+build-type: Simple
+license: BSD3
+license-file: "BSD3.txt"
+maintainer: Oscar Finnsson
+
+stability: stable
+homepage: http://github.com/finnsson/template-helper
+package-url:
+bug-reports:
+synopsis: Module to automatically extract functions from the local code.
+description:
+   @language-haskell-extract@ contains some useful helper functions on top of Template Haskell.
+   .
+   @functionExtractor@ extracts all functions after a regexp-pattern.
+   .
+   > foo = "test"
+   > boo = "testing"
+   > bar = $(functionExtractor "oo$")
+   .  
+   will automagically extract the functions ending with @oo@ such as
+   . 
+   > bar = [("foo",foo), ("boo",boo)]
+   .
+   This can be useful if you wish to extract all functions beginning with test (for a test-framework)
+   or all functions beginning with wc (for a web service).
+   .
+   @functionExtractorMap@ works like @functionsExtractor@ but applies a function over all function-pairs.
+   .
+   This functions is useful if the common return type of the functions is a type class.
+   .
+   Example:
+   .
+   > secondTypeclassTest =
+   >   do let expected = ["45", "88.8", "\"hej\""]
+   >          actual = $(functionExtractorMap "^tc" [|\n f -> show f|] )
+   >      expected @=? actual
+   > 
+   > tcInt :: Integer
+   > tcInt = 45
+   > 
+   > tcDouble :: Double
+   > tcDouble = 88.8
+   > 
+   > tcString :: String
+   > tcString = "hej"
+category: Template Haskell
+author: Oscar Finnsson & Emil Nordling
+
+library
+  ghc-options: -Wall
+  hs-source-dirs: src
+  exposed-modules: Language.Haskell.Extract
+  build-depends: base >= 4 && < 5, regex-posix, template-haskell
+
+source-repository head
+  type:     git
+  location: http://github.com/finnsson/template-helper

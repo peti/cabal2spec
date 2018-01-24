@@ -1,0 +1,47 @@
+Name:                biopsl
+Version:             0.4
+Synopsis:            Library and executables for working with PSL files
+Description:         The library contains the functionality for reading and writing
+		     PSL files (alignment data, e.g. from BLAT output). It duplicates
+		     code from (and is incompatible with) the "bio" library.
+Homepage:            http://biohaskell.org/
+License:             LGPL
+Author:              Ketil Malde
+Maintainer:          ketil@malde.org
+Stability:           Experimental
+Category:            Bioinformatics
+Build-type:          Simple
+Cabal-version:       >=1.6
+
+Source-repository this
+   Type:      darcs
+   Location:  http://malde.org/~ketil/biohaskell/biosff
+   Tag:       0.3
+
+Library
+  Exposed-modules: Bio.Alignment.PSL
+  Build-depends:   base >= 3 && < 5, biocore >= 0.1, bytestring
+  Hs-Source-Dirs:  src
+  Ghc-Options:     -Wall
+
+Executable pslstats
+  Main-Is:        PslStats.hs
+  Hs-Source-Dirs: src, examples
+  Build-depends:  unordered-containers
+  Ghc-Options:    -Wall
+
+Executable psluniq
+  Main-Is:        PslUniq.hs
+  Hs-Source-Dirs: src, examples
+  Ghc-Options:    -Wall
+
+Executable pslfilter
+  Main-Is:        PslFilter.hs
+  Hs-Source-Dirs: src, examples
+  Build-Depends:  cmdargs
+  Ghc-Options:    -Wall
+
+Executable pslcov
+  Main-Is:        PslCov.hs
+  Hs-Source-Dirs: src, examples
+  Ghc-Options:    -Wall

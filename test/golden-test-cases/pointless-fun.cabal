@@ -1,0 +1,53 @@
+----------------------------------------------------------------
+-- wren gayle romano <wren@community.haskell.org>   ~ 2015.05.30
+----------------------------------------------------------------
+
+-- By and large Cabal >=1.2 is fine; but >= 1.6 gives tested-with:
+-- and source-repository:.
+Cabal-Version:  >= 1.6
+Build-Type:     Simple
+
+Name:           pointless-fun
+Version:        1.1.0.6
+Stability:      provisional
+Homepage:       http://code.haskell.org/~wren/
+Author:         wren gayle romano, Matt Hellige
+Maintainer:     wren@community.haskell.org
+Copyright:      Copyright (c) 2009--2015 wren gayle romano
+License:        BSD3
+License-File:   LICENSE
+
+Category:       Combinators, Composition, Utils
+Synopsis:       Some common point-free combinators.
+Description:    Some common point-free combinators.
+
+Tested-With:
+    GHC ==6.12.1, GHC ==6.12.3, GHC ==7.6.1, GHC ==7.8.0
+Extra-source-files:
+    README, CHANGELOG
+Source-Repository head
+    Type:     darcs
+    Location: http://community.haskell.org/~wren/pointless-fun
+
+----------------------------------------------------------------
+Flag base4
+    Default:     True
+    Description: base-4.0 emits "Prelude deprecated" messages in
+                 order to get people to be explicit about which
+                 version of base they use.
+
+-- TODO: add flags for compiling against haskell98 or haskell2010
+-- instead of base?
+
+----------------------------------------------------------------
+Library
+    Hs-Source-Dirs:  src
+    Exposed-Modules: Data.Function.Pointless
+    
+    if flag(base4)
+        Build-Depends: base >= 4 && < 5
+    else
+        Build-Depends: base < 4
+
+----------------------------------------------------------------
+----------------------------------------------------------- fin.

@@ -1,0 +1,43 @@
+name:                   gamma
+version:                0.9.0.2
+stability:              provisional
+
+cabal-version:          >= 1.6
+build-type:             Simple
+
+author:                 James Cook <mokus@deepbondi.net>
+maintainer:             James Cook <mokus@deepbondi.net>
+license:                PublicDomain
+homepage:               https://github.com/mokus0/gamma
+
+category:               Math, Numerical
+synopsis:               Gamma function and related functions.
+description:            Approximations of the gamma function, incomplete gamma 
+                        functions, and factorials.
+
+tested-with:            GHC == 6.10.4,
+                        GHC == 6.12.1, GHC == 6.12.3,
+                        GHC == 7.0.1, GHC == 7.0.2,
+                        GHC == 7.2.1,
+                        GHC == 7.4.1-rc1
+
+extra-source-files:     extras/*.hs
+
+source-repository head
+  type: git
+  location: git://github.com/mokus0/gamma.git
+
+
+Library
+  hs-source-dirs:       src
+  ghc-options:          -Wall
+  exposed-modules:      Math.Factorial
+                        Math.Gamma
+                        Math.Gamma.Incomplete
+                        Math.Gamma.Stirling
+                        Math.Gamma.Lanczos
+  build-depends:        base >= 3 && <5,
+                        continued-fractions >= 0.9.1,
+                        converge,
+                        template-haskell,
+                        vector >= 0.5

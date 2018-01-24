@@ -1,0 +1,47 @@
+name: libxml-sax
+version: 0.7.5
+license: MIT
+license-file: license.txt
+author: John Millikin
+maintainer: jmillikin@gmail.com
+build-type: Simple
+cabal-version: >= 1.6
+category: Foreign, Text, XML, Parsing
+stability: experimental
+homepage: https://john-millikin.com/software/haskell-libxml/
+bug-reports: mailto:jmillikin@gmail.com
+
+synopsis: Bindings for the libXML2 SAX interface
+description:
+
+extra-source-files:
+  cbits/hslibxml-shim.c
+  cbits/hslibxml-shim.h
+
+source-repository head
+  type: git
+  location: https://john-millikin.com/code/haskell-libxml-sax/
+
+source-repository this
+  type: git
+  location: https://john-millikin.com/code/haskell-libxml-sax/
+  tag: haskell-libxml-sax_0.7.5
+
+library
+  hs-source-dirs: lib
+  ghc-options: -Wall -O2
+  cc-options: -Wall
+
+  build-depends:
+      base >= 4.1 && < 5.0
+    , bytestring >= 0.9
+    , text >= 0.7
+    , xml-types >= 0.3 && < 0.4
+
+  exposed-modules:
+    Text.XML.LibXML.SAX
+
+  c-sources: cbits/hslibxml-shim.c
+
+  extra-libraries: xml2
+  pkgconfig-depends: libxml-2.0

@@ -1,0 +1,32 @@
+name:           symbol
+version:        0.2.4
+cabal-version:  >= 1.6
+license:        BSD3
+license-file:   LICENSE
+copyright:      (c) 2006-2011 Harvard University
+		(c) 2011-2014 Geoffrey Mainland
+author:         Geoffrey Mainland <mainland@cs.drexel.edu>
+maintainer:     Geoffrey Mainland <mainland@cs.drexel.edu>
+stability:      alpha
+homepage:       http://www.cs.drexel.edu/~mainland/
+category:       Data
+synopsis:       A 'Symbol' type for fast symbol comparison.
+description:    Provides a 'Symbol' data type allowing fast symbol comparisons
+                and functions for interning symbols and recovering their
+                'String' representation.
+
+build-type:     Simple
+
+library
+  exposed-modules:
+    Data.Symbol
+    Data.Symbol.Unsafe
+
+  build-depends:
+    base       >= 4   && < 5,
+    containers >= 0.2 && < 0.6,
+    deepseq    >= 1.0 && < 2.0
+
+source-repository head
+  type:     git
+  location: git://github.com/mainland/symbol.git

@@ -1,0 +1,25 @@
+Name:                blastxml
+Version:             0.3.2
+Synopsis:            Library for reading Blast XML output
+Description:         This library contains a data structure and functions for 
+		     reading output from the BLAST sequence alignment program.
+Homepage:            http://biohaskell.org/
+License:             LGPL
+License-file:	     COPYING
+Author:              Ketil Malde
+Maintainer:          ketil@malde.org
+Stability:           Experimental
+Category:            Bioinformatics
+Build-type:          Simple
+Cabal-version:       >=1.6
+
+Source-Repository this
+   Type:      darcs
+   Location:  http://malde.org/~ketil/biohaskell/blastxml
+   Tag:       0.2
+
+Library
+  Exposed-modules: Bio.BlastXML Bio.BlastData
+  Build-depends:   base >= 3 && < 5, biocore >= 0.3.0, bytestring, parallel, tagsoup
+  Hs-Source-Dirs:  src
+  Ghc-Options:     -Wall

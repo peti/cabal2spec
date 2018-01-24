@@ -1,0 +1,40 @@
+Name:            bencode
+Version:         0.6.0.0
+Maintainer:      Christopher Reichert <creichert07@gmail.com>
+Author:          Lemmih (lemmih@gmail.com), Jesper Louis Andersen
+Copyright:       (c) 2005-2009, David Himmelstrup,
+                     2006 Lemmih <lemmih@gmail.com>,
+                     2005 Jesper Louis Andersen <jlouis@mongers.org>
+License-File:    LICENSE
+License:         BSD3
+Build-Type:      Simple
+Category:        Text
+Tested-With:     GHC == 7.10.1, GHC == 7.8.4, GHC == 7.8.3, GHC == 7.6.3
+Cabal-Version:   >= 1.10
+Synopsis:        Parser and printer for bencoded data.
+Description:
+  Parser and printer for bencoded data.
+  .
+  Bencode (pronounced like B encode) is the encoding used by the
+  peer-to-peer file sharing system BitTorrent for storing and
+  transmitting loosely structured data.
+
+
+Source-Repository head
+  type:     git
+  location: https://github.com/creichert/bencode
+
+
+Library
+  GHC-Options:        -Wall
+  Default-Extensions: PatternGuards
+  Hs-Source-Dirs:     src
+  Default-Language:   Haskell2010
+  Exposed-Modules:    Data.BEncode
+                      Data.BEncode.Lexer
+                      Data.BEncode.Parser
+  Build-Depends:      base<5
+                    , parsec
+                    , bytestring
+                    , containers
+                    , binary

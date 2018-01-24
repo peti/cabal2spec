@@ -1,0 +1,27 @@
+Cabal-Version: >= 1.2
+Name: microbench
+Version: 0.1
+Synopsis: Microbenchmark Haskell code
+Description:
+  Microbenchmarking can be used to compare the speed of different
+  approaches to the same operation.  Since most code is very fast, to
+  get accurate timing information you must run the operation many times
+  and then divide to get the time per operation.
+  .
+  This library manages the microbenchmarking process: it finds how many
+  iterations of a function are needed to get a good timing estimate per
+  iteration and prints out a human-readable \"Your code takes /n/ nanoseconds
+  to run, and can run /n/ times per second\".
+Category: Development
+License: BSD3
+License-File: LICENSE
+Author: Evan Martin
+Maintainer: martine@danga.com
+Copyright: (c) 2008 Evan Martin <martine@danga.com>
+Homepage: http://neugierig.org/software/darcs/browse/?r=microbench;a=summary
+Extra-Source-Files: demo.hs
+Build-Type: Simple
+
+Library
+  Build-Depends: base, time
+  Exposed-Modules: Microbench

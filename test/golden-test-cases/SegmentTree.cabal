@@ -1,0 +1,37 @@
+Name:    SegmentTree
+Version: 0.3
+License: BSD3
+License-File: LICENSE
+Author: Dmitry Astapov <dastapov@gmail.com>
+Maintainer: Dmitry Astapov <dastapov@gmail.com>
+Category: Data
+Stability: beta
+Cabal-Version:   >= 1.2
+Build-type:	Simple
+Synopsis: Data structure for querying the set (or count) of intervals covering given point
+Description: Segment Tree implemented following section 10.3 and 10.4 of
+  Mark de Berg, Otfried Cheong, Marc van Kreveld, Mark Overmars
+  "Computational Geometry, Algorithms and Applications", Third Edition
+  (2008) pp 231-237
+
+Tested-With:        GHC >=6.10.4
+
+Extra-source-files: README 
+
+flag test
+    default: False
+
+Library
+  Hs-Source-Dirs: ./src
+  Build-Depends: base >=3 && <=5
+  Exposed-modules: Data.SegmentTree
+  Other-modules: Data.SegmentTree.Interval, Data.SegmentTree.Measured
+
+Executable  SegmentTreeTests
+  Hs-Source-Dirs: ./src
+  Main-Is:       Tests.hs
+  if flag(test)
+    Build-Depends: base >=3 && <=5, HUnit, QuickCheck >= 2.0.0 , test-framework, test-framework-quickcheck2, test-framework-hunit
+    Other-Modules: Stabbing.Naive Stabbing.SegmentTree
+  else
+    Buildable: False
