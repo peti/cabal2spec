@@ -1,23 +1,36 @@
-module Cabal2Spec ( createSpecFile ) where
+module Cabal2Spec where
 
 import Control.Monad
 import Data.Char
 import Data.List
 import Data.Time.Clock
 import Data.Time.Format
+import Distribution.Compiler
 import Distribution.License
 import Distribution.Package
 import Distribution.PackageDescription
+import Distribution.PackageDescription.Configuration
+import Distribution.PackageDescription.Parse
+import Distribution.System
 import Distribution.Text
+import Distribution.Types.ComponentRequestedSpec
 import Distribution.Types.LegacyExeDependency
 import Distribution.Types.PkgconfigDependency
 import Distribution.Types.UnqualComponentName
+import Distribution.Verbosity
 import Distribution.Version
 import System.Directory
 import System.FilePath
 import System.IO
 
 type ForceBinary = Bool
+
+cabal2spec :: Platform -> CompilerId -> FlagAssignment -> ForceBinary -> FilePath -> FilePath -> IO ()
+cabal2spec platform compilerId flags forceBinary cabalFile specFile = do
+  gpd <- readGenericPackageDescription silent cabalFile
+  case finalizePD flags (ComponentRequestedSpec False False) (const True) platform (unknownCompilerInfo compilerId NoAbiTag) [] gpd of
+    Left missing -> fail ("finalizePD: " ++ show missing)
+    Right (pd,_) -> createSpecFile specFile cabalFile pd forceBinary flags
 
 showPkgCfg :: String -> String
 showPkgCfg p = "pkgconfig(" ++ p ++ ")"
