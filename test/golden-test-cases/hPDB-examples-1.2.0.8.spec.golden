@@ -69,7 +69,7 @@ Examples for handling Protein Data Bank file format.
 
 %files
 %doc LICENSE
-%doc AUTHORS README.md examples
+%doc AUTHORS README.md
 %{_bindir}/CanonicalAxes
 %{_bindir}/CleanPDB
 %{_bindir}/PDB2Fasta

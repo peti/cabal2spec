@@ -97,7 +97,6 @@ files.
 
 %files
 %doc LICENSE
-%doc examples
 %{_bindir}/tor-relay
 %dir %{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}-%{version}/LICENSE
@@ -109,6 +108,5 @@ files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
-%doc examples
 
 %changelog

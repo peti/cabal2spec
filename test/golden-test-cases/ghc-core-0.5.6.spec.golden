@@ -56,7 +56,6 @@ Usage:
 
 %files
 %doc LICENSE
-%doc README
 %{_bindir}/%{name}
 
 %changelog

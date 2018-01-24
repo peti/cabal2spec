@@ -135,7 +135,7 @@ This package provides the Haskell %{name} library development files.
 
 %files
 %doc LICENSE
-%doc AUTHORS.md CHANGELOG.md README.md examples
+%doc AUTHORS.md CHANGELOG.md README.md
 %{_bindir}/ersatz-regexp-grid
 %{_bindir}/ersatz-sudoku
 %dir %{_datadir}/%{name}-%{version}
@@ -210,6 +210,6 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
-%doc AUTHORS.md CHANGELOG.md README.md examples
+%doc AUTHORS.md CHANGELOG.md README.md
 
 %changelog

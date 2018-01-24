@@ -92,7 +92,7 @@ This package provides the Haskell %{name} library development files.
 
 %files
 %doc LICENSE.txt
-%doc CHANGELOG.md README.md docopt.cabal docopt.spec
+%doc CHANGELOG.md README.md
 %dir %{_datadir}/%{name}-%{version}
 %dir %{_datadir}/%{name}-%{version}/test
 %{_datadir}/%{name}-%{version}/test/testcases.docopt
@@ -104,6 +104,6 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
-%doc CHANGELOG.md README.md docopt.cabal docopt.spec
+%doc CHANGELOG.md README.md
 
 %changelog

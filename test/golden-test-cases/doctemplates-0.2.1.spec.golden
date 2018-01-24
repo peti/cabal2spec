@@ -89,7 +89,6 @@ This package provides the Haskell %{name} library development files.
 
 %files
 %doc LICENSE
-%doc doctemplates.cabal doctemplates.spec
 %dir %{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}-%{version}/README.md
 
@@ -99,6 +98,5 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
-%doc doctemplates.cabal doctemplates.spec
 
 %changelog

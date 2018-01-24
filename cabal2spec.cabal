@@ -28,7 +28,6 @@ library
   ghc-options:          -Wall
   build-depends:        base < 5
                       , Cabal > 2
-                      , directory
                       , filepath
                       , time >= 1.5
   exposed-modules:      Cabal2Spec

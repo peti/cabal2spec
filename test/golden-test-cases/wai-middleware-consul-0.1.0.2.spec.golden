@@ -91,7 +91,7 @@ files.
 
 %files
 %doc LICENSE
-%doc README.md example
+%doc README.md
 
 %files -n ghc-%{name} -f ghc-%{name}.files
 %defattr(-,root,root,-)
@@ -99,6 +99,6 @@ files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
-%doc README.md example
+%doc README.md
 
 %changelog

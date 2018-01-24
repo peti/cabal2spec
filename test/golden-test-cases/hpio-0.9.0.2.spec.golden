@@ -109,7 +109,7 @@ This package provides the Haskell %{name} library development files.
 
 %files
 %doc LICENSE
-%doc README.md changelog.md examples
+%doc README.md changelog.md
 %{_bindir}/hpio-example
 %{_bindir}/hpio-reader-example
 %{_bindir}/hpio-sysfs-example
@@ -120,6 +120,6 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
-%doc README.md changelog.md examples
+%doc README.md changelog.md
 
 %changelog

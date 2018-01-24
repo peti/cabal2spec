@@ -70,7 +70,7 @@ correct Haskell types.
 
 %files
 %doc COPYING
-%doc AUTHORS ChangeLog ChangeLog.CTKlight ChangeLog.old README README.CTKlight README.md TODO TODO.CTKlight doc examples
+%doc AUTHORS ChangeLog ChangeLog.old README doc
 %{_bindir}/%{name}
 %dir %{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}-%{version}/C2HS.hs

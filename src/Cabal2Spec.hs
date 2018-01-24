@@ -19,7 +19,6 @@ import Distribution.Types.PkgconfigDependency
 import Distribution.Types.UnqualComponentName
 import Distribution.Verbosity
 import Distribution.Version
-import System.Directory
 import System.FilePath
 import System.IO
 
@@ -30,7 +29,7 @@ cabal2spec platform compilerId flags forceBinary cabalFile specFile = do
   gpd <- readGenericPackageDescription silent cabalFile
   case finalizePD flags (ComponentRequestedSpec False False) (const True) platform (unknownCompilerInfo compilerId NoAbiTag) [] gpd of
     Left missing -> fail ("finalizePD: " ++ show missing)
-    Right (pd,_) -> createSpecFile specFile cabalFile pd forceBinary flags
+    Right (pd,_) -> createSpecFile specFile pd forceBinary flags
 
 showPkgCfg :: String -> String
 showPkgCfg p = "pkgconfig(" ++ p ++ ")"
@@ -44,8 +43,8 @@ mkTools tools' = filter excludedTools $ nub $ map mapTools tools'
     mapTools "gtk2hsTypeGen" = "gtk2hs-buildtools"
     mapTools tool = tool
 
-createSpecFile :: FilePath -> FilePath -> PackageDescription -> ForceBinary -> FlagAssignment -> IO ()
-createSpecFile specFile cabalPath pkgDesc forceBinary flagAssignment = do
+createSpecFile :: FilePath -> PackageDescription -> ForceBinary -> FlagAssignment -> IO ()
+createSpecFile specFile pkgDesc forceBinary flagAssignment = do
   let deps :: [String]
       deps = map showDep deps'
       deps' :: [String]
@@ -214,7 +213,7 @@ createSpecFile specFile cabalPath pkgDesc forceBinary flagAssignment = do
   let licensefiles = licenseFiles pkgDesc
 
   -- remove docs from datafiles (#38)
-  docsUnfiltered <- fmap sort (findDocs cabalPath licensefiles)
+  docsUnfiltered <- fmap sort (findDocs (extraSrcFiles pkgDesc ++ extraDocFiles pkgDesc) licensefiles)
   let datafiles = dataFiles pkgDesc
       dupdocs   = docsUnfiltered `intersect` datafiles
       docs      = docsUnfiltered \\ datafiles
@@ -283,18 +282,16 @@ createSpecFile specFile cabalPath pkgDesc forceBinary flagAssignment = do
 isBuildable :: Executable -> Bool
 isBuildable exe = buildable $ buildInfo exe
 
-findDocs :: FilePath -> [FilePath] -> IO [FilePath]
-findDocs cabalPath licensefiles = do
-  contents <- getDirectoryContents $ dropFileName cabalPath
-  let docs = filter likely contents
+findDocs :: [FilePath] -> [FilePath] -> IO [FilePath]
+findDocs contents licensefiles = do
+  let docs = filter likely (sort (nub (map (head . splitDirectories) (contents))))
   return $ if null licensefiles
            then docs
-           else filter unlikely $ filter (`notElem` licensefiles) docs
+           else filter (`notElem` licensefiles) docs
   where names = ["author", "changelog", "changes", "contributors", "copying", "doc",
                  "example", "licence", "license", "news", "readme", "todo"]
         likely name = let lowerName = map toLower name
                       in any (`isPrefixOf` lowerName) names
-        unlikely name = not $ any (`isSuffixOf` name) ["~"]
 
 normalizeVersion :: Version -> Version
 normalizeVersion v = case versionNumbers v of

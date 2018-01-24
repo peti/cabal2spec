@@ -93,7 +93,6 @@ This package provides the Haskell %{name} library development files.
 
 %files
 %doc COPYING
-%doc doc
 %dir %{_datadir}/%{name}-%{version}
 %dir %{_datadir}/%{name}-%{version}/doc
 %dir %{_datadir}/%{name}-%{version}/texmf
@@ -116,6 +115,5 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
-%doc doc
 
 %changelog

@@ -98,7 +98,7 @@ This package provides the Haskell %{name} library development files.
 
 %files
 %doc LICENSE
-%doc CHANGELOG.md README.md example
+%doc CHANGELOG.md README.md
 
 %files -n ghc-%{name} -f ghc-%{name}.files
 %defattr(-,root,root,-)
@@ -106,6 +106,6 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
-%doc CHANGELOG.md README.md example
+%doc CHANGELOG.md README.md
 
 %changelog

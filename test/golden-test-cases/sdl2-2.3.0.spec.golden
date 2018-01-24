@@ -92,7 +92,7 @@ This package provides the Haskell %{name} library development files.
 
 %files
 %doc LICENSE
-%doc ChangeLog.md examples
+%doc ChangeLog.md
 %dir %{_datadir}/%{name}-%{version}
 %dir %{_datadir}/%{name}-%{version}/examples
 %dir %{_datadir}/%{name}-%{version}/examples/lazyfoo
@@ -106,6 +106,6 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
-%doc ChangeLog.md examples
+%doc ChangeLog.md
 
 %changelog

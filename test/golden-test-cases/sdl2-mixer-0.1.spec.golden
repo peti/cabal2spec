@@ -87,7 +87,6 @@ This package provides the Haskell %{name} library development files.
 
 %files
 %doc LICENSE
-%doc examples
 %{_bindir}/sdl2-mixer-basic
 %{_bindir}/sdl2-mixer-effect
 %{_bindir}/sdl2-mixer-jumbled
@@ -100,6 +99,5 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
-%doc examples
 
 %changelog

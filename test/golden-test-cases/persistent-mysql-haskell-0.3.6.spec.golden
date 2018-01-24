@@ -100,7 +100,7 @@ files.
 
 %files
 %doc LICENSE
-%doc ChangeLog.md README.md example
+%doc ChangeLog.md README.md
 %{_bindir}/persistent-mysql-haskell-example
 
 %files -n ghc-%{name} -f ghc-%{name}.files
@@ -109,6 +109,6 @@ files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
-%doc ChangeLog.md README.md example
+%doc ChangeLog.md README.md
 
 %changelog

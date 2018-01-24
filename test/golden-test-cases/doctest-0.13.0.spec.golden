@@ -101,7 +101,7 @@ This package provides the Haskell %{name} library development files.
 
 %files
 %doc LICENSE
-%doc doctest.cabal doctest.spec example
+%doc example
 %{_bindir}/%{name}
 
 %files -n ghc-%{name} -f ghc-%{name}.files
@@ -110,6 +110,6 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
-%doc doctest.cabal doctest.spec example
+%doc example
 
 %changelog

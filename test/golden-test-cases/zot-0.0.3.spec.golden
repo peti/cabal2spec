@@ -57,7 +57,6 @@ and
 
 %files
 %doc LICENSE
-%doc examples
 %{_bindir}/%{name}
 %dir %{_datadir}/%{name}-%{version}
 %dir %{_datadir}/%{name}-%{version}/examples

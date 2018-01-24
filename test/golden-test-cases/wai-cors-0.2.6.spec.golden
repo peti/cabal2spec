@@ -99,7 +99,6 @@ This package provides the Haskell %{name} library development files.
 
 %files
 %doc LICENSE
-%doc examples
 %dir %{_datadir}/%{name}-%{version}
 %dir %{_datadir}/%{name}-%{version}/test
 %dir %{_datadir}/%{name}-%{version}/examples
@@ -117,6 +116,5 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
-%doc examples
 
 %changelog
