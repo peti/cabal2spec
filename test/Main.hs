@@ -17,5 +17,8 @@ regressionTest :: String -> TestTree
 regressionTest goldenFile = do
   let specFile = dropExtension goldenFile
       cabalFile = specFile `replaceExtension` "cabal"
-  goldenVsFile specFile goldenFile specFile
-               (cabal2spec buildPlatform buildCompilerId [] True cabalFile specFile)
+  goldenVsFileDiff specFile
+                   (\ref new -> ["diff", "-u", ref, new])
+                   goldenFile
+                   specFile
+                   (cabal2spec buildPlatform buildCompilerId [] True cabalFile specFile)
