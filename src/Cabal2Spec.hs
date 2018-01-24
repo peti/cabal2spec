@@ -1,4 +1,4 @@
-module Cabal2Spec where
+module Cabal2Spec ( cabal2spec, createSpecFile, ForceBinary ) where
 
 import Control.Monad
 import Data.Char
@@ -284,7 +284,7 @@ isBuildable exe = buildable $ buildInfo exe
 
 findDocs :: [FilePath] -> [FilePath] -> IO [FilePath]
 findDocs contents licensefiles = do
-  let docs = filter likely (sort (nub (map (head . splitDirectories) (contents))))
+  let docs = filter likely (sort (nub (map (head . splitDirectories) contents)))
   return $ if null licensefiles
            then docs
            else filter (`notElem` licensefiles) docs
