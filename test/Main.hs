@@ -11,13 +11,13 @@ import Test.Tasty.Golden
 
 main :: IO ()
 main = do
-  testCases <- findByExtension [".golden"] "test/golden-test-cases"
-  defaultMain $ testGroup "regressions" (map regressionTest testCases)
+  testCases <- findByExtension [".cabal"] "test/golden-test-cases"
+  defaultMain $ testGroup "regression-tests" (map regressionTest testCases)
 
 regressionTest :: String -> TestTree
-regressionTest goldenFile = do
-  let specFile = dropExtension goldenFile
-      cabalFile = specFile `replaceExtension` "cabal"
+regressionTest cabalFile = do
+  let specFile = cabalFile `replaceExtension` "spec"
+      goldenFile = specFile `addExtension` "golden"
       pid = Platform X86_64 Linux
       cid = CompilerId GHC (mkVersion [8,2])
   goldenVsFileDiff specFile
