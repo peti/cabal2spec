@@ -197,7 +197,7 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
   putNewline
 
   put "%build"
-  when (flagAssignment /= []) $ do
+  when (flagAssignment /= mempty) $ do
     let cabalFlags = [ "-f" ++ (if b then "" else "-") ++ unFlagName n | (n, b) <- flagAssignment ]
     put $ "%define cabal_configure_options " ++ unwords cabalFlags
   let pkgType = if hasLib then "lib" else "bin"

@@ -56,4 +56,4 @@ main = do
   print opts
   let specFile = fromMaybe (optCabalFile `replaceExtension` "spec") optOutputFile
   putStrLn $ "Writing spec file to " ++ show specFile ++ " ..."
-  cabal2spec buildPlatform buildCompilerId [] True optCabalFile specFile
+  cabal2spec buildPlatform buildCompilerId mempty True optCabalFile specFile
