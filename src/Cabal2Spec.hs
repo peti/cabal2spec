@@ -199,7 +199,7 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
   put "%build"
   when (flagAssignment /= mempty) $ do
     let cabalFlags = [ "-f" ++ (if b then "" else "-") ++ unFlagName n | (n, b) <- flagAssignment ]
-    put $ "%define cabal_configure_options " ++ unwords cabalFlags
+    put $ "%define cabal_configure_options " ++ unwords (sort cabalFlags)
   let pkgType = if hasLib then "lib" else "bin"
   put $ "%ghc_" ++ pkgType ++ "_build"
   putNewline
@@ -219,7 +219,7 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
       docs      = docsUnfiltered \\ datafiles
   unless (null dupdocs) $
     -- TODO: What does this warning accomplish?
-    putStrLn $ "*** " ++ pkgname ++ ": doc files found in datadir:" +-+ unwords dupdocs
+    putStrLn $ "*** " ++ pkgname ++ ": doc files found in datadir:" +-+ unwords (sort dupdocs)
   putNewline
 
   unless (null testsuiteDeps) $ do
@@ -242,8 +242,8 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
 
   let listDataFiles = do unless (null (dataFiles pkgDesc)) $ do
                            put ("%dir %{_datadir}/" ++ pkg_name ++ "-%{version}")
-                           mapM_ (put . (("%dir %{_datadir}/" ++ pkg_name ++ "-%{version}/")++)) (listDirs (dataFiles pkgDesc))
-                         mapM_ (put . (("%{_datadir}/" ++ pkg_name ++ "-%{version}/")++)) (dataFiles pkgDesc)
+                           mapM_ (put . (("%dir %{_datadir}/" ++ pkg_name ++ "-%{version}/")++)) (sort (listDirs (dataFiles pkgDesc)))
+                           mapM_ (put . (("%{_datadir}/" ++ pkg_name ++ "-%{version}/")++)) (sort (dataFiles pkgDesc))
 
       listDirs :: [FilePath] -> [FilePath]
       listDirs = nub . concatMap (map joinPath . tail . inits) . nub . map init . filter (\p -> length p > 1) . map splitDirectories
@@ -252,10 +252,10 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
     put "%files"
     -- Add the license file to the main package only if it wouldn't
     -- otherwise be empty.
-    mapM_ (\ l -> put $ license_macro +-+ l) licensefiles
+    mapM_ (\ l -> put $ license_macro +-+ l) (sort licensefiles)
     unless (null docs) $
-      put $ "%doc" +-+ unwords docs
-    mapM_ (\ p -> put $ "%{_bindir}/" ++ (if p == name then "%{name}" else p)) execs
+      put $ "%doc" +-+ unwords (sort docs)
+    mapM_ (\ p -> put $ "%{_bindir}/" ++ (if p == name then "%{name}" else p)) (sort execs)
     listDataFiles
     putNewline
 
@@ -266,13 +266,13 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
     put "%defattr(-,root,root,-)"
     mapM_ (\ l -> put $ license_macro +-+ l) licensefiles
     unless binlib $
-      mapM_ (\ p -> put $ "%{_bindir}/" ++ (if p == name then "%{pkg_name}" else p)) execs
+      mapM_ (\ p -> put $ "%{_bindir}/" ++ (if p == name then "%{pkg_name}" else p)) (sort execs)
     unless hasExecPkg listDataFiles
     putNewline
-    put $ "%files" +-+ ghcPkgDevel +-+  develFiles
+    put $ "%files" +-+ ghcPkgDevel +-+ develFiles
     put "%defattr(-,root,root,-)"
     unless (null docs) $
-      put $ "%doc" +-+ unwords docs
+      put $ "%doc" +-+ unwords (sort docs)
     putNewline
 
   put "%changelog"

@@ -116,18 +116,18 @@ This package provides the Haskell %{name} library development files.
 %doc CHANGES.txt README.md
 %{_bindir}/%{name}
 %dir %{_datadir}/%{name}-%{version}
-%dir %{_datadir}/%{name}-%{version}/misc
 %dir %{_datadir}/%{name}-%{version}/html
 %dir %{_datadir}/%{name}-%{version}/html/plugin
-%{_datadir}/%{name}-%{version}/misc/settings.txt
+%dir %{_datadir}/%{name}-%{version}/misc
+%{_datadir}/%{name}-%{version}/html/*.css
+%{_datadir}/%{name}-%{version}/html/*.html
 %{_datadir}/%{name}-%{version}/html/*.js
 %{_datadir}/%{name}-%{version}/html/*.png
-%{_datadir}/%{name}-%{version}/html/*.css
 %{_datadir}/%{name}-%{version}/html/*.xml
-%{_datadir}/%{name}-%{version}/html/*.html
 %{_datadir}/%{name}-%{version}/html/plugin/*.css
 %{_datadir}/%{name}-%{version}/html/plugin/*.js
 %{_datadir}/%{name}-%{version}/html/plugin/*.png
+%{_datadir}/%{name}-%{version}/misc/settings.txt
 
 %files -n ghc-%{name} -f ghc-%{name}.files
 %defattr(-,root,root,-)

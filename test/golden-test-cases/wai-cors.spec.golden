@@ -100,15 +100,15 @@ This package provides the Haskell %{name} library development files.
 %files
 %doc LICENSE
 %dir %{_datadir}/%{name}-%{version}
-%dir %{_datadir}/%{name}-%{version}/test
 %dir %{_datadir}/%{name}-%{version}/examples
-%{_datadir}/%{name}-%{version}/README.md
+%dir %{_datadir}/%{name}-%{version}/test
 %{_datadir}/%{name}-%{version}/CHANGELOG.md
+%{_datadir}/%{name}-%{version}/README.md
+%{_datadir}/%{name}-%{version}/examples/Scotty.hs
+%{_datadir}/%{name}-%{version}/examples/ServantWai.hs
+%{_datadir}/%{name}-%{version}/examples/Wai.hs
 %{_datadir}/%{name}-%{version}/test/index.html
 %{_datadir}/%{name}-%{version}/test/phantomjs.js
-%{_datadir}/%{name}-%{version}/examples/Scotty.hs
-%{_datadir}/%{name}-%{version}/examples/Wai.hs
-%{_datadir}/%{name}-%{version}/examples/ServantWai.hs
 
 %files -n ghc-%{name} -f ghc-%{name}.files
 %defattr(-,root,root,-)

@@ -124,8 +124,8 @@ This package provides the Haskell %{name} library development files.
 %dir %{_datadir}/%{name}-%{version}
 %dir %{_datadir}/%{name}-%{version}/static
 %{_datadir}/%{name}-%{version}/static/index.html
-%{_datadir}/%{name}-%{version}/static/jquery.js
 %{_datadir}/%{name}-%{version}/static/jquery-json.js
+%{_datadir}/%{name}-%{version}/static/jquery.js
 
 %files -n ghc-%{name} -f ghc-%{name}.files
 %defattr(-,root,root,-)

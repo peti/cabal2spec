@@ -140,25 +140,25 @@ This package provides the Haskell %{name} library development files.
 %{_bindir}/hakyll-init
 %dir %{_datadir}/%{name}-%{version}
 %dir %{_datadir}/%{name}-%{version}/example
-%dir %{_datadir}/%{name}-%{version}/example/posts
-%dir %{_datadir}/%{name}-%{version}/example/images
-%dir %{_datadir}/%{name}-%{version}/example/templates
 %dir %{_datadir}/%{name}-%{version}/example/css
+%dir %{_datadir}/%{name}-%{version}/example/images
+%dir %{_datadir}/%{name}-%{version}/example/posts
+%dir %{_datadir}/%{name}-%{version}/example/templates
 %dir %{_datadir}/%{name}-%{version}/templates
-%{_datadir}/%{name}-%{version}/example/posts/2015-11-28-carpe-diem.markdown
-%{_datadir}/%{name}-%{version}/example/posts/2015-10-07-rosa-rosa-rosam.markdown
-%{_datadir}/%{name}-%{version}/example/posts/2015-12-07-tu-quoque.markdown
-%{_datadir}/%{name}-%{version}/example/posts/2015-08-12-spqr.markdown
-%{_datadir}/%{name}-%{version}/example/site.hs
-%{_datadir}/%{name}-%{version}/example/images/haskell-logo.png
-%{_datadir}/%{name}-%{version}/example/templates/post-list.html
-%{_datadir}/%{name}-%{version}/example/templates/default.html
-%{_datadir}/%{name}-%{version}/example/templates/archive.html
-%{_datadir}/%{name}-%{version}/example/templates/post.html
-%{_datadir}/%{name}-%{version}/example/css/default.css
-%{_datadir}/%{name}-%{version}/example/index.html
 %{_datadir}/%{name}-%{version}/example/about.rst
 %{_datadir}/%{name}-%{version}/example/contact.markdown
+%{_datadir}/%{name}-%{version}/example/css/default.css
+%{_datadir}/%{name}-%{version}/example/images/haskell-logo.png
+%{_datadir}/%{name}-%{version}/example/index.html
+%{_datadir}/%{name}-%{version}/example/posts/2015-08-12-spqr.markdown
+%{_datadir}/%{name}-%{version}/example/posts/2015-10-07-rosa-rosa-rosam.markdown
+%{_datadir}/%{name}-%{version}/example/posts/2015-11-28-carpe-diem.markdown
+%{_datadir}/%{name}-%{version}/example/posts/2015-12-07-tu-quoque.markdown
+%{_datadir}/%{name}-%{version}/example/site.hs
+%{_datadir}/%{name}-%{version}/example/templates/archive.html
+%{_datadir}/%{name}-%{version}/example/templates/default.html
+%{_datadir}/%{name}-%{version}/example/templates/post-list.html
+%{_datadir}/%{name}-%{version}/example/templates/post.html
 %{_datadir}/%{name}-%{version}/templates/atom-item.xml
 %{_datadir}/%{name}-%{version}/templates/atom.xml
 %{_datadir}/%{name}-%{version}/templates/rss-item.xml
