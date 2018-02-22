@@ -1,5 +1,5 @@
 name:                   cabal2spec
-version:                2.0.0
+version:                2.0.1
 synopsis:               Convert Cabal files into rpm spec files
 homepage:               https://github.com/peti/cabal2spec
 license:                GPL-3
