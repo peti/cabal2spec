@@ -1,5 +1,5 @@
 name:                   cabal2spec
-version:                2.0.1
+version:                2.0.2
 synopsis:               Convert Cabal files into rpm spec files
 homepage:               https://github.com/peti/cabal2spec
 license:                GPL-3
@@ -33,7 +33,7 @@ library
   hs-source-dirs:       src
   ghc-options:          -Wall
   build-depends:        base < 5
-                      , Cabal > 2
+                      , Cabal > 2.2
                       , filepath
                       , time >= 1.5
   exposed-modules:      Cabal2Spec
@@ -44,7 +44,7 @@ executable cabal2spec
   hs-source-dirs:       cabal2spec
   other-modules:        Paths_cabal2spec
   build-depends:        base < 5
-                      , Cabal > 2
+                      , Cabal > 2.2
                       , cabal2spec
                       , filepath
                       , optparse-applicative
@@ -56,7 +56,7 @@ test-suite regression-test
   main-is:              Main.hs
   hs-source-dirs:       test
   build-depends:        base
-                      , Cabal > 2
+                      , Cabal > 2.2
                       , cabal2spec
                       , filepath
                       , tasty

@@ -10,7 +10,8 @@ import Distribution.License
 import Distribution.Package
 import Distribution.PackageDescription
 import Distribution.PackageDescription.Configuration
-import Distribution.PackageDescription.Parse
+import Distribution.PackageDescription.Parsec
+import Distribution.Pretty
 import Distribution.System
 import Distribution.Text
 import Distribution.Types.ComponentRequestedSpec
@@ -140,7 +141,7 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
   putHdr "Summary" summary
   putHdr "Group" "Development/Libraries/Haskell"
   putNewline
-  putHdr "License" $ showLicense (license pkgDesc)
+  putHdr "License" $ either (show . pretty) showLicense (licenseRaw pkgDesc)
   putHdr "Url" $ "https://hackage.haskell.org/package/" ++ pkg_name
   putHdr "Source0" $ "https://hackage.haskell.org/package/" ++ pkg_name ++ "-%{version}/" ++ pkg_name ++ "-%{version}.tar.gz"
   when (revision /= "0") $
@@ -198,7 +199,7 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
 
   put "%build"
   when (flagAssignment /= mempty) $ do
-    let cabalFlags = [ "-f" ++ (if b then "" else "-") ++ unFlagName n | (n, b) <- flagAssignment ]
+    let cabalFlags = [ "-f" ++ (if b then "" else "-") ++ unFlagName n | (n, b) <- unFlagAssignment flagAssignment ]
     put $ "%define cabal_configure_options " ++ unwords (sort cabalFlags)
   let pkgType = if hasLib then "lib" else "bin"
   put $ "%ghc_" ++ pkgType ++ "_build"
