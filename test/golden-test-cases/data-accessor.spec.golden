@@ -37,7 +37,7 @@ BuildRequires:  ghc-transformers-devel
 In Haskell 98 the name of a record field is automatically also the name of a
 function which gets the value of the according field. E.g. if we have
 
-data Pair a b = Pair first :: a, second :: b
+data Pair a b = Pair {first :: a, second :: b}
 
 then
 
@@ -46,8 +46,8 @@ then
 However for setting or modifying a field value we need to use some syntactic
 sugar, which is often clumsy.
 
-modifyFirst :: (a -> a) -> (Pair a b -> Pair a b) modifyFirst f r@(Pair first=a
-) = r first = f a
+modifyFirst :: (a -> a) -> (Pair a b -> Pair a b) modifyFirst f r@(Pair
+{first=a}) = r{first = f a}
 
 With this package you can define record field accessors which allow setting,
 getting and modifying values easily. The package clearly demonstrates the power
