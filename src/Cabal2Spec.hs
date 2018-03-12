@@ -16,6 +16,7 @@ import Distribution.System
 import Distribution.Text
 import Distribution.Types.ComponentRequestedSpec
 import Distribution.Types.LegacyExeDependency
+import Distribution.Types.PackageDescription
 import Distribution.Types.PkgconfigDependency
 import Distribution.Types.UnqualComponentName
 import Distribution.Verbosity
@@ -28,9 +29,12 @@ type ForceBinary = Bool
 cabal2spec :: Platform -> CompilerId -> FlagAssignment -> ForceBinary -> FilePath -> FilePath -> IO ()
 cabal2spec platform compilerId flags forceBinary cabalFile specFile = do
   gpd <- readGenericPackageDescription silent cabalFile
-  case finalizePD flags (ComponentRequestedSpec False False) (const True) platform (unknownCompilerInfo compilerId NoAbiTag) [] gpd of
+  case finalizePD flags requestedComponents (const True) platform (unknownCompilerInfo compilerId NoAbiTag) [] gpd of
     Left missing -> fail ("finalizePD: " ++ show missing)
     Right (pd,_) -> createSpecFile specFile pd forceBinary flags
+
+requestedComponents :: ComponentRequestedSpec
+requestedComponents = defaultComponentRequestedSpec
 
 showPkgCfg :: String -> String
 showPkgCfg p = "pkgconfig(" ++ p ++ ")"
@@ -54,7 +58,7 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
       pkgcfgs :: [String]
       pkgcfgs = map showPkgCfg (nub $ map depName $ concatMap pkgconfigDepends buildinfo)
       buildinfo :: [BuildInfo]
-      buildinfo = allBuildInfo pkgDesc
+      buildinfo = enabledBuildInfos pkgDesc requestedComponents
       tools :: [String]
       tools = mkTools (nub $ map depName (concatMap buildTools buildinfo)) ++ chrpath
       clibs :: [String]
