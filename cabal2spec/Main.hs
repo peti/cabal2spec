@@ -52,8 +52,7 @@ pinfo = info
 
 main :: IO ()
 main = do
-  opts@Options {..} <- execParser pinfo
-  print opts
+  Options {..} <- execParser pinfo
   let specFile = fromMaybe (optCabalFile `replaceExtension` "spec") optOutputFile
   putStrLn $ "Writing spec file to " ++ show specFile ++ " ..."
-  cabal2spec buildPlatform buildCompilerId mempty True optCabalFile specFile
+  cabal2spec buildPlatform buildCompilerId (mkFlagAssignment optFlags) True optCabalFile specFile
