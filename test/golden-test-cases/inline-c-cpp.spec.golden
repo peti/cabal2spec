@@ -34,7 +34,6 @@ BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-inline-c-devel
 BuildRequires:  ghc-safe-exceptions-devel
 BuildRequires:  ghc-template-haskell-devel
-BuildRequires:  libstdc++-devel
 %if %{with tests}
 BuildRequires:  ghc-hspec-devel
 %endif
@@ -59,7 +58,6 @@ Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
 Requires:       ghc-%{name} = %{version}-%{release}
-Requires:       libstdc++-devel
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
