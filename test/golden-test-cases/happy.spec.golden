@@ -57,7 +57,7 @@ to the 'yacc' tool for C.
 %cabal_test
 
 %files
-%doc LICENSE
+%license LICENSE
 %doc CHANGES README.md TODO doc examples
 %{_bindir}/%{name}
 

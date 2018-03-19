@@ -67,7 +67,7 @@ Complete interactive development program for Haskell.
 %cabal_test
 
 %files
-%doc LICENSE
+%license LICENSE
 %doc CHANGELOG README.md
 %{_bindir}/%{name}
 %dir %{_datadir}/%{name}-%{version}

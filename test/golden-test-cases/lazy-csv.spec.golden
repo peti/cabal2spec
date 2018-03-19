@@ -76,13 +76,13 @@ This package provides the Haskell %{name} library development files.
 %ghc_pkg_recache
 
 %files
-%doc LICENCE-BSD3
+%license LICENCE-BSD3
 %doc changelog.html
 %{_bindir}/csvSelect
 
 %files -n ghc-%{name} -f ghc-%{name}.files
 %defattr(-,root,root,-)
-%doc LICENCE-BSD3
+%license LICENCE-BSD3
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)

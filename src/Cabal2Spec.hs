@@ -248,7 +248,7 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
     put $ "%postun" +-+ ghcPkgDevel
     putInstallScript
 
-  let license_macro = "%doc"
+  let license_macro = "%license"
   let execs :: [String]
       execs = sort $ map (unUnqualComponentName . exeName) $ filter isBuildable $ executables pkgDesc
 

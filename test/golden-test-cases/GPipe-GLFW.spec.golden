@@ -77,13 +77,13 @@ This package provides the Haskell %{name} library development files.
 %ghc_pkg_recache
 
 %files
-%doc LICENSE
+%license LICENSE
 %dir %{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}-%{version}/CHANGELOG.md
 
 %files -n ghc-%{name} -f ghc-%{name}.files
 %defattr(-,root,root,-)
-%doc LICENSE
+%license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)

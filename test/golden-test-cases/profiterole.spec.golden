@@ -51,7 +51,7 @@ which are typically more concise and may reveal new insights.
 %ghc_bin_install
 
 %files
-%doc LICENSE
+%license LICENSE
 %doc CHANGES.txt README.md
 %{_bindir}/%{name}
 

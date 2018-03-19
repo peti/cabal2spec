@@ -68,7 +68,7 @@ Examples for handling Protein Data Bank file format.
 %cabal_test
 
 %files
-%doc LICENSE
+%license LICENSE
 %doc AUTHORS README.md
 %{_bindir}/CanonicalAxes
 %{_bindir}/CleanPDB

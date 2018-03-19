@@ -80,7 +80,7 @@ compresses the files, adds fingerprints and writes the result to a directory.
 %cabal_test
 
 %files
-%doc LICENSE
+%license LICENSE
 %{_bindir}/%{name}
 
 %changelog

@@ -87,12 +87,12 @@ This package provides the Haskell %{name} library development files.
 %ghc_pkg_recache
 
 %files
-%doc UNLICENSE
+%license UNLICENSE
 %doc README.md
 
 %files -n ghc-%{name} -f ghc-%{name}.files
 %defattr(-,root,root,-)
-%doc UNLICENSE
+%license UNLICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)

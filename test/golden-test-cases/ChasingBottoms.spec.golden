@@ -163,11 +163,11 @@ This package provides the Haskell %{name} library development files.
 %ghc_pkg_recache
 
 %files
-%doc LICENCE
+%license LICENCE
 
 %files -n ghc-%{name} -f ghc-%{name}.files
 %defattr(-,root,root,-)
-%doc LICENCE
+%license LICENCE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %defattr(-,root,root,-)
