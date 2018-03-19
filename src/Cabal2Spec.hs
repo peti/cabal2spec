@@ -132,14 +132,14 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
           '\\' -> head cs: filterSymbols (tail cs)
           _ -> c: filterSymbols cs
       filterSymbols [] = []
-  when hasLib $ do
+  when hasLib $
     putDef "pkg_name" name
 
   when hasSubLib $ do
     putDef "has_internal_sub_libraries" "1"
     putNewline
 
-  unless (null testsuiteDeps) $ do
+  unless (null testsuiteDeps) $
     put "%bcond_with tests"
 
   let version = packageVersion pkg
