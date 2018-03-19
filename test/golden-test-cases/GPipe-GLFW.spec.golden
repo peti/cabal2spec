@@ -1,5 +1,5 @@
 #
-# spec file for package GPipe-GLFW
+# spec file for package GPipe-GLFW.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,31 +15,28 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%global pkg_name GPipe-GLFW
 
+%global pkg_name GPipe-GLFW
 Name:           %{pkg_name}
 Version:        1.4.1.1
 Release:        0
 Summary:        GLFW OpenGL context creation for GPipe
-Group:          Development/Libraries/Haskell
-
 License:        MIT
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-GLFW-b-devel
 BuildRequires:  ghc-GPipe-devel
 BuildRequires:  ghc-async-devel
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-stm-devel
 
 %description
 GPipe-GLFW is a utility library to enable the use of GLFW as the OpenGL window
 and context handler for GPipe. GPipe is a typesafe functional API based on the
 conceptual model of OpenGL.
-
 
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
@@ -48,18 +45,16 @@ Group:          System/Libraries
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
-
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
 Group:          Development/Libraries/Haskell
+Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
-Requires:       ghc-%{name} = %{version}-%{release}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
-
 
 %prep
 %setup -q
@@ -82,10 +77,8 @@ This package provides the Haskell %{name} library development files.
 %{_datadir}/%{name}-%{version}/CHANGELOG.md
 
 %files -n ghc-%{name} -f ghc-%{name}.files
-%defattr(-,root,root,-)
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
-%defattr(-,root,root,-)
 
 %changelog

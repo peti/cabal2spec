@@ -1,5 +1,5 @@
 #
-# spec file for package mole
+# spec file for package mole.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,20 +15,17 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%bcond_with tests
 
+%bcond_with tests
 Name:           mole
 Version:        0.0.6
 Release:        0
 Summary:        A glorified string replacement tool
-Group:          Development/Libraries/Haskell
-
 License:        MIT
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-attoparsec-devel
 BuildRequires:  ghc-base64-bytestring-devel
 BuildRequires:  ghc-bytestring-devel
@@ -44,6 +41,7 @@ BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-network-uri-devel
 BuildRequires:  ghc-optparse-applicative-devel
 BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-snap-core-devel
 BuildRequires:  ghc-snap-server-devel
 BuildRequires:  ghc-stm-devel
@@ -65,7 +63,6 @@ A glorified string replacement tool. For a very specific purpose. That purpose
 being to compile and optimize a static website (or a single-page application).
 Mole inspects source, builds a complete dependency tree, minifies and
 compresses the files, adds fingerprints and writes the result to a directory.
-
 
 %prep
 %setup -q

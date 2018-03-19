@@ -1,5 +1,5 @@
 #
-# spec file for package lazy-csv
+# spec file for package lazy-csv.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,21 +15,19 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%global pkg_name lazy-csv
 
+%global pkg_name lazy-csv
 Name:           %{pkg_name}
 Version:        0.5.1
 Release:        0
 Summary:        Efficient lazy parsers for CSV (comma-separated values)
-Group:          Development/Libraries/Haskell
-
 License:        BSD-3-Clause
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-rpm-macros
 
 %description
 The CSV format is defined by RFC 4180. These efficient lazy parsers (String and
@@ -39,7 +37,6 @@ show warnings, or to halt on error. Valid fields retain information about their
 original location in the input, so a secondary parser from textual fields to
 typed values can give intelligent error messages.
 
-
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
 Group:          System/Libraries
@@ -47,18 +44,16 @@ Group:          System/Libraries
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
-
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
 Group:          Development/Libraries/Haskell
+Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
-Requires:       ghc-%{name} = %{version}-%{release}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
-
 
 %prep
 %setup -q
@@ -81,11 +76,9 @@ This package provides the Haskell %{name} library development files.
 %{_bindir}/csvSelect
 
 %files -n ghc-%{name} -f ghc-%{name}.files
-%defattr(-,root,root,-)
 %license LICENCE-BSD3
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
-%defattr(-,root,root,-)
 %doc changelog.html
 
 %changelog

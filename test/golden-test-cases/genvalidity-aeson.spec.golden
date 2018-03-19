@@ -1,5 +1,5 @@
 #
-# spec file for package genvalidity-aeson
+# spec file for package genvalidity-aeson.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,22 +15,18 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+
 %global pkg_name genvalidity-aeson
-
 %bcond_with tests
-
 Name:           %{pkg_name}
 Version:        0.1.0.0
 Release:        0
 Summary:        GenValidity support for aeson
-Group:          Development/Libraries/Haskell
-
 License:        MIT
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-QuickCheck-devel
 BuildRequires:  ghc-aeson-devel
 BuildRequires:  ghc-genvalidity-devel
@@ -38,6 +34,7 @@ BuildRequires:  ghc-genvalidity-scientific-devel
 BuildRequires:  ghc-genvalidity-text-devel
 BuildRequires:  ghc-genvalidity-unordered-containers-devel
 BuildRequires:  ghc-genvalidity-vector-devel
+BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-validity-aeson-devel
 BuildRequires:  ghc-validity-devel
 %if %{with tests}
@@ -48,7 +45,6 @@ BuildRequires:  ghc-hspec-devel
 %description
 GenValidity support for aeson.
 
-
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
 Group:          System/Libraries
@@ -56,18 +52,16 @@ Group:          System/Libraries
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
-
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
 Group:          Development/Libraries/Haskell
+Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
-Requires:       ghc-%{name} = %{version}-%{release}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
-
 
 %prep
 %setup -q
@@ -91,10 +85,8 @@ This package provides the Haskell %{name} library development files.
 %license LICENSE
 
 %files -n ghc-%{name} -f ghc-%{name}.files
-%defattr(-,root,root,-)
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
-%defattr(-,root,root,-)
 
 %changelog

@@ -1,5 +1,5 @@
 #
-# spec file for package hPDB-examples
+# spec file for package hPDB-examples.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,21 +15,18 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%bcond_with tests
 
+%bcond_with tests
 Name:           hPDB-examples
 Version:        1.2.0.8
 Release:        0
 Summary:        Examples for hPDB library
-Group:          Development/Libraries/Haskell
-
 License:        BSD-3-Clause
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
-BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-AC-Vector-devel
+BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-GLUT-devel
 BuildRequires:  ghc-Octree-devel
 BuildRequires:  ghc-OpenGL-devel
@@ -41,6 +38,7 @@ BuildRequires:  ghc-directory-devel
 BuildRequires:  ghc-hPDB-devel
 BuildRequires:  ghc-iterable-devel
 BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-template-haskell-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-text-format-devel
@@ -53,7 +51,6 @@ BuildRequires:  ghc-time-devel
 
 %description
 Examples for handling Protein Data Bank file format.
-
 
 %prep
 %setup -q

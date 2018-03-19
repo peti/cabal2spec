@@ -1,5 +1,5 @@
 #
-# spec file for package these
+# spec file for package these.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,22 +15,18 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+
 %global pkg_name these
-
 %bcond_with tests
-
 Name:           %{pkg_name}
 Version:        0.7.4
 Release:        0
 Summary:        An either-or-both data type & a generalized 'zip with padding' typeclass
-Group:          Development/Libraries/Haskell
-
 License:        BSD-3-Clause
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-QuickCheck-devel
 BuildRequires:  ghc-aeson-devel
 BuildRequires:  ghc-bifunctors-devel
@@ -42,6 +38,7 @@ BuildRequires:  ghc-hashable-devel
 BuildRequires:  ghc-keys-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-profunctors-devel
+BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-semigroupoids-devel
 BuildRequires:  ghc-transformers-compat-devel
 BuildRequires:  ghc-transformers-devel
@@ -67,7 +64,6 @@ truncating to the size of the smaller input.
 Also included is 'ChronicleT', a monad transformer based on the Monad instance
 for 'These a', along with the usual monad transformer bells and whistles.
 
-
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
 Group:          System/Libraries
@@ -75,18 +71,16 @@ Group:          System/Libraries
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
-
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
 Group:          Development/Libraries/Haskell
+Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
-Requires:       ghc-%{name} = %{version}-%{release}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
-
 
 %prep
 %setup -q
@@ -111,11 +105,9 @@ This package provides the Haskell %{name} library development files.
 %doc CHANGELOG.md README.md
 
 %files -n ghc-%{name} -f ghc-%{name}.files
-%defattr(-,root,root,-)
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
-%defattr(-,root,root,-)
 %doc CHANGELOG.md README.md
 
 %changelog

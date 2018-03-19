@@ -1,5 +1,5 @@
 #
-# spec file for package hmpfr
+# spec file for package hmpfr.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,18 +15,16 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%global pkg_name hmpfr
 
+%global pkg_name hmpfr
 Name:           %{pkg_name}
 Version:        0.4.3
 Release:        0
 Summary:        Haskell binding to the MPFR library
-Group:          Development/Libraries/Haskell
-
 License:        BSD-3-Clause
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  mpfr-devel
@@ -39,7 +37,6 @@ should have a lot less overhead than the pure one.
 
 Some simple examples of usage can be found in demo/Demo.hs.
 
-
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
 Group:          System/Libraries
@@ -47,19 +44,17 @@ Group:          System/Libraries
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
-
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
 Group:          Development/Libraries/Haskell
+Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
+Requires:       mpfr-devel
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
-Requires:       ghc-%{name} = %{version}-%{release}
-Requires:       mpfr-devel
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
-
 
 %prep
 %setup -q
@@ -84,10 +79,8 @@ This package provides the Haskell %{name} library development files.
 %{_datadir}/%{name}-%{version}/dict.txt
 
 %files -n ghc-%{name} -f ghc-%{name}.files
-%defattr(-,root,root,-)
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
-%defattr(-,root,root,-)
 
 %changelog

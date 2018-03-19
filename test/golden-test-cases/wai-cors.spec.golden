@@ -1,5 +1,5 @@
 #
-# spec file for package wai-cors
+# spec file for package wai-cors.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,28 +15,25 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+
 %global pkg_name wai-cors
-
 %bcond_with tests
-
 Name:           %{pkg_name}
 Version:        0.2.6
 Release:        0
 Summary:        CORS for WAI
-Group:          Development/Libraries/Haskell
-
 License:        MIT
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-attoparsec-devel
 BuildRequires:  ghc-base-unicode-symbols-devel
 BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-case-insensitive-devel
 BuildRequires:  ghc-http-types-devel
 BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-transformers-devel
 BuildRequires:  ghc-wai-devel
 %if %{with tests}
@@ -58,7 +55,6 @@ This package provides an implemenation of Cross-Origin resource sharing (CORS)
 for <http://hackage.haskell.org/package/wai Wai> that aims to be compliant with
 <http://www.w3.org/TR/cors>.
 
-
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
 Group:          System/Libraries
@@ -66,18 +62,16 @@ Group:          System/Libraries
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
-
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
 Group:          Development/Libraries/Haskell
+Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
-Requires:       ghc-%{name} = %{version}-%{release}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
-
 
 %prep
 %setup -q
@@ -111,10 +105,8 @@ This package provides the Haskell %{name} library development files.
 %{_datadir}/%{name}-%{version}/test/phantomjs.js
 
 %files -n ghc-%{name} -f ghc-%{name}.files
-%defattr(-,root,root,-)
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
-%defattr(-,root,root,-)
 
 %changelog

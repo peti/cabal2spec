@@ -1,5 +1,5 @@
 #
-# spec file for package haskell-tools-rewrite
+# spec file for package haskell-tools-rewrite.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,28 +15,25 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+
 %global pkg_name haskell-tools-rewrite
-
 %bcond_with tests
-
 Name:           %{pkg_name}
 Version:        1.0.0.3
 Release:        0
 Summary:        Facilities for generating new parts of the Haskell-Tools AST
-Group:          Development/Libraries/Haskell
-
 License:        BSD-3-Clause
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-ghc-devel
 BuildRequires:  ghc-haskell-tools-ast-devel
 BuildRequires:  ghc-haskell-tools-prettyprint-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-references-devel
+BuildRequires:  ghc-rpm-macros
 %if %{with tests}
 BuildRequires:  ghc-directory-devel
 BuildRequires:  ghc-filepath-devel
@@ -51,7 +48,6 @@ already present on the AST. The package is divided into modules based on which
 language elements can the given module generate. This packages should be used
 during the transformations to generate parts of the new AST.
 
-
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
 Group:          System/Libraries
@@ -59,19 +55,17 @@ Group:          System/Libraries
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
-
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
 Group:          Development/Libraries/Haskell
+Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
-Requires:       ghc-%{name} = %{version}-%{release}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development
 files.
-
 
 %prep
 %setup -q
@@ -95,10 +89,8 @@ files.
 %license LICENSE
 
 %files -n ghc-%{name} -f ghc-%{name}.files
-%defattr(-,root,root,-)
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
-%defattr(-,root,root,-)
 
 %changelog

@@ -1,5 +1,5 @@
 #
-# spec file for package minio-hs
+# spec file for package minio-hs.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,22 +15,18 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+
 %global pkg_name minio-hs
-
 %bcond_with tests
-
 Name:           %{pkg_name}
 Version:        0.3.2
 Release:        0
 Summary:        A Minio Haskell Library for Amazon S3 compatible cloud storage
-Group:          Development/Libraries/Haskell
-
 License:        Apache-2.0
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-aeson-devel
 BuildRequires:  ghc-async-devel
 BuildRequires:  ghc-base64-bytestring-devel
@@ -54,6 +50,7 @@ BuildRequires:  ghc-memory-devel
 BuildRequires:  ghc-monad-control-devel
 BuildRequires:  ghc-protolude-devel
 BuildRequires:  ghc-resourcet-devel
+BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-text-format-devel
 BuildRequires:  ghc-time-devel
@@ -75,7 +72,6 @@ BuildRequires:  ghc-temporary-devel
 The Minio Haskell client library provides simple APIs to access Minio, Amazon
 S3 and other API compatible cloud storage servers.
 
-
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
 Group:          System/Libraries
@@ -83,18 +79,16 @@ Group:          System/Libraries
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
-
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
 Group:          Development/Libraries/Haskell
+Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
-Requires:       ghc-%{name} = %{version}-%{release}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
-
 
 %prep
 %setup -q
@@ -118,10 +112,8 @@ This package provides the Haskell %{name} library development files.
 %license LICENSE
 
 %files -n ghc-%{name} -f ghc-%{name}.files
-%defattr(-,root,root,-)
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
-%defattr(-,root,root,-)
 
 %changelog

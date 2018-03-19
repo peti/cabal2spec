@@ -1,5 +1,5 @@
 #
-# spec file for package eventful-sqlite
+# spec file for package eventful-sqlite.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,28 +15,25 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+
 %global pkg_name eventful-sqlite
-
 %bcond_with tests
-
 Name:           %{pkg_name}
 Version:        0.2.0
 Release:        0
 Summary:        SQLite implementations for eventful
-Group:          Development/Libraries/Haskell
-
 License:        MIT
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-aeson-devel
 BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-eventful-core-devel
 BuildRequires:  ghc-eventful-sql-common-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-persistent-devel
+BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-uuid-devel
 %if %{with tests}
@@ -49,7 +46,6 @@ BuildRequires:  ghc-persistent-sqlite-devel
 %description
 SQLite implementations for eventful.
 
-
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
 Group:          System/Libraries
@@ -57,18 +53,16 @@ Group:          System/Libraries
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
-
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
 Group:          Development/Libraries/Haskell
+Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
-Requires:       ghc-%{name} = %{version}-%{release}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
-
 
 %prep
 %setup -q
@@ -93,11 +87,9 @@ This package provides the Haskell %{name} library development files.
 %doc CHANGELOG.md README.md
 
 %files -n ghc-%{name} -f ghc-%{name}.files
-%defattr(-,root,root,-)
 %license LICENSE.md
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
-%defattr(-,root,root,-)
 %doc CHANGELOG.md README.md
 
 %changelog

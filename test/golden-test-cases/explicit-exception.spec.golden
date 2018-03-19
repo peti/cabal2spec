@@ -1,5 +1,5 @@
 #
-# spec file for package explicit-exception
+# spec file for package explicit-exception.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,21 +15,19 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%global pkg_name explicit-exception
 
+%global pkg_name explicit-exception
 Name:           %{pkg_name}
 Version:        0.1.9
 Release:        0
 Summary:        Exceptions which are explicit in the type signature
-Group:          Development/Libraries/Haskell
-
 License:        BSD-3-Clause
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-transformers-devel
 
 %description
@@ -53,7 +51,6 @@ this library, in order to let Haskell programmers get accustomed easily to it.
 
 See also: 'unexceptionalio'.
 
-
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
 Group:          System/Libraries
@@ -61,18 +58,16 @@ Group:          System/Libraries
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
-
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
 Group:          Development/Libraries/Haskell
+Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
-Requires:       ghc-%{name} = %{version}-%{release}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
-
 
 %prep
 %setup -q
@@ -93,10 +88,8 @@ This package provides the Haskell %{name} library development files.
 %license LICENSE
 
 %files -n ghc-%{name} -f ghc-%{name}.files
-%defattr(-,root,root,-)
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
-%defattr(-,root,root,-)
 
 %changelog

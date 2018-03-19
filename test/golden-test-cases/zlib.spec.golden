@@ -1,5 +1,5 @@
 #
-# spec file for package zlib
+# spec file for package zlib.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,23 +15,20 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+
 %global pkg_name zlib
-
 %bcond_with tests
-
 Name:           %{pkg_name}
 Version:        0.6.1.2
 Release:        0
 Summary:        Compression and decompression in the gzip and zlib formats
-Group:          Development/Libraries/Haskell
-
 License:        BSD-3-Clause
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-rpm-macros
 BuildRequires:  zlib-devel
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
@@ -50,7 +47,6 @@ It provides a convenient high level API suitable for most tasks and for the few
 cases where more control is needed it provides access to the full zlib feature
 set.
 
-
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
 Group:          System/Libraries
@@ -58,19 +54,17 @@ Group:          System/Libraries
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
-
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
 Group:          Development/Libraries/Haskell
+Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
+Requires:       zlib-devel
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
-Requires:       ghc-%{name} = %{version}-%{release}
-Requires:       zlib-devel
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
-
 
 %prep
 %setup -q
@@ -95,11 +89,9 @@ This package provides the Haskell %{name} library development files.
 %doc changelog examples
 
 %files -n ghc-%{name} -f ghc-%{name}.files
-%defattr(-,root,root,-)
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
-%defattr(-,root,root,-)
 %doc changelog examples
 
 %changelog

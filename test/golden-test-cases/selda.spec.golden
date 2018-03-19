@@ -1,5 +1,5 @@
 #
-# spec file for package selda
+# spec file for package selda.spec
 #
 # Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
@@ -15,25 +15,23 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%global pkg_name selda
 
+%global pkg_name selda
 Name:           %{pkg_name}
 Version:        0.1.11.2
 Release:        0
 Summary:        Type-safe, high-level EDSL for interacting with relational databases
-Group:          Development/Libraries/Haskell
-
 License:        MIT
-Url:            https://hackage.haskell.org/package/%{name}
+Group:          Development/Libraries/Haskell
+URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-exceptions-devel
 BuildRequires:  ghc-hashable-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-psqueues-devel
+BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-unordered-containers-devel
@@ -47,7 +45,6 @@ you need at least one backend package, in addition to this package.
 There are currently two different backend packages: selda-sqlite and
 selda-postgresql.
 
-
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
 Group:          System/Libraries
@@ -55,18 +52,16 @@ Group:          System/Libraries
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
-
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
 Group:          Development/Libraries/Haskell
+Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}
 Requires(postun): ghc-compiler = %{ghc_version}
-Requires:       ghc-%{name} = %{version}-%{release}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
-
 
 %prep
 %setup -q
@@ -88,11 +83,9 @@ This package provides the Haskell %{name} library development files.
 %doc ChangeLog.md README.md
 
 %files -n ghc-%{name} -f ghc-%{name}.files
-%defattr(-,root,root,-)
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
-%defattr(-,root,root,-)
 %doc ChangeLog.md README.md
 
 %changelog

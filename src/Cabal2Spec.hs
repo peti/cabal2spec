@@ -98,7 +98,7 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
     now <- getCurrentTime
     let year = formatTime defaultTimeLocale "%Y" now
     put "#"
-    put $ "# spec file for package " ++ pkgname
+    put $ "# spec file for package " ++ pkgname ++ ".spec"
     put "#"
     put $ "# Copyright (c) " ++ year ++ " SUSE LINUX GmbH, Nuernberg, Germany."
     put "#"
@@ -113,6 +113,7 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
     putNewline
     put "# Please submit bugfixes or comments via http://bugs.opensuse.org/"
     put "#"
+  putNewline
   putNewline
 
   -- Some packages conflate the synopsis and description fields.  Ugh.
@@ -133,7 +134,6 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
       filterSymbols [] = []
   when hasLib $ do
     putDef "pkg_name" name
-    putNewline
 
   when hasSubLib $ do
     putDef "has_internal_sub_libraries" "1"
@@ -141,7 +141,6 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
 
   unless (null testsuiteDeps) $ do
     put "%bcond_with tests"
-    putNewline
 
   let version = packageVersion pkg
       revision = show $ maybe (0::Int) read (lookup "x-revision" (customFieldsPD pkgDesc))
@@ -149,19 +148,15 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
   putHdr "Version" (display version)
   putHdr "Release" "0"
   putHdr "Summary" summary
-  putHdr "Group" "Development/Libraries/Haskell"
-  putNewline
   putHdr "License" $ either (show . pretty) showLicense (licenseRaw pkgDesc)
-  putHdr "Url" $ "https://hackage.haskell.org/package/" ++ pkg_name
+  putHdr "Group" "Development/Libraries/Haskell"
+  putHdr "URL" $ "https://hackage.haskell.org/package/" ++ pkg_name
   putHdr "Source0" $ "https://hackage.haskell.org/package/" ++ pkg_name ++ "-%{version}/" ++ pkg_name ++ "-%{version}.tar.gz"
   when (revision /= "0") $
     putHdr "Source1" $ "https://hackage.haskell.org/package/" ++ pkg_name ++ "-%{version}/revision/" ++ revision ++ ".cabal#/" ++ pkg_name ++ ".cabal"
-  putNewline
-  putHdr "BuildRequires" "ghc-Cabal-devel"
-  putHdr "BuildRequires" "ghc-rpm-macros"
 
-  let isa = ""
-  let alldeps = sort $ deps ++ tools ++ map (++ isa) clibs ++ pkgcfgs
+  let fixedDeps = ["ghc-Cabal-devel", "ghc-rpm-macros"]
+  let alldeps = sort $ fixedDeps ++ deps ++ tools ++ clibs ++ pkgcfgs ++ ["pkgconfig" | not (null pkgcfgs)]
   let extraTestDeps = sort $ testsuiteDeps \\ deps
   unless (null $ alldeps ++ extraTestDeps) $ do
     mapM_ (putHdr "BuildRequires") alldeps
@@ -174,7 +169,6 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
 
   put "%description"
   mapM_ put descLines
-  putNewline
 
   let wrapGenDesc = wordwrap (79 - max 0 (length pkgname - length pkg_name))
 
@@ -186,20 +180,18 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
       putNewline
       put $ "%description" +-+ ghcPkg
       put $ wrapGenDesc $ "This package provides the Haskell" +-+ pkg_name +-+ "shared library."
-      putNewline
     put $ "%package" +-+ ghcPkgDevel
     putHdr "Summary" $ "Haskell" +-+ pkg_name +-+ "library development files"
     putHdr "Group" "Development/Libraries/Haskell"
+    putHdr "Requires" $ (if binlib then "ghc-%{name}" else "%{name}") +-+ "= %{version}-%{release}"
     putHdr "Requires" "ghc-compiler = %{ghc_version}"
+    unless (null $ clibs ++ pkgcfgs) $
+      mapM_ (putHdr "Requires") $ sort (clibs ++ pkgcfgs ++ ["pkgconfig" | not (null pkgcfgs)])
     putHdr "Requires(post)" "ghc-compiler = %{ghc_version}"
     putHdr "Requires(postun)" "ghc-compiler = %{ghc_version}"
-    putHdr "Requires" $ (if binlib then "ghc-%{name}" else "%{name}") ++ isa +-+ "= %{version}-%{release}"
-    unless (null $ clibs ++ pkgcfgs) $
-      mapM_ (putHdr "Requires") $ sort $ map (++ isa) clibs ++ pkgcfgs ++ ["pkgconfig" | not $ null pkgcfgs]
     putNewline
     put $ "%description" +-+ ghcPkgDevel
     put $ wrapGenDesc $ "This package provides the Haskell" +-+ pkg_name +-+ "library development files."
-    putNewline
 
   put "%prep"
   put $ "%setup -q" ++ (if pkgname /= name then " -n %{pkg_name}-%{version}" else "")
@@ -275,14 +267,12 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
     let baseFiles = if binlib then "-f ghc-%{name}.files" else "-f %{name}.files"
         develFiles = if binlib then "-f ghc-%{name}-devel.files" else "-f %{name}-devel.files"
     put $ "%files" +-+ ghcPkg +-+ baseFiles
-    put "%defattr(-,root,root,-)"
     mapM_ (\ l -> put $ license_macro +-+ l) licensefiles
     unless binlib $
       mapM_ (\ p -> put $ "%{_bindir}/" ++ (if p == name then "%{pkg_name}" else p)) (sort execs)
     unless hasExecPkg listDataFiles
     putNewline
     put $ "%files" +-+ ghcPkgDevel +-+ develFiles
-    put "%defattr(-,root,root,-)"
     unless (null docs) $
       put $ "%doc" +-+ unwords (sort docs)
     putNewline
