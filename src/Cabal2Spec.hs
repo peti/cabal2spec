@@ -206,7 +206,8 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
     let cabalFlags = [ "-f" ++ (if b then "" else "-") ++ unFlagName n | (n, b) <- unFlagAssignment flagAssignment ]
     put $ "%define cabal_configure_options " ++ unwords (sort cabalFlags)
   let pkgType = if hasLib then "lib" else "bin"
-  put $ "%ghc_" ++ pkgType ++ "_build"
+      noHaddockModifier = if not (null (subLibraries pkgDesc)) then "_without_haddock" else ""
+  put $ "%ghc_" ++ pkgType ++ "_build" ++ noHaddockModifier -- https://github.com/haskell/cabal/issues/4969
   putNewline
 
   put "%install"
