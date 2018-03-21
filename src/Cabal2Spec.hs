@@ -368,8 +368,11 @@ infixr 4 +-+
 s +-+ "" = s
 s +-+ t = s ++ " " ++ t
 
-excludedPkgs :: String -> Bool
-excludedPkgs = flip notElem ["Cabal", "base", "ghc-prim", "integer-gmp"]
+excludedPkgs :: PackageDescription -> String -> Bool
+excludedPkgs pkgDesc = flip notElem (subLibs ++ ["Cabal", "base", "ghc-prim", "integer-gmp"])
+  where
+    subLibs :: [String]
+    subLibs = [ unUnqualComponentName ln | l <- subLibraries pkgDesc, Just ln <- [libName l] ]
 
 -- returns list of deps and whether package is self-dependent
 buildDependencies :: PackageDescription -> String -> ([String], Bool)
@@ -378,7 +381,7 @@ buildDependencies pkgDesc self =
       sdeps = maybe [] (map depName . setupDepends) (setupBuildInfo pkgDesc)
       deps  = nub $ bdeps ++ sdeps
   in
-    (filter excludedPkgs (delete self deps), self `elem` deps && hasExes pkgDesc)
+    (filter (excludedPkgs pkgDesc) (delete self deps), self `elem` deps && hasExes pkgDesc)
 
 class IsDependency a where
   depName :: a -> String
@@ -446,7 +449,7 @@ testsuiteDependencies :: PackageDescription -- ^pkg description
                       -> String             -- ^self
                       -> [String]           -- ^depends
 testsuiteDependencies pkgDesc self =
-  map showDep . delete self . filter excludedPkgs . nub . map depName $ concatMap (targetBuildDepends . testBuildInfo) (testSuites pkgDesc)
+  map showDep . delete self . filter (excludedPkgs pkgDesc) . nub . map depName $ concatMap (targetBuildDepends . testBuildInfo) (testSuites pkgDesc)
 
 badDescription :: String -> Bool
 badDescription s = null s
