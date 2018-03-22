@@ -23,7 +23,7 @@ Release:        0
 Summary:        Bindings for GNU libgsasl
 Group:          Development/Libraries/Haskell
 
-License:        GPL-3.0+
+License:        GPL-3.0-or-later
 Url:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 

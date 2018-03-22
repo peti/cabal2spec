@@ -23,7 +23,7 @@ Release:        0
 Summary:        An interface to the GNU readline library
 Group:          Development/Libraries/Haskell
 
-License:        GPL-1.0+
+License:        GPL-1.0-or-later
 Url:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 
