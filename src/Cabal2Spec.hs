@@ -70,6 +70,7 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
       name = unPackageName (packageName pkg)
       hasExec = hasExes pkgDesc
       hasLib = hasLibs pkgDesc
+      hasSubLib = not (null (subLibraries pkgDesc))
   (pkgname, binlib) <- getPkgName (Just specFile) pkgDesc forceBinary
 
   let pkg_name = if pkgname == name then "%{name}" else "%{pkg_name}"
@@ -131,6 +132,10 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
       filterSymbols [] = []
   when hasLib $ do
     putDef "pkg_name" name
+    putNewline
+
+  when hasSubLib $ do
+    putDef "has_internal_sub_libraries" "1"
     putNewline
 
   unless (null testsuiteDeps) $ do
@@ -206,7 +211,7 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
     let cabalFlags = [ "-f" ++ (if b then "" else "-") ++ unFlagName n | (n, b) <- unFlagAssignment flagAssignment ]
     put $ "%define cabal_configure_options " ++ unwords (sort cabalFlags)
   let pkgType = if hasLib then "lib" else "bin"
-      noHaddockModifier = if not (null (subLibraries pkgDesc)) then "_without_haddock" else ""
+      noHaddockModifier = if hasSubLib then "_without_haddock" else ""
   put $ "%ghc_" ++ pkgType ++ "_build" ++ noHaddockModifier -- https://github.com/haskell/cabal/issues/4969
   putNewline
 

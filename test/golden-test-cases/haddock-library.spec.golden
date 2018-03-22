@@ -17,6 +17,8 @@
 
 %global pkg_name haddock-library
 
+%global has_internal_sub_libraries 1
+
 %bcond_with tests
 
 Name:           %{pkg_name}
