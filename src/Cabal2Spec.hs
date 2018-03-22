@@ -310,10 +310,10 @@ normalizeVersion v = case versionNumbers v of
                        _   -> v
 
 showLicense :: License -> String
-showLicense (GPL Nothing) = "GPL-1.0+"
-showLicense (GPL (Just ver)) = "GPL-" ++ display (normalizeVersion ver) ++ "+"
-showLicense (LGPL Nothing) = "LGPL-2.0+"
-showLicense (LGPL (Just ver)) = "LGPL-" ++ display (normalizeVersion ver) ++ "+"
+showLicense (GPL Nothing) = "GPL-1.0-or-later"
+showLicense (GPL (Just ver)) = "GPL-" ++ display (normalizeVersion ver) ++ "-or-later"
+showLicense (LGPL Nothing) = "LGPL-2.0-or-later"
+showLicense (LGPL (Just ver)) = "LGPL-" ++ display (normalizeVersion ver) ++ "-or-later"
 showLicense BSD3 = "BSD-3-Clause"
 showLicense BSD4 = "BSD-4-Clause"
 showLicense MIT = "MIT"
@@ -323,8 +323,8 @@ showLicense OtherLicense = "Unknown"
 showLicense (UnknownLicense l) = "Unknown" +-+ l
 showLicense (Apache Nothing) = "Apache-2.0"
 showLicense (Apache (Just ver)) = "Apache-" ++ display (normalizeVersion ver)
-showLicense (AGPL Nothing) = "AGPLv?"
-showLicense (AGPL (Just ver)) = "AGPLv" ++ display ver
+showLicense (AGPL Nothing) = "AGPL-1.0-or-later"
+showLicense (AGPL (Just ver)) = "AGPL-" ++ display (normalizeVersion ver) ++ "-or-later"
 showLicense BSD2 = "BSD-2-Clause"
 showLicense (MPL ver) = "MPL-" ++ display (normalizeVersion ver)
 showLicense ISC = "ISC"
