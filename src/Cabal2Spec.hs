@@ -98,7 +98,7 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
     now <- getCurrentTime
     let year = formatTime defaultTimeLocale "%Y" now
     put "#"
-    put $ "# spec file for package " ++ pkgname ++ ".spec"
+    put $ "# spec file for package " ++ pkgname
     put "#"
     put $ "# Copyright (c) " ++ year ++ " SUSE LINUX GmbH, Nuernberg, Germany."
     put "#"
