@@ -135,7 +135,7 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
   when hasLib $
     putDef "pkg_name" name
 
-  when hasSubLib $ do
+  when hasSubLib $
     putDef "has_internal_sub_libraries" "1"
 
   unless (null testsuiteDeps) $
