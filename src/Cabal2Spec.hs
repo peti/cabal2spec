@@ -245,8 +245,8 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
 
   let listDataFiles = unless (null (dataFiles pkgDesc)) $ do
                         put ("%dir %{_datadir}/" ++ pkg_name ++ "-%{version}")
-                        mapM_ (put . (("%dir %{_datadir}/" ++ pkg_name ++ "-%{version}/")++)) (sort (listDirs (dataFiles pkgDesc)))
-                        mapM_ (put . (("%{_datadir}/" ++ pkg_name ++ "-%{version}/")++)) (sort (dataFiles pkgDesc))
+                        mapM_ (put . (("%dir %{_datadir}/" ++ pkg_name ++ "-%{version}/")++) . avoidSquareBrackets) (sort (listDirs (dataFiles pkgDesc)))
+                        mapM_ (put . (("%{_datadir}/" ++ pkg_name ++ "-%{version}/")++) . avoidSquareBrackets) (sort (dataFiles pkgDesc))
 
       listDirs :: [FilePath] -> [FilePath]
       listDirs = nub . concatMap (map joinPath . tail . inits) . nub . map init . filter (\p -> length p > 1) . map splitDirectories
@@ -457,3 +457,15 @@ badDescription s = null s
                 || "cf readme" `isPrefixOf` map toLower s
                 || "please refer to readme" `isPrefixOf` map toLower s
                 || "initial project template" `isPrefixOf` map toLower s
+
+-- | @pandoc-2.2.1@ installs a file with square brackets in its name, and that
+-- confuses RPM because it thinks those are shell specials.
+--
+-- TODO: Figure out how this code is supposed to interact with legitimate shell
+-- globs, like '*'.
+
+avoidSquareBrackets :: String -> String
+avoidSquareBrackets []     = []
+avoidSquareBrackets (x:xs)
+  | x `elem` "[]"       = '?' : avoidSquareBrackets xs
+  | otherwise           = x : avoidSquareBrackets xs
