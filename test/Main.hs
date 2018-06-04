@@ -24,4 +24,4 @@ regressionTest cabalFile = do
                    (\ref new -> ["diff", "-u", ref, new])
                    goldenFile
                    specFile
-                   (cabal2spec pid cid mempty True cabalFile specFile)
+                   (cabal2spec pid cid mempty True False cabalFile specFile)

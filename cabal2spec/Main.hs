@@ -18,6 +18,7 @@ data Options = Options
   { optPlatform   :: Platform
   , optCompiler   :: CompilerId
   , optForceExe   :: ForceBinary
+  , optRunTests   :: RunTests
   , optFlags      :: [(FlagName, Bool)]
   , optOutputFile :: Maybe FilePath
   , optCabalFile  :: FilePath
@@ -29,6 +30,7 @@ options = Options
   <$> option (maybeReader simpleParse) (long "platform" <> help "target build platform" <> value buildPlatform <> showDefaultWith (show . display))
   <*> option (maybeReader simpleParse) (long "compiler" <> help "compiler to use when evaluating the Cabal file" <> value buildCompilerId <> showDefaultWith (show . display))
   <*> switch (long "force-exe" <> help "treat this package as a executable-only build even if it defined a library")
+  <*> switch (long "enable-tests" <> help "enable the test suite in the generated build")
   <*> many (option (parseFlag) (short 'f' <> long "flag" <> help "Cabal flag (may be specified multiple times)"))
   <*> optional (strOption (short 'o' <> long "output" <> metavar "FILE" <> help "write generated spec file to this path"))
   <*> strArgument (metavar "CABAL-FILE")
@@ -55,4 +57,4 @@ main = do
   Options {..} <- execParser pinfo
   let specFile = fromMaybe (optCabalFile `replaceExtension` "spec") optOutputFile
   putStrLn $ "Writing spec file to " ++ show specFile ++ " ..."
-  cabal2spec buildPlatform buildCompilerId (mkFlagAssignment optFlags) True optCabalFile specFile
+  cabal2spec buildPlatform buildCompilerId (mkFlagAssignment optFlags) optForceExe optRunTests optCabalFile specFile

@@ -1,4 +1,4 @@
-module Cabal2Spec ( cabal2spec, createSpecFile, ForceBinary ) where
+module Cabal2Spec ( cabal2spec, createSpecFile, ForceBinary, RunTests ) where
 
 import Control.Monad
 import Data.Char
@@ -25,13 +25,15 @@ import System.FilePath
 import System.IO
 
 type ForceBinary = Bool
+type RunTests = Bool
 
-cabal2spec :: Platform -> CompilerId -> FlagAssignment -> ForceBinary -> FilePath -> FilePath -> IO ()
-cabal2spec platform compilerId flags forceBinary cabalFile specFile = do
+cabal2spec :: Platform -> CompilerId -> FlagAssignment -> ForceBinary -> RunTests
+           -> FilePath -> FilePath -> IO ()
+cabal2spec platform compilerId flags forceBinary runTests cabalFile specFile = do
   gpd <- readGenericPackageDescription silent cabalFile
   case finalizePD flags requestedComponents (const True) platform (unknownCompilerInfo compilerId NoAbiTag) [] gpd of
     Left missing -> fail ("finalizePD: " ++ show missing)
-    Right (pd,_) -> createSpecFile specFile pd forceBinary flags
+    Right (pd,_) -> createSpecFile specFile pd forceBinary runTests flags
 
 requestedComponents :: ComponentRequestedSpec
 requestedComponents = defaultComponentRequestedSpec
@@ -48,8 +50,8 @@ mkTools tools' = filter excludedTools $ nub $ map mapTools tools'
     mapTools "gtk2hsTypeGen" = "gtk2hs-buildtools"
     mapTools tool = tool
 
-createSpecFile :: FilePath -> PackageDescription -> ForceBinary -> FlagAssignment -> IO ()
-createSpecFile specFile pkgDesc forceBinary flagAssignment = do
+createSpecFile :: FilePath -> PackageDescription -> ForceBinary -> RunTests -> FlagAssignment -> IO ()
+createSpecFile specFile pkgDesc forceBinary runTests flagAssignment = do
   let deps :: [String]
       deps = map showDep deps'
       deps' :: [String]
@@ -139,7 +141,9 @@ createSpecFile specFile pkgDesc forceBinary flagAssignment = do
     putDef "has_internal_sub_libraries" "1"
 
   unless (null testsuiteDeps) $
-    put "%bcond_with tests"
+    if runTests
+       then put "%bcond_without tests"
+       else put "%bcond_with tests"
 
   let version = packageVersion pkg
       revision = show $ maybe (0::Int) read (lookup "x-revision" (customFieldsPD pkgDesc))
