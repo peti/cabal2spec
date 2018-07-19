@@ -57,4 +57,4 @@ main = do
   Options {..} <- execParser pinfo
   let specFile = fromMaybe (optCabalFile `replaceExtension` "spec") optOutputFile
   putStrLn $ "Writing spec file to " ++ show specFile ++ " ..."
-  cabal2spec buildPlatform buildCompilerId (mkFlagAssignment optFlags) optForceExe optRunTests optCabalFile specFile
+  cabal2spec optPlatform optCompiler (mkFlagAssignment optFlags) optForceExe optRunTests optCabalFile specFile
