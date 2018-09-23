@@ -452,7 +452,7 @@ testsuiteDependencies :: PackageDescription -- ^pkg description
                       -> String             -- ^self
                       -> [String]           -- ^depends
 testsuiteDependencies pkgDesc self =
-  map showDep . delete self . filter (excludedPkgs pkgDesc) . nub . map depName $ concatMap (targetBuildDepends . testBuildInfo) (testSuites pkgDesc)
+  map showDep . delete self . filter (excludedPkgs pkgDesc) . nub . map depName $ concatMap targetBuildDepends (filter buildable (map testBuildInfo (testSuites pkgDesc)))
 
 badDescription :: String -> Bool
 badDescription s = null s

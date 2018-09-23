@@ -17,7 +17,6 @@
 
 
 %global pkg_name mwc-random
-%bcond_with tests
 Name:           %{pkg_name}
 Version:        0.13.6.0
 Release:        0
@@ -32,14 +31,6 @@ BuildRequires:  ghc-primitive-devel
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-vector-devel
-%if %{with tests}
-BuildRequires:  ghc-HUnit-devel
-BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-statistics-devel
-BuildRequires:  ghc-test-framework-devel
-BuildRequires:  ghc-test-framework-hunit-devel
-BuildRequires:  ghc-test-framework-quickcheck2-devel
-%endif
 
 %description
 This package contains code for generating high quality random numbers that
@@ -80,9 +71,6 @@ This package provides the Haskell %{name} library development files.
 
 %install
 %ghc_lib_install
-
-%check
-%cabal_test
 
 %post -n ghc-%{name}-devel
 %ghc_pkg_recache

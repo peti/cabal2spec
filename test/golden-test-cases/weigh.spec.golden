@@ -34,12 +34,6 @@ BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-split-devel
 BuildRequires:  ghc-template-haskell-devel
 BuildRequires:  ghc-temporary-devel
-%if %{with tests}
-BuildRequires:  ghc-bytestring-trie-devel
-BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-random-devel
-BuildRequires:  ghc-unordered-containers-devel
-%endif
 
 %description
 Measure allocations of a Haskell functions/values.
