@@ -377,7 +377,8 @@ excludedPkgs pkgDesc = flip notElem (subLibs ++ ["Cabal", "base", "ghc-prim", "i
 -- returns list of deps and whether package is self-dependent
 buildDependencies :: PackageDescription -> String -> ([String], Bool)
 buildDependencies pkgDesc self =
-  let bdeps = map depName (buildDepends pkgDesc)
+  let bis   = map libBuildInfo (allLibraries pkgDesc) ++ map buildInfo (executables pkgDesc)
+      bdeps = map depName (concatMap targetBuildDepends (filter buildable bis))
       sdeps = maybe [] (map depName . setupDepends) (setupBuildInfo pkgDesc)
       deps  = nub $ bdeps ++ sdeps
   in
