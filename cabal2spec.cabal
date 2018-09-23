@@ -1,5 +1,5 @@
 name:               cabal2spec
-version:            2.2.1
+version:            2.2.2
 synopsis:           Convert Cabal files into rpm spec files
 description:        Convert
                     Cabal files into a
