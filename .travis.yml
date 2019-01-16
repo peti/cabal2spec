@@ -5,7 +5,6 @@
 # For more information, see https://github.com/haskell-CI/haskell-ci
 #
 language: c
-sudo: false
 
 git:
   submodules: false  # whether to recursively clone submodules
@@ -28,9 +27,9 @@ before_cache:
 
 matrix:
   include:
-    - compiler: "ghc-8.6.2"
+    - compiler: "ghc-8.6.3"
     # env: TEST=--disable-tests BENCH=--disable-benchmarks
-      addons: {apt: {packages: [ghc-ppa-tools,cabal-install-2.4,ghc-8.6.2], sources: [hvr-ghc]}}
+      addons: {apt: {packages: [ghc-ppa-tools,cabal-install-2.4,ghc-8.6.3], sources: [hvr-ghc]}}
     - compiler: "ghc-8.4.4"
     # env: TEST=--disable-tests BENCH=--disable-benchmarks
       addons: {apt: {packages: [ghc-ppa-tools,cabal-install-2.4,ghc-8.4.4], sources: [hvr-ghc]}}
@@ -57,7 +56,7 @@ install:
   - BENCH=${BENCH---enable-benchmarks}
   - TEST=${TEST---enable-tests}
   - HADDOCK=${HADDOCK-true}
-  - UNCONSTRAINED=${UNCONSTRAINED-false}
+  - UNCONSTRAINED=${UNCONSTRAINED-true}
   - NOINSTALLEDCONSTRAINTS=${NOINSTALLEDCONSTRAINTS-true}
   - GHCHEAD=${GHCHEAD-false}
   - travis_retry cabal update -v
@@ -66,8 +65,9 @@ install:
   - grep -Ev -- '^\s*--' ${HOME}/.cabal/config | grep -Ev '^\s*$'
   - (cd /tmp && echo '' | cabal new-repl -w ${HC} --build-dep fail)
   - if [ $HCNUMVER -ge 80000 ]; then cabal new-install -w ${HC} -j2 --symlink-bindir=$HOME/.local/bin doctest --constraint='doctest ==0.16.*'; fi
-  - if [ $HCNUMVER -eq 80602 ]; then cabal new-install -w ${HC} -j2 --symlink-bindir=$HOME/.local/bin hlint --constraint='hlint ==2.1.*'; fi
+  - if [ $HCNUMVER -eq 80603 ]; then cabal new-install -w ${HC} -j2 --symlink-bindir=$HOME/.local/bin hlint --constraint='hlint ==2.1.*'; fi
   - "printf 'packages: \".\"\\n' > cabal.project"
+  - "printf 'write-ghc-environment-files: always\\n' >> cabal.project"
   - touch cabal.project.local
   - "if ! $NOINSTALLEDCONSTRAINTS; then for pkg in $($HCPKG list --simple-output); do echo $pkg  | grep -vw -- cabal2spec | sed 's/^/constraints: /' | sed 's/-[^-]*$/ installed/' >> cabal.project.local; done; fi"
   - cat cabal.project || true
@@ -90,6 +90,7 @@ script:
   - cd ${DISTDIR} || false
   - find . -maxdepth 1 -name '*.tar.gz' -exec tar -xvf '{}' \;
   - "printf 'packages: cabal2spec-*/*.cabal\\n' > cabal.project"
+  - "printf 'write-ghc-environment-files: always\\n' >> cabal.project"
   - touch cabal.project.local
   - "if ! $NOINSTALLEDCONSTRAINTS; then for pkg in $($HCPKG list --simple-output); do echo $pkg  | grep -vw -- cabal2spec | sed 's/^/constraints: /' | sed 's/-[^-]*$/ installed/' >> cabal.project.local; done; fi"
   - cat cabal.project || true
@@ -105,7 +106,7 @@ script:
   - if [ $HCNUMVER -ge 80000 ]; then (cd cabal2spec-* && doctest  -XMonadFailDesugaring src); fi
 
   # hlint
-  - if [ $HCNUMVER -eq 80602 ]; then (cd cabal2spec-* && hlint -XMonadFailDesugaring src); fi
+  - if [ $HCNUMVER -eq 80603 ]; then (cd cabal2spec-* && hlint -XMonadFailDesugaring src); fi
 
   # cabal check
   - (cd cabal2spec-* && cabal check)
