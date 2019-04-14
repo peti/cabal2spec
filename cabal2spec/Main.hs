@@ -1,3 +1,4 @@
+{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE RecordWildCards #-}
 
 module Main ( main ) where
@@ -36,11 +37,11 @@ options = Options
   <*> strArgument (metavar "CABAL-FILE")
 
 parseFlag :: ReadM (FlagName,Bool)
-parseFlag = maybeReader $ \s -> case s of
-                                  []      -> Nothing
-                                  ('-':f) -> Just (mkFlagName f, False)
-                                  ('+':f) -> Just (mkFlagName f, True)
-                                  f       -> Just (mkFlagName f, True)
+parseFlag = maybeReader $ \case
+                            []      -> Nothing
+                            ('-':f) -> Just (mkFlagName f, False)
+                            ('+':f) -> Just (mkFlagName f, True)
+                            f       -> Just (mkFlagName f, True)
 
 pinfo :: ParserInfo Options
 pinfo = info
