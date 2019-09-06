@@ -372,7 +372,7 @@ excludedPkgs :: PackageDescription -> String -> Bool
 excludedPkgs pkgDesc = flip notElem (subLibs ++ ["Cabal", "base", "ghc-prim", "integer-gmp"])
   where
     subLibs :: [String]
-    subLibs = [ unUnqualComponentName ln | l <- subLibraries pkgDesc, Just ln <- [libName l] ]
+    subLibs = [ unUnqualComponentName ln | l <- subLibraries pkgDesc, LSubLibName ln <- [libName l] ]
 
 -- returns list of deps and whether package is self-dependent
 buildDependencies :: PackageDescription -> String -> ([String], Bool)
@@ -388,7 +388,7 @@ class IsDependency a where
   depName :: a -> String
 
 instance IsDependency Dependency where
-  depName (Dependency n _) = unPackageName n
+  depName (Dependency n _ _) = unPackageName n
 
 instance IsDependency PkgconfigDependency where
   depName (PkgconfigDependency n _) = unPkgconfigName n

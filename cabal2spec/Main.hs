@@ -8,6 +8,7 @@ import Paths_cabal2spec ( version )
 
 import Data.Maybe
 import Data.Monoid
+import Data.Version
 import Distribution.Compiler
 import Distribution.PackageDescription hiding ( options )
 import Distribution.System
@@ -46,7 +47,7 @@ parseFlag = maybeReader $ \case
 pinfo :: ParserInfo Options
 pinfo = info
         (   helper
-        <*> infoOption ("cabal2spec " ++ display version) (long "version" <> help "Show version number")
+        <*> infoOption ("cabal2spec " ++ showVersion version) (long "version" <> help "Show version number")
         <*> options
         )
         (  fullDesc
