@@ -23,7 +23,6 @@ Version:        0.0.5
 Release:        0
 Summary:        A library for algebraic graph construction and transformation
 License:        MIT
-Group:          Development/Libraries/Haskell
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 BuildRequires:  ghc-Cabal-devel
@@ -69,14 +68,12 @@ This is an experimental library and the API will be unstable until version
 
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
-Group:          System/Libraries
 
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
-Group:          Development/Libraries/Haskell
 Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}

@@ -152,7 +152,6 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment = do
   putHdr "Release" "0"
   putHdr "Summary" summary
   putHdr "License" $ either (show . pretty) showLicense (licenseRaw pkgDesc)
-  putHdr "Group" "Development/Libraries/Haskell"
   putHdr "URL" $ "https://hackage.haskell.org/package/" ++ pkg_name
   putHdr "Source0" $ "https://hackage.haskell.org/package/" ++ pkg_name ++ "-%{version}/" ++ pkg_name ++ "-%{version}.tar.gz"
   when (revision /= "0") $
@@ -179,13 +178,11 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment = do
     when binlib $ do
       put $ "%package" +-+ ghcPkg
       putHdr "Summary" $ "Haskell" +-+ pkg_name +-+ "library"
-      putHdr "Group" "System/Libraries"
       putNewline
       put $ "%description" +-+ ghcPkg
       put $ wrapGenDesc $ "This package provides the Haskell" +-+ pkg_name +-+ "shared library."
     put $ "%package" +-+ ghcPkgDevel
     putHdr "Summary" $ "Haskell" +-+ pkg_name +-+ "library development files"
-    putHdr "Group" "Development/Libraries/Haskell"
     putHdr "Requires" $ (if binlib then "ghc-%{name}" else "%{name}") +-+ "= %{version}-%{release}"
     putHdr "Requires" "ghc-compiler = %{ghc_version}"
     unless (null $ clibs ++ pkgcfgs) $

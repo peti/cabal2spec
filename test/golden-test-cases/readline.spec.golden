@@ -22,7 +22,6 @@ Version:        1.0.3.0
 Release:        0
 Summary:        An interface to the GNU readline library
 License:        GPL-1.0-or-later
-Group:          Development/Libraries/Haskell
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 BuildRequires:  ghc-Cabal-devel
@@ -35,14 +34,12 @@ http://www.gnu.org/directory/readline.html.
 
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
-Group:          System/Libraries
 
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
-Group:          Development/Libraries/Haskell
 Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}

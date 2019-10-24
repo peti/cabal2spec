@@ -23,7 +23,6 @@ Version:        2.3.0.1
 Release:        0
 Summary:        Driver (client) for MongoDB, a free, scalable, fast, document DBMS
 License:        Apache-2.0
-Group:          Development/Libraries/Haskell
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 BuildRequires:  ghc-Cabal-devel
@@ -68,14 +67,12 @@ For information about MongoDB itself, see www.mongodb.org.
 
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
-Group:          System/Libraries
 
 %description -n ghc-%{name}
 This package provides the Haskell %{name} shared library.
 
 %package -n ghc-%{name}-devel
 Summary:        Haskell %{name} library development files
-Group:          Development/Libraries/Haskell
 Requires:       ghc-%{name} = %{version}-%{release}
 Requires:       ghc-compiler = %{ghc_version}
 Requires(post): ghc-compiler = %{ghc_version}
