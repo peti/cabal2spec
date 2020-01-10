@@ -14,7 +14,7 @@ license:            GPL-3
 license-file:       LICENSE
 author:             Peter Simons, Bryan O'Sullivan, Jens Petersen
 maintainer:         simons@cryp.to
-tested-with:        GHC == 8.0.2, GHC == 8.2.2, GHC == 8.4.4, GHC == 8.6.5, GHC == 8.8.1
+tested-with:        GHC == 8.0.2, GHC == 8.2.2, GHC == 8.4.4, GHC == 8.6.5, GHC == 8.8.1, GHC == 8.10.1
 category:           Distribution
 homepage:           https://github.com/peti/cabal2spec
 build-type:         Simple
@@ -30,9 +30,8 @@ source-repository head
 library
   exposed-modules:    Cabal2Spec
   hs-source-dirs:     src
-  build-depends:      base < 5, Cabal == 3.0.*, filepath, time >= 1.5
+  build-depends:      base < 5, Cabal > 3.0 && < 3.2, filepath, time >= 1.5
   default-language:   Haskell2010
-  default-extensions: MonadFailDesugaring
   ghc-options:        -Wall -Wcompat -Wincomplete-uni-patterns -Wincomplete-record-updates
                       -Wredundant-constraints
 
@@ -40,9 +39,8 @@ executable cabal2spec
   main-is:            Main.hs
   other-modules:      Paths_cabal2spec
   hs-source-dirs:     cabal2spec
-  build-depends:      base < 5, Cabal > 2.2, cabal2spec, filepath, optparse-applicative
+  build-depends:      base, Cabal, cabal2spec, filepath, optparse-applicative
   default-language:   Haskell2010
-  default-extensions: MonadFailDesugaring
   ghc-options:        -Wall -Wcompat -Wincomplete-uni-patterns -Wincomplete-record-updates
                       -Wredundant-constraints
 
@@ -50,8 +48,7 @@ test-suite regression-test
   type:               exitcode-stdio-1.0
   main-is:            Main.hs
   hs-source-dirs:     test
-  build-depends:      base, Cabal > 2.2, cabal2spec, filepath, tasty, tasty-golden
+  build-depends:      base, Cabal, cabal2spec, filepath, tasty, tasty-golden
   default-language:   Haskell2010
-  default-extensions: MonadFailDesugaring
   ghc-options:        -Wall -Wcompat -Wincomplete-uni-patterns -Wincomplete-record-updates
                       -Wredundant-constraints
