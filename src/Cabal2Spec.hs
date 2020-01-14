@@ -1,4 +1,4 @@
-module Cabal2Spec ( cabal2spec, createSpecFile, ForceBinary, RunTests ) where
+module Cabal2Spec ( cabal2spec, createSpecFile, ForceBinary, RunTests, CopyrightYear ) where
 
 import Control.Monad
 import Data.Char
@@ -26,14 +26,15 @@ import System.IO
 
 type ForceBinary = Bool
 type RunTests = Bool
+type CopyrightYear = Int
 
-cabal2spec :: Platform -> CompilerId -> FlagAssignment -> ForceBinary -> RunTests
+cabal2spec :: Platform -> CompilerId -> FlagAssignment -> ForceBinary -> RunTests -> Maybe CopyrightYear
            -> FilePath -> FilePath -> IO ()
-cabal2spec platform compilerId flags forceBinary runTests cabalFile specFile = do
+cabal2spec platform compilerId flags forceBinary runTests copyrightYear cabalFile specFile = do
   gpd <- readGenericPackageDescription silent cabalFile
   case finalizePD flags requestedComponents (const True) platform (unknownCompilerInfo compilerId NoAbiTag) [] gpd of
     Left missing -> fail ("finalizePD: " ++ show missing)
-    Right (pd,_) -> createSpecFile specFile pd forceBinary runTests flags
+    Right (pd,_) -> createSpecFile specFile pd forceBinary runTests flags copyrightYear
 
 requestedComponents :: ComponentRequestedSpec
 requestedComponents = defaultComponentRequestedSpec
@@ -50,8 +51,8 @@ mkTools tools' = filter excludedTools $ nub $ map mapTools tools'
     mapTools "gtk2hsTypeGen" = "gtk2hs-buildtools"
     mapTools tool = tool
 
-createSpecFile :: FilePath -> PackageDescription -> ForceBinary -> RunTests -> FlagAssignment -> IO ()
-createSpecFile specFile pkgDesc forceBinary runTests flagAssignment = do
+createSpecFile :: FilePath -> PackageDescription -> ForceBinary -> RunTests -> FlagAssignment -> Maybe CopyrightYear -> IO ()
+createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYear = do
   let deps :: [String]
       deps = map showDep deps'
       deps' :: [String]
@@ -97,8 +98,9 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment = do
       ghcPkgDevel = if binlib then "-n ghc-%{name}-devel" else "devel"
 
   do
-    now <- getCurrentTime
-    let year = formatTime defaultTimeLocale "%Y" now
+    year <- case copyrightYear of
+              Just y -> return (show y)
+              Nothing -> formatTime defaultTimeLocale "%Y" <$> getCurrentTime
     put "#"
     put $ "# spec file for package " ++ pkgname
     put "#"

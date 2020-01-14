@@ -17,13 +17,14 @@ import Options.Applicative
 import System.FilePath
 
 data Options = Options
-  { optPlatform   :: Platform
-  , optCompiler   :: CompilerId
-  , optForceExe   :: ForceBinary
-  , optRunTests   :: RunTests
-  , optFlags      :: [(FlagName, Bool)]
-  , optOutputFile :: Maybe FilePath
-  , optCabalFile  :: FilePath
+  { optPlatform      :: Platform
+  , optCompiler      :: CompilerId
+  , optForceExe      :: ForceBinary
+  , optRunTests      :: RunTests
+  , optCopyrightYear :: Maybe CopyrightYear
+  , optFlags         :: [(FlagName, Bool)]
+  , optOutputFile    :: Maybe FilePath
+  , optCabalFile     :: FilePath
   }
   deriving (Show)
 
@@ -33,6 +34,7 @@ options = Options
   <*> option (maybeReader simpleParse) (long "compiler" <> help "compiler to use when evaluating the Cabal file" <> value buildCompilerId <> showDefaultWith (show . display))
   <*> switch (long "force-exe" <> help "treat this package as a executable-only build even if it defined a library")
   <*> switch (long "enable-tests" <> help "enable the test suite in the generated build")
+  <*> optional (option auto (long "copyright-year" <> help "specify the year to be used in the copyright header"))
   <*> many (option parseFlag (short 'f' <> long "flag" <> help "Cabal flag (may be specified multiple times)"))
   <*> optional (strOption (short 'o' <> long "output" <> metavar "FILE" <> help "write generated spec file to this path"))
   <*> strArgument (metavar "CABAL-FILE")
@@ -59,4 +61,4 @@ main = do
   Options {..} <- execParser pinfo
   let specFile = fromMaybe (optCabalFile `replaceExtension` "spec") optOutputFile
   putStrLn $ "Writing spec file to " ++ show specFile ++ " ..."
-  cabal2spec optPlatform optCompiler (mkFlagAssignment optFlags) optForceExe optRunTests optCabalFile specFile
+  cabal2spec optPlatform optCompiler (mkFlagAssignment optFlags) optForceExe optRunTests optCopyrightYear optCabalFile specFile
