@@ -55,7 +55,7 @@ homepage,
 and, Mutsuo Saito and Makoto Matsumoto, /SIMD-oriented Fast Mersenne Twister: a
 128-bit Pseudorandom Number Generator/, in the Proceedings of MCQMC2006, here:
 
-<http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/ARTICLES/sfmt.pdf> .
+<http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/ARTICLES/sfmt.pdf>.
 
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library

@@ -143,7 +143,7 @@ and development welcome).
 <http://groups.google.com/group/accelerate-haskell>
 
 * Bug reports and issue tracking:
-<https://github.com/AccelerateHS/accelerate/issues> .
+<https://github.com/AccelerateHS/accelerate/issues>.
 
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library

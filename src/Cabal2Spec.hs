@@ -19,6 +19,7 @@ import Distribution.Types.LegacyExeDependency
 import Distribution.Types.PackageDescription
 import Distribution.Types.PkgconfigDependency
 import Distribution.Types.UnqualComponentName
+import Distribution.Utils.ShortText ( fromShortText )
 import Distribution.Verbosity
 import Distribution.Version
 import System.FilePath
@@ -121,12 +122,12 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
   putNewline
 
   -- Some packages conflate the synopsis and description fields.  Ugh.
-  let syn = synopsis pkgDesc
+  let syn = fromShortText (synopsis pkgDesc)
   let initialCapital (c:cs) = toUpper c:cs
       initialCapital [] = []
   let syn' = if badDescription syn then "FIXME" else (unwords . lines . initialCapital) syn
-  let summary = rstrip (== '.') syn'
-  let descr = description pkgDesc
+  let summary = rstrip (== '.') . rstrip isSpace $ syn'
+  let descr = rstrip isSpace (fromShortText (description pkgDesc))
   let descLines = (formatParagraphs . initialCapital . filterSymbols . finalPeriod) $ if badDescription descr then syn' else descr
       finalPeriod cs = if last cs == '.' then cs else cs ++ "."
       filterSymbols (c:cs) =

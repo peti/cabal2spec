@@ -86,7 +86,7 @@ with <http://hackage.haskell.org/package/http-client-tls http-client-tls>)
 
 * <http://hackage.haskell.org/package/req req>
 
-* <http://hackage.haskell.org/package/wreq wreq> .
+* <http://hackage.haskell.org/package/wreq wreq>.
 
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library

@@ -58,7 +58,7 @@ This implementation is fully interoperable with the main C implementation.
 
 This is stricly only manipulating the git store (what's inside the .git
 directory), and doesn't do anything with the index or your working directory
-files. .
+files.
 
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library

@@ -37,7 +37,7 @@ necessary constraints) to refine the terms generated:
 import Test.QuickCheck import Test.QuickCheck.Instances import GHC.TypeLits
 &#13; instance Arbitrary LinearEquation where &#32;&#32;arbitrary = do
 &#32;&#32;&#32;&#32;vars <- arbitrary :: Gen (AtLeast 3 Set String)
-&#32;&#32;&#32;&#32;&#45;&#45; ... ' .
+&#32;&#32;&#32;&#32;&#45;&#45; ... '.
 
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library

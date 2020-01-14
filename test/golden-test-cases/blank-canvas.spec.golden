@@ -73,7 +73,7 @@ main = blankCanvas 3000 $ \ context -> do -- start blank canvas on port 3000
 <<https://github.com/ku-fpg/blank-canvas/wiki/images/Red_Line.png>>
 
 For more details, read the <https://github.com/ku-fpg/blank-canvas/wiki
-blank-canvas wiki>. .
+blank-canvas wiki>.
 
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library

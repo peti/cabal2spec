@@ -51,7 +51,7 @@ BuildRequires:  ghc-quickcheck-instances-devel
 %description
 This is a small library for working with changes to JSON documents. It includes
 a library and two command-line executables in the style of the diff(1) and
-patch(1) commands available on many systems. .
+patch(1) commands available on many systems.
 
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library

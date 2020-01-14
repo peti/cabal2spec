@@ -34,7 +34,7 @@ The code is generated from the
 <http://www.loc.gov/standards/iso639-2/php/English_list.php official site>
 using haskell-src-exts in an extra file included in the .tar.gz.
 
-Special thanks to Petter Bergman for the suggestions and bug fixing .
+Special thanks to Petter Bergman for the suggestions and bug fixing.
 
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library

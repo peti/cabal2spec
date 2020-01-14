@@ -56,7 +56,7 @@ You should only need the following modules:
 used to create Json and XML trees that can be validated.
 
 If you want to implement your own parser then you can look at the Parsers
-module .
+module.
 
 %package -n ghc-%{name}
 Summary:        Haskell %{name} library
