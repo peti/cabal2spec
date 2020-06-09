@@ -3,12 +3,6 @@
 packages: .
 tests: True
 
--- jailbreak these builds for ghc-8.10.1
-allow-newer:
-  async:base
-  hashable:base
-
 package cabal2spec
   ghc-options:        -Wall -Wcompat -Wincomplete-uni-patterns -Wincomplete-record-updates
                       -Wredundant-constraints
-
