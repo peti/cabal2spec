@@ -105,7 +105,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     put "#"
     put $ "# spec file for package " ++ pkgname
     put "#"
-    put $ "# Copyright (c) " ++ year ++ " SUSE LINUX GmbH, Nuernberg, Germany."
+    put $ "# Copyright (c) " ++ year ++ " SUSE LLC"
     put "#"
     put "# All modifications and additions to the file contributed by third parties"
     put "# remain the property of their copyright owners, unless otherwise agreed"
