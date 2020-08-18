@@ -39,7 +39,7 @@ Given a GHC profile output, this tool generates alternative views on the data,
 which are typically more concise and may reveal new insights.
 
 %prep
-%setup -q
+%autosetup
 
 %build
 %ghc_bin_build

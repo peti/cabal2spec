@@ -64,7 +64,7 @@ Mole inspects source, builds a complete dependency tree, minifies and
 compresses the files, adds fingerprints and writes the result to a directory.
 
 %prep
-%setup -q
+%autosetup
 
 %build
 %ghc_bin_build

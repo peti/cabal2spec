@@ -52,7 +52,7 @@ BuildRequires:  ghc-time-devel
 Examples for handling Protein Data Bank file format.
 
 %prep
-%setup -q
+%autosetup
 
 %build
 %ghc_bin_build

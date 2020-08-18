@@ -41,7 +41,7 @@ Happy generates Haskell code to parse the grammar. Happy works in a similar way
 to the 'yacc' tool for C.
 
 %prep
-%setup -q
+%autosetup
 
 %build
 %ghc_bin_build

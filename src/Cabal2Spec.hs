@@ -197,7 +197,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     put $ wrapGenDesc $ "This package provides the Haskell" +-+ pkg_name +-+ "library development files."
 
   put "%prep"
-  put $ "%setup -q" ++ (if pkgname /= name then " -n %{pkg_name}-%{version}" else "")
+  put $ "%autosetup" ++ (if pkgname /= name then " -n %{pkg_name}-%{version}" else "")
   when (revision /= "0") $
     put $ "cp -p %{SOURCE1}" +-+ pkg_name ++ ".cabal"
   putNewline

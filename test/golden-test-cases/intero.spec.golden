@@ -51,7 +51,7 @@ BuildRequires:  ghc-temporary-devel
 Complete interactive development program for Haskell.
 
 %prep
-%setup -q
+%autosetup
 
 %build
 %ghc_bin_build
