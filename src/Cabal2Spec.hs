@@ -116,7 +116,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     put "# license that conforms to the Open Source Definition (Version 1.9)"
     put "# published by the Open Source Initiative."
     putNewline
-    put "# Please submit bugfixes or comments via http://bugs.opensuse.org/"
+    put "# Please submit bugfixes or comments via https://bugs.opensuse.org/"
     put "#"
   putNewline
   putNewline
