@@ -2,7 +2,7 @@ module Cabal2Spec ( cabal2spec, createSpecFile, ForceBinary, RunTests, Copyright
 
 import Control.Monad
 import Data.Char
-import Data.List
+import Data.List ( delete, nub, sort, (\\), inits, intersect, isPrefixOf, groupBy )
 import Data.Time.Clock
 import Data.Time.Format
 import Distribution.Compiler
