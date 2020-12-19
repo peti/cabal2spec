@@ -7,7 +7,6 @@ import Cabal2Spec
 import Paths_cabal2spec ( version )
 
 import Data.Maybe
-import Data.Monoid
 import Data.Version
 import Distribution.Compiler
 import Distribution.PackageDescription hiding ( options )

@@ -25,6 +25,7 @@ Summary:        A parser and writer for the HTTP Link header as specified in RFC
 License:        SUSE-Public-Domain
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-attoparsec-devel
 BuildRequires:  ghc-bytestring-conversion-devel

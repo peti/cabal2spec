@@ -25,6 +25,7 @@ Summary:        Read and write IDX data that is used in e.g. the MNIST database
 License:        LGPL-3.0-or-later
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-binary-devel
 BuildRequires:  ghc-bytestring-devel

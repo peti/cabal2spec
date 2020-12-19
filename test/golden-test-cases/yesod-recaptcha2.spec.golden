@@ -24,6 +24,7 @@ Summary:        Yesod recaptcha2
 License:        MIT
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-classy-prelude-yesod-devel
 BuildRequires:  ghc-http-conduit-devel

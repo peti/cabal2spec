@@ -24,6 +24,7 @@ Summary:        Generate high quality pseudorandom numbers using a SIMD Fast Mer
 License:        BSD-3-Clause
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-old-time-devel
 BuildRequires:  ghc-rpm-macros

@@ -24,6 +24,7 @@ Summary:        Tools for working with functions of undetermined arity
 License:        BSD-3-Clause
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-constraints-devel
 BuildRequires:  ghc-rpm-macros

@@ -24,6 +24,7 @@ Summary:        Read and write Repa arrays in various formats
 License:        BSD-3-Clause
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-binary-devel
 BuildRequires:  ghc-bmp-devel

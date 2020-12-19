@@ -24,6 +24,7 @@ Summary:        Takes a Haskell source-code file and outputs its modules
 License:        MIT
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-MissingH-devel
 BuildRequires:  ghc-async-devel

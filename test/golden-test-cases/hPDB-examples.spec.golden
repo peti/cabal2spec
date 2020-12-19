@@ -24,6 +24,7 @@ Summary:        Examples for hPDB library
 License:        BSD-3-Clause
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+ExcludeArch:    %{ix86}
 BuildRequires:  ghc-AC-Vector-devel
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-GLUT-devel

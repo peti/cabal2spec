@@ -24,6 +24,7 @@ Summary:        Drop-in compatibility package to migrate from »ansi-wl-pprint«
 License:        BSD-2-Clause
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-prettyprinter-ansi-terminal-devel
 BuildRequires:  ghc-prettyprinter-devel
