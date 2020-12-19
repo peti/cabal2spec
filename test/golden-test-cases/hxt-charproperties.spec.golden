@@ -24,6 +24,7 @@ Summary:        Character properties and classes for XML and Unicode
 License:        MIT
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-rpm-macros
 

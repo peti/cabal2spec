@@ -25,6 +25,7 @@ Summary:        Amazon EC2 Container Service SDK
 License:        MPL-2.0
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-amazonka-core-devel
 BuildRequires:  ghc-rpm-macros
