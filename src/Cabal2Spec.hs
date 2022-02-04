@@ -16,10 +16,6 @@ import Distribution.System
 import Distribution.Text
 import Distribution.Utils.Path ( getSymbolicPath )
 import Distribution.Types.ComponentRequestedSpec
-import Distribution.Types.LegacyExeDependency
-import Distribution.Types.PackageDescription
-import Distribution.Types.PkgconfigDependency
-import Distribution.Types.UnqualComponentName
 import Distribution.Utils.ShortText ( fromShortText )
 import Distribution.Verbosity
 import Distribution.Version
