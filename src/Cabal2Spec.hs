@@ -14,6 +14,7 @@ import Distribution.PackageDescription.Parsec
 import Distribution.Pretty
 import Distribution.System
 import Distribution.Text
+import Distribution.Utils.Path ( getSymbolicPath )
 import Distribution.Types.ComponentRequestedSpec
 import Distribution.Types.LegacyExeDependency
 import Distribution.Types.PackageDescription
@@ -217,7 +218,8 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
   when selfdep $
     put $ "%ghc_fix_rpath" +-+ "%{pkg_name}-%{version}"
 
-  let licensefiles = licenseFiles pkgDesc
+  -- TODO: getSymbolicPath should not be used like this
+  let licensefiles = map getSymbolicPath (licenseFiles pkgDesc)
 
   -- remove docs from datafiles (#38)
   docsUnfiltered <- fmap sort (findDocs (extraSrcFiles pkgDesc ++ extraDocFiles pkgDesc) licensefiles)
