@@ -24,6 +24,7 @@ Summary:        GLFW OpenGL context creation for GPipe
 License:        MIT
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-GLFW-b-devel
 BuildRequires:  ghc-GPipe-devel

@@ -25,6 +25,7 @@ Summary:        Generic parser library capable of providing partial results from
 License:        GPL-1.0-or-later
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
+ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-monoid-subclasses-devel
 BuildRequires:  ghc-rpm-macros
