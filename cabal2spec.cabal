@@ -14,8 +14,7 @@ license:            GPL-3
 license-file:       LICENSE
 author:             Peter Simons, Bryan O'Sullivan, Jens Petersen
 maintainer:         simons@cryp.to
-tested-with:        GHC == 7.10.3, GHC == 8.0.2, GHC == 8.2.2, GHC == 8.4.4, GHC == 8.6.5,
-                    GHC == 8.8.4, GHC == 8.10.7, GHC == 9.0.1, GHC == 9.2.1
+tested-with:        GHC == 8.6.5, GHC == 8.8.4, GHC == 8.10.7, GHC == 9.0.1, GHC == 9.2.1
 category:           Distribution
 homepage:           https://github.com/peti/cabal2spec
 build-type:         Simple
@@ -31,7 +30,7 @@ source-repository head
 library
   exposed-modules:  Cabal2Spec
   hs-source-dirs:   src
-  build-depends:    base > 4.8 && < 5, Cabal == 3.6.2.*, filepath, time >= 1.5
+  build-depends:    base > 4.12 && < 5, Cabal == 3.6.2.*, filepath, time >= 1.5
   default-language: Haskell2010
 
 executable cabal2spec
