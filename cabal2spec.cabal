@@ -25,7 +25,7 @@ cabal-version:      >= 1.10
 
 source-repository head
   type:     git
-  location: git://github.com/peti/cabal2spec.git
+  location: https://github.com/peti/cabal2spec.git
 
 library
   exposed-modules:  Cabal2Spec
