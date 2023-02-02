@@ -12,10 +12,11 @@ import Distribution.PackageDescription
 import Distribution.PackageDescription.Configuration
 import Distribution.PackageDescription.Parsec
 import Distribution.Pretty
+import Distribution.Simple.PackageDescription
 import Distribution.System
 import Distribution.Text
-import Distribution.Utils.Path ( getSymbolicPath )
 import Distribution.Types.ComponentRequestedSpec
+import Distribution.Utils.Path ( getSymbolicPath )
 import Distribution.Utils.ShortText ( fromShortText )
 import Distribution.Verbosity
 import Distribution.Version
