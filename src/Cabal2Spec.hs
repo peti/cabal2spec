@@ -10,7 +10,6 @@ import Distribution.License
 import Distribution.Package
 import Distribution.PackageDescription
 import Distribution.PackageDescription.Configuration
-import Distribution.PackageDescription.Parsec
 import Distribution.Pretty
 import Distribution.Simple.PackageDescription
 import Distribution.System
