@@ -97,7 +97,7 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 
 %files doc -f %{name}-doc.files
-%license LICENSE
+%license COPYING
 
 %files prof -f %{name}-prof.files
 

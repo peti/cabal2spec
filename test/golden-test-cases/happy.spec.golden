@@ -66,9 +66,4 @@ to the 'yacc' tool for C.
 %doc CHANGES README.md TODO doc examples
 %{_bindir}/%{name}
 
-%files doc -f %{name}-doc.files
-%license LICENSE
-
-%files prof -f %{name}-prof.files
-
 %changelog

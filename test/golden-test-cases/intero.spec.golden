@@ -91,9 +91,4 @@ Complete interactive development program for Haskell.
 %dir %{_datadir}/%{name}-%{version}/elisp
 %{_datadir}/%{name}-%{version}/elisp/*.el
 
-%files doc -f %{name}-doc.files
-%license LICENSE
-
-%files prof -f %{name}-prof.files
-
 %changelog

@@ -299,13 +299,11 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     unless (null docs) $
       put $ "%doc" +-+ unwords (sort docs)
     putNewline
-
-  put $ unlines
-      [ "%files doc -f %{name}-doc.files"
-      , "%license LICENSE"
-      , ""
-      , "%files prof -f %{name}-prof.files"
-      ]
+    put "%files doc -f %{name}-doc.files"
+    mapM_ (\ l -> put $ license_macro +-+ l) licensefiles
+    putNewline
+    put "%files prof -f %{name}-prof.files"
+    putNewline
 
   put "%changelog"
   hClose h

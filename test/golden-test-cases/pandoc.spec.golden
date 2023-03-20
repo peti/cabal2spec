@@ -383,7 +383,7 @@ This package provides the Haskell %{pkg_name} profiling library.
 %doc AUTHORS.md README.md changelog
 
 %files doc -f %{name}-doc.files
-%license LICENSE
+%license COPYING.md
 
 %files prof -f %{name}-prof.files
 

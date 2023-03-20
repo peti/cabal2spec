@@ -133,6 +133,7 @@ This package provides the Haskell %{pkg_name} profiling library.
 
 %files doc -f %{name}-doc.files
 %license LICENSE
+%license vendor/attoparsec-0.13.1.0/LICENSE
 
 %files prof -f %{name}-prof.files
 

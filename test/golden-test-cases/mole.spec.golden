@@ -110,9 +110,4 @@ compresses the files, adds fingerprints and writes the result to a directory.
 %license LICENSE
 %{_bindir}/%{name}
 
-%files doc -f %{name}-doc.files
-%license LICENSE
-
-%files prof -f %{name}-prof.files
-
 %changelog

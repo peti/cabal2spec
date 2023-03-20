@@ -123,7 +123,7 @@ This package provides the Haskell %{pkg_name} profiling library.
 %doc CHANGELOG.md README.md
 
 %files doc -f %{name}-doc.files
-%license LICENSE
+%license etc/LICENCE.md
 
 %files prof -f %{name}-prof.files
 

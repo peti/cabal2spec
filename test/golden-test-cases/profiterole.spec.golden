@@ -63,9 +63,4 @@ which are typically more concise and may reveal new insights.
 %doc CHANGES.txt README.md
 %{_bindir}/%{name}
 
-%files doc -f %{name}-doc.files
-%license LICENSE
-
-%files prof -f %{name}-prof.files
-
 %changelog

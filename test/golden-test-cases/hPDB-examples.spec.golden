@@ -99,9 +99,4 @@ Examples for handling Protein Data Bank file format.
 %{_bindir}/StericClashCheck
 %{_bindir}/Viewer
 
-%files doc -f %{name}-doc.files
-%license LICENSE
-
-%files prof -f %{name}-prof.files
-
 %changelog
