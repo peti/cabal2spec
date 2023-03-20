@@ -196,21 +196,21 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     put $ "%description" +-+ ghcPkgDevel
     put $ wrapGenDesc $ "This package provides the Haskell" +-+ pkg_name +-+ "library development files."
     put $ unlines
-        [ "%package doc"
+        [ "%package -n ghc-%{pkg_name}-doc"
         , "Summary:        Haskell %{pkg_name} library documentation"
         , "BuildArch:      noarch"
         , "Requires:       ghc-filesystem"
         , ""
-        , "%description doc"
+        , "%description -n ghc-%{pkg_name}-doc"
         , "This package provides the Haskell %{pkg_name} library documentation."
         , ""
         , ""
-        , "%package prof"
+        , "%package -n ghc-%{pkg_name}-prof"
         , "Summary:        Haskell %{pkg_name} profiling library"
         , "Requires:       %{name}-devel = %{version}-%{release}"
         , "Supplements:    (%{name}-devel and ghc-prof)"
         , ""
-        , "%description prof"
+        , "%description -n ghc-%{pkg_name}-prof"
         , "This package provides the Haskell %{pkg_name} profiling library."
         , ""
         ]
@@ -299,10 +299,10 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     unless (null docs) $
       put $ "%doc" +-+ unwords (sort docs)
     putNewline
-    put "%files doc -f %{name}-doc.files"
+    put "%files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files"
     mapM_ (\ l -> put $ license_macro +-+ l) licensefiles
     putNewline
-    put "%files prof -f %{name}-prof.files"
+    put "%files -n ghc-%{pkg_nanme}-prof -f ghc-%{pkg_name}-prof.files"
     putNewline
 
   put "%changelog"
