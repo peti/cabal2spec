@@ -302,7 +302,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     put "%files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files"
     mapM_ (\ l -> put $ license_macro +-+ l) licensefiles
     putNewline
-    put "%files -n ghc-%{pkg_nanme}-prof -f ghc-%{pkg_name}-prof.files"
+    put "%files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files"
     putNewline
 
   put "%changelog"
