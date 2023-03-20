@@ -119,6 +119,6 @@ This package provides the Haskell %{pkg_name} profiling library.
 
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 
-%files -n ghc-%{pkg_nanme}-prof -f ghc-%{pkg_name}-prof.files
+%files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
 
 %changelog
