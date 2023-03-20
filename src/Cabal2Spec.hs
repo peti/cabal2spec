@@ -195,26 +195,25 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     putNewline
     put $ "%description" +-+ ghcPkgDevel
     put $ wrapGenDesc $ "This package provides the Haskell" +-+ pkg_name +-+ "library development files."
-
-  put $ unlines
-      [ "%package doc"
-      , "Summary:        Haskell %{pkg_name} library documentation"
-      , "BuildArch:      noarch"
-      , "Requires:       ghc-filesystem"
-      , ""
-      , "%description doc"
-      , "This package provides the Haskell %{pkg_name} library documentation."
-      , ""
-      , ""
-      , "%package prof"
-      , "Summary:        Haskell %{pkg_name} profiling library"
-      , "Requires:       %{name}-devel = %{version}-%{release}"
-      , "Supplements:    (%{name}-devel and ghc-prof)"
-      , ""
-      , "%description prof"
-      , "This package provides the Haskell %{pkg_name} profiling library."
-      , ""
-      ]
+    put $ unlines
+        [ "%package doc"
+        , "Summary:        Haskell %{pkg_name} library documentation"
+        , "BuildArch:      noarch"
+        , "Requires:       ghc-filesystem"
+        , ""
+        , "%description doc"
+        , "This package provides the Haskell %{pkg_name} library documentation."
+        , ""
+        , ""
+        , "%package prof"
+        , "Summary:        Haskell %{pkg_name} profiling library"
+        , "Requires:       %{name}-devel = %{version}-%{release}"
+        , "Supplements:    (%{name}-devel and ghc-prof)"
+        , ""
+        , "%description prof"
+        , "This package provides the Haskell %{pkg_name} profiling library."
+        , ""
+        ]
 
   put "%prep"
   put $ "%autosetup" ++ (if pkgname /= name then " -n %{pkg_name}-%{version}" else "")

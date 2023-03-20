@@ -94,24 +94,6 @@ being to compile and optimize a static website (or a single-page application).
 Mole inspects source, builds a complete dependency tree, minifies and
 compresses the files, adds fingerprints and writes the result to a directory.
 
-%package doc
-Summary:        Haskell %{pkg_name} library documentation
-BuildArch:      noarch
-Requires:       ghc-filesystem
-
-%description doc
-This package provides the Haskell %{pkg_name} library documentation.
-
-
-%package prof
-Summary:        Haskell %{pkg_name} profiling library
-Requires:       %{name}-devel = %{version}-%{release}
-Supplements:    (%{name}-devel and ghc-prof)
-
-%description prof
-This package provides the Haskell %{pkg_name} profiling library.
-
-
 %prep
 %autosetup
 

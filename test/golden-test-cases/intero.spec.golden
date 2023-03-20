@@ -71,24 +71,6 @@ BuildRequires:  ghc-temporary-prof
 %description
 Complete interactive development program for Haskell.
 
-%package doc
-Summary:        Haskell %{pkg_name} library documentation
-BuildArch:      noarch
-Requires:       ghc-filesystem
-
-%description doc
-This package provides the Haskell %{pkg_name} library documentation.
-
-
-%package prof
-Summary:        Haskell %{pkg_name} profiling library
-Requires:       %{name}-devel = %{version}-%{release}
-Supplements:    (%{name}-devel and ghc-prof)
-
-%description prof
-This package provides the Haskell %{pkg_name} profiling library.
-
-
 %prep
 %autosetup
 
