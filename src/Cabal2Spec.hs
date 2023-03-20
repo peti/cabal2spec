@@ -394,7 +394,7 @@ s +-+ "" = s
 s +-+ t = s ++ " " ++ t
 
 excludedPkgs :: PackageDescription -> String -> Bool
-excludedPkgs pkgDesc = flip notElem (subLibs ++ ["Cabal", "ghc-prim", "integer-gmp", "bignum"])
+excludedPkgs pkgDesc = flip notElem (subLibs ++ ["Cabal", "ghc-prim", "integer-gmp", "ghc-bignum"])
   where
     subLibs :: [String]
     subLibs = [ unUnqualComponentName ln | l <- subLibraries pkgDesc, LSubLibName ln <- [libName l] ]
