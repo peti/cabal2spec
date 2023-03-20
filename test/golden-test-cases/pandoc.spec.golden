@@ -30,6 +30,7 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-Cabal-prof
 BuildRequires:  ghc-Glob-devel
 BuildRequires:  ghc-Glob-prof
 BuildRequires:  ghc-HTTP-devel

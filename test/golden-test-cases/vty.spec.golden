@@ -74,6 +74,8 @@ BuildRequires:  ghc-utf8-string-prof
 BuildRequires:  ghc-vector-devel
 BuildRequires:  ghc-vector-prof
 %if %{with tests}
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-Cabal-prof
 BuildRequires:  ghc-HUnit-devel
 BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-QuickCheck-devel

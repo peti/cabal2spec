@@ -161,7 +161,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
   putHdr "ExcludeArch" "%{ix86}"
 
   let fixedDeps = ["ghc-Cabal-devel", "ghc-rpm-macros"]
-  let alldeps = sort $ fixedDeps ++ deps ++ tools ++ clibs ++ pkgcfgs ++ ["pkgconfig" | not (null pkgcfgs)]
+  let alldeps = sort $ nub $ fixedDeps ++ deps ++ tools ++ clibs ++ pkgcfgs ++ ["pkgconfig" | not (null pkgcfgs)]
   let extraTestDeps = sort $ testsuiteDeps \\ deps
   unless (null $ alldeps ++ extraTestDeps) $ do
     mapM_ (putHdr "BuildRequires") alldeps
@@ -394,7 +394,7 @@ s +-+ "" = s
 s +-+ t = s ++ " " ++ t
 
 excludedPkgs :: PackageDescription -> String -> Bool
-excludedPkgs pkgDesc = flip notElem (subLibs ++ ["Cabal", "ghc-prim", "integer-gmp", "ghc-bignum"])
+excludedPkgs pkgDesc = flip notElem (subLibs ++ ["ghc-prim", "integer-gmp", "ghc-bignum"])
   where
     subLibs :: [String]
     subLibs = [ unUnqualComponentName ln | l <- subLibraries pkgDesc, LSubLibName ln <- [libName l] ]
