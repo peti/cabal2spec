@@ -17,6 +17,8 @@
 
 
 %global pkg_name persistable-types-HDBC-pg
+%global pkgver %{pkg_name}-%{version}
+
 Name:           %{pkg_name}
 Version:        0.0.1.5
 Release:        0
@@ -27,12 +29,20 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-HDBC-devel
+BuildRequires:  ghc-HDBC-prof
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-convertible-devel
+BuildRequires:  ghc-convertible-prof
 BuildRequires:  ghc-persistable-record-devel
+BuildRequires:  ghc-persistable-record-prof
 BuildRequires:  ghc-relational-query-HDBC-devel
+BuildRequires:  ghc-relational-query-HDBC-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-postgresql-devel
+BuildRequires:  ghc-text-postgresql-prof
 
 %description
 This package contains HDBC Convertible instances and Relational-Record
@@ -55,6 +65,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development
 files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -80,5 +108,10 @@ files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc example
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

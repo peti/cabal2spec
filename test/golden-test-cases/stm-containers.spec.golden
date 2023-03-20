@@ -17,6 +17,8 @@
 
 
 %global pkg_name stm-containers
+%global pkgver %{pkg_name}-%{version}
+
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        0.2.16
@@ -27,22 +29,38 @@ URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-base-prelude-devel
+BuildRequires:  ghc-base-prelude-prof
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-focus-devel
+BuildRequires:  ghc-focus-prof
 BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-hashable-prof
 BuildRequires:  ghc-list-t-devel
+BuildRequires:  ghc-list-t-prof
 BuildRequires:  ghc-primitive-devel
+BuildRequires:  ghc-primitive-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-transformers-prof
 %if %{with tests}
 BuildRequires:  ghc-HTF-devel
+BuildRequires:  ghc-HTF-prof
 BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-free-devel
+BuildRequires:  ghc-free-prof
 BuildRequires:  ghc-loch-th-devel
+BuildRequires:  ghc-loch-th-prof
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-mtl-prelude-devel
+BuildRequires:  ghc-mtl-prelude-prof
+BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-placeholders-devel
+BuildRequires:  ghc-placeholders-prof
 BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-unordered-containers-prof
 %endif
 
 %description
@@ -70,6 +88,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
 
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
+
 %prep
 %autosetup
 
@@ -95,5 +131,10 @@ This package provides the Haskell %{name} library development files.
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

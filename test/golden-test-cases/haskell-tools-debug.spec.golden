@@ -17,6 +17,8 @@
 
 
 %global pkg_name haskell-tools-debug
+%global pkgver %{pkg_name}-%{version}
+
 Name:           %{pkg_name}
 Version:        1.0.0.3
 Release:        0
@@ -27,18 +29,31 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-ghc-devel
 BuildRequires:  ghc-ghc-paths-devel
+BuildRequires:  ghc-ghc-paths-prof
+BuildRequires:  ghc-ghc-prof
 BuildRequires:  ghc-haskell-tools-ast-devel
+BuildRequires:  ghc-haskell-tools-ast-prof
 BuildRequires:  ghc-haskell-tools-backend-ghc-devel
+BuildRequires:  ghc-haskell-tools-backend-ghc-prof
 BuildRequires:  ghc-haskell-tools-builtin-refactorings-devel
+BuildRequires:  ghc-haskell-tools-builtin-refactorings-prof
 BuildRequires:  ghc-haskell-tools-prettyprint-devel
+BuildRequires:  ghc-haskell-tools-prettyprint-prof
 BuildRequires:  ghc-haskell-tools-refactor-devel
+BuildRequires:  ghc-haskell-tools-refactor-prof
 BuildRequires:  ghc-references-devel
+BuildRequires:  ghc-references-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-split-devel
+BuildRequires:  ghc-split-prof
 BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-template-haskell-prof
 
 %description
 Debugging Tools for Haskell-tools.
@@ -59,6 +74,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development
 files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -84,5 +117,10 @@ files.
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

@@ -27,29 +27,67 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-array-devel
+BuildRequires:  ghc-array-prof
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-ghc-boot-th-devel
+BuildRequires:  ghc-ghc-boot-th-prof
 BuildRequires:  ghc-ghc-devel
 BuildRequires:  ghc-ghc-paths-devel
+BuildRequires:  ghc-ghc-paths-prof
+BuildRequires:  ghc-ghc-prof
 BuildRequires:  ghc-ghci-devel
+BuildRequires:  ghc-ghci-prof
 BuildRequires:  ghc-haskeline-devel
+BuildRequires:  ghc-haskeline-prof
 BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-process-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-syb-devel
+BuildRequires:  ghc-syb-prof
 BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-unix-devel
+BuildRequires:  ghc-unix-prof
 %if %{with tests}
 BuildRequires:  ghc-hspec-devel
+BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-regex-compat-devel
+BuildRequires:  ghc-regex-compat-prof
 BuildRequires:  ghc-temporary-devel
+BuildRequires:  ghc-temporary-prof
 %endif
 
 %description
 Complete interactive development program for Haskell.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -70,5 +108,10 @@ Complete interactive development program for Haskell.
 %dir %{_datadir}/%{name}-%{version}
 %dir %{_datadir}/%{name}-%{version}/elisp
 %{_datadir}/%{name}-%{version}/elisp/*.el
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

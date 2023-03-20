@@ -17,6 +17,9 @@
 
 
 %global pkg_name QuickCheck
+%global pkgver %{pkg_name}-%{version}
+
+%bcond_with tests
 Name:           %{pkg_name}
 Version:        2.10.1
 Release:        0
@@ -26,13 +29,21 @@ URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-deepseq-prof
 BuildRequires:  ghc-random-devel
+BuildRequires:  ghc-random-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-template-haskell-prof
 BuildRequires:  ghc-tf-random-devel
+BuildRequires:  ghc-tf-random-prof
 BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-transformers-prof
 
 %description
 QuickCheck is a library for random testing of program properties.
@@ -69,6 +80,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
 
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
+
 %prep
 %autosetup
 
@@ -77,6 +106,9 @@ This package provides the Haskell %{name} library development files.
 
 %install
 %ghc_lib_install
+
+%check
+%cabal_test
 
 %post -n ghc-%{name}-devel
 %ghc_pkg_recache
@@ -93,5 +125,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc README changelog examples
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

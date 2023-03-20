@@ -17,6 +17,8 @@
 
 
 %global pkg_name cheapskate
+%global pkgver %{pkg_name}-%{version}
+
 Name:           %{pkg_name}
 Version:        0.1.1
 Release:        0
@@ -27,17 +29,29 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-blaze-html-devel
+BuildRequires:  ghc-blaze-html-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-data-default-devel
+BuildRequires:  ghc-data-default-prof
 BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-deepseq-prof
 BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-syb-devel
+BuildRequires:  ghc-syb-prof
 BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-uniplate-devel
+BuildRequires:  ghc-uniplate-prof
 BuildRequires:  ghc-xss-sanitize-devel
+BuildRequires:  ghc-xss-sanitize-prof
 
 %description
 This is an experimental Markdown processor in pure Haskell. It aims to process
@@ -65,6 +79,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
 
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
+
 %prep
 %autosetup
 
@@ -91,5 +123,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc README.markdown changelog
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

@@ -17,6 +17,9 @@
 
 
 %global pkg_name wai-middleware-caching-redis
+%global pkgver %{pkg_name}-%{version}
+
+%bcond_with tests
 Name:           %{pkg_name}
 Version:        0.2.0.0
 Release:        0
@@ -26,14 +29,23 @@ URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-blaze-builder-devel
+BuildRequires:  ghc-blaze-builder-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-hedis-devel
+BuildRequires:  ghc-hedis-prof
 BuildRequires:  ghc-http-types-devel
+BuildRequires:  ghc-http-types-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-wai-devel
 BuildRequires:  ghc-wai-middleware-caching-devel
+BuildRequires:  ghc-wai-middleware-caching-prof
+BuildRequires:  ghc-wai-prof
 
 %description
 Cache Wai Middleware using Redis backend.
@@ -55,6 +67,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 This package provides the Haskell %{name} library
 development files.
 
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
+
 %prep
 %autosetup
 
@@ -63,6 +93,9 @@ development files.
 
 %install
 %ghc_lib_install
+
+%check
+%cabal_test
 
 %post -n ghc-%{name}-devel
 %ghc_pkg_recache
@@ -77,5 +110,10 @@ development files.
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

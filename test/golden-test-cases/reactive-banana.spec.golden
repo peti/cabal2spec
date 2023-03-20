@@ -17,6 +17,8 @@
 
 
 %global pkg_name reactive-banana
+%global pkgver %{pkg_name}-%{version}
+
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        1.1.0.1
@@ -27,18 +29,30 @@ URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-hashable-prof
 BuildRequires:  ghc-pqueue-devel
+BuildRequires:  ghc-pqueue-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-vault-devel
+BuildRequires:  ghc-vault-prof
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
+BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-psqueues-devel
+BuildRequires:  ghc-psqueues-prof
 BuildRequires:  ghc-test-framework-devel
 BuildRequires:  ghc-test-framework-hunit-devel
+BuildRequires:  ghc-test-framework-hunit-prof
+BuildRequires:  ghc-test-framework-prof
 %endif
 
 %description
@@ -74,6 +88,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
 
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
+
 %prep
 %autosetup
 
@@ -101,5 +133,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc CHANGELOG.md doc
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

@@ -52,7 +52,7 @@ mkTools tools' = filter excludedTools $ nub $ map mapTools tools'
 createSpecFile :: FilePath -> PackageDescription -> ForceBinary -> RunTests -> FlagAssignment -> Maybe CopyrightYear -> IO ()
 createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYear = do
   let deps :: [String]
-      deps = map showDep deps'
+      deps = map showDevelDep deps' ++ map showProfDep deps'
       deps' :: [String]
       selfdep :: Bool
       (deps', selfdep) = buildDependencies pkgDesc name
@@ -91,7 +91,9 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
       padding hdr = replicate (14 - length hdr) ' ' ++ " "
       putNewline = hPutStrLn h ""
       put = hPutStrLn h
-      putDef v s = put $ "%global" +-+ v +-+ s
+      putDef v s = put $ unlines [ "%global" +-+ v +-+ s
+                                 , "%global pkgver %{pkg_name}-%{version}"
+                                 ]
       ghcPkg = if binlib then "-n ghc-%{name}" else ""
       ghcPkgDevel = if binlib then "-n ghc-%{name}-devel" else "devel"
 
@@ -194,6 +196,26 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     put $ "%description" +-+ ghcPkgDevel
     put $ wrapGenDesc $ "This package provides the Haskell" +-+ pkg_name +-+ "library development files."
 
+  put $ unlines
+      [ "%package doc"
+      , "Summary:        Haskell %{pkg_name} library documentation"
+      , "BuildArch:      noarch"
+      , "Requires:       ghc-filesystem"
+      , ""
+      , "%description doc"
+      , "This package provides the Haskell %{pkg_name} library documentation."
+      , ""
+      , ""
+      , "%package prof"
+      , "Summary:        Haskell %{pkg_name} profiling library"
+      , "Requires:       %{name}-devel = %{version}-%{release}"
+      , "Supplements:    (%{name}-devel and ghc-prof)"
+      , ""
+      , "%description prof"
+      , "This package provides the Haskell %{pkg_name} profiling library."
+      , ""
+      ]
+
   put "%prep"
   put $ "%autosetup" ++ (if pkgname /= name then " -n %{pkg_name}-%{version}" else "")
   when (revision /= "0") $
@@ -278,6 +300,13 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     unless (null docs) $
       put $ "%doc" +-+ unwords (sort docs)
     putNewline
+
+  put $ unlines
+      [ "%files doc -f %{name}-doc.files"
+      , "%license LICENSE"
+      , ""
+      , "%files prof -f %{name}-prof.files"
+      ]
 
   put "%changelog"
   hClose h
@@ -368,7 +397,7 @@ s +-+ "" = s
 s +-+ t = s ++ " " ++ t
 
 excludedPkgs :: PackageDescription -> String -> Bool
-excludedPkgs pkgDesc = flip notElem (subLibs ++ ["Cabal", "base", "ghc-prim", "integer-gmp"])
+excludedPkgs pkgDesc = flip notElem (subLibs ++ ["Cabal", "ghc-prim", "integer-gmp", "bignum"])
   where
     subLibs :: [String]
     subLibs = [ unUnqualComponentName ln | l <- subLibraries pkgDesc, LSubLibName ln <- [libName l] ]
@@ -395,8 +424,11 @@ instance IsDependency PkgconfigDependency where
 instance IsDependency LegacyExeDependency where
   depName (LegacyExeDependency n _) = n
 
-showDep :: String -> String
-showDep p = "ghc-" ++ p ++ "-devel"
+showDevelDep :: String -> String
+showDevelDep p = "ghc-" ++ p ++ "-devel"
+
+showProfDep :: String -> String
+showProfDep p = "ghc-" ++ p ++ "-prof"
 
 resolveLib :: String -> String
 resolveLib "alut" = "freealut-devel"
@@ -450,8 +482,9 @@ resolveLib name | "lib" `isPrefixOf` name = name ++ "-devel"
 testsuiteDependencies :: PackageDescription -- ^pkg description
                       -> String             -- ^self
                       -> [String]           -- ^depends
-testsuiteDependencies pkgDesc self =
-  map showDep . delete self . filter (excludedPkgs pkgDesc) . nub . map depName $ concatMap targetBuildDepends (filter buildable (map testBuildInfo (testSuites pkgDesc)))
+testsuiteDependencies pkgDesc self = map showDevelDep deps ++ map showProfDep deps
+  where deps = delete self . filter (excludedPkgs pkgDesc) . nub . map depName $
+                 concatMap targetBuildDepends (filter buildable (map testBuildInfo (testSuites pkgDesc)))
 
 badDescription :: String -> Bool
 badDescription s = null s

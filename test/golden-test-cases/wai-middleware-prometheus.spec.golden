@@ -17,6 +17,8 @@
 
 
 %global pkg_name wai-middleware-prometheus
+%global pkgver %{pkg_name}-%{version}
+
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        0.3.0
@@ -27,16 +29,26 @@ URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-clock-devel
+BuildRequires:  ghc-clock-prof
 BuildRequires:  ghc-data-default-devel
+BuildRequires:  ghc-data-default-prof
 BuildRequires:  ghc-http-types-devel
+BuildRequires:  ghc-http-types-prof
 BuildRequires:  ghc-prometheus-client-devel
+BuildRequires:  ghc-prometheus-client-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-wai-devel
+BuildRequires:  ghc-wai-prof
 %if %{with tests}
 BuildRequires:  ghc-doctest-devel
+BuildRequires:  ghc-doctest-prof
 %endif
 
 %description
@@ -58,6 +70,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development
 files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -84,5 +114,10 @@ files.
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

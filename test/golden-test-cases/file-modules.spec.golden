@@ -17,6 +17,8 @@
 
 
 %global pkg_name file-modules
+%global pkgver %{pkg_name}-%{version}
+
 Name:           %{pkg_name}
 Version:        0.1.2.4
 Release:        0
@@ -27,12 +29,21 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-MissingH-devel
+BuildRequires:  ghc-MissingH-prof
 BuildRequires:  ghc-async-devel
+BuildRequires:  ghc-async-prof
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-haskell-src-exts-devel
+BuildRequires:  ghc-haskell-src-exts-prof
 BuildRequires:  ghc-regex-compat-devel
+BuildRequires:  ghc-regex-compat-prof
 BuildRequires:  ghc-regex-pcre-devel
+BuildRequires:  ghc-regex-pcre-prof
 BuildRequires:  ghc-rpm-macros
 
 %description
@@ -54,6 +65,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -78,5 +107,10 @@ This package provides the Haskell %{name} library development files.
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

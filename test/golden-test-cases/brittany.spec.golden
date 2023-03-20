@@ -17,6 +17,8 @@
 
 
 %global pkg_name brittany
+%global pkgver %{pkg_name}-%{version}
+
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        0.9.0.0
@@ -29,38 +31,71 @@ ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-butcher-devel
+BuildRequires:  ghc-butcher-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-cmdargs-devel
+BuildRequires:  ghc-cmdargs-prof
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-czipwith-devel
+BuildRequires:  ghc-czipwith-prof
 BuildRequires:  ghc-data-tree-print-devel
+BuildRequires:  ghc-data-tree-print-prof
 BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-deepseq-prof
 BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-extra-devel
+BuildRequires:  ghc-extra-prof
 BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-ghc-boot-th-devel
+BuildRequires:  ghc-ghc-boot-th-prof
 BuildRequires:  ghc-ghc-devel
 BuildRequires:  ghc-ghc-exactprint-devel
+BuildRequires:  ghc-ghc-exactprint-prof
 BuildRequires:  ghc-ghc-paths-devel
+BuildRequires:  ghc-ghc-paths-prof
+BuildRequires:  ghc-ghc-prof
 BuildRequires:  ghc-hspec-devel
+BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-monad-memo-devel
+BuildRequires:  ghc-monad-memo-prof
 BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-multistate-devel
+BuildRequires:  ghc-multistate-prof
 BuildRequires:  ghc-neat-interpolation-devel
+BuildRequires:  ghc-neat-interpolation-prof
 BuildRequires:  ghc-pretty-devel
+BuildRequires:  ghc-pretty-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-safe-devel
+BuildRequires:  ghc-safe-prof
 BuildRequires:  ghc-semigroups-devel
+BuildRequires:  ghc-semigroups-prof
 BuildRequires:  ghc-strict-devel
+BuildRequires:  ghc-strict-prof
 BuildRequires:  ghc-syb-devel
+BuildRequires:  ghc-syb-prof
 BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-uniplate-devel
+BuildRequires:  ghc-uniplate-prof
 BuildRequires:  ghc-unsafe-devel
+BuildRequires:  ghc-unsafe-prof
 BuildRequires:  ghc-yaml-devel
+BuildRequires:  ghc-yaml-prof
 %if %{with tests}
 BuildRequires:  ghc-parsec-devel
+BuildRequires:  ghc-parsec-prof
 %endif
 
 %description
@@ -89,6 +124,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -119,5 +172,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc ChangeLog.md README.md doc
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

@@ -17,6 +17,8 @@
 
 
 %global pkg_name integer-logarithms
+%global pkgver %{pkg_name}-%{version}
+
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        1.0.2
@@ -28,14 +30,23 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-array-devel
+BuildRequires:  ghc-array-prof
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-rpm-macros
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-smallcheck-devel
+BuildRequires:  ghc-smallcheck-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-tasty-hunit-prof
+BuildRequires:  ghc-tasty-prof
 BuildRequires:  ghc-tasty-quickcheck-devel
+BuildRequires:  ghc-tasty-quickcheck-prof
 BuildRequires:  ghc-tasty-smallcheck-devel
+BuildRequires:  ghc-tasty-smallcheck-prof
 %endif
 
 %description
@@ -61,6 +72,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -89,5 +118,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc changelog.md readme.md
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

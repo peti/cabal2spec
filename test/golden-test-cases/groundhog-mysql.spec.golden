@@ -17,6 +17,8 @@
 
 
 %global pkg_name groundhog-mysql
+%global pkgver %{pkg_name}-%{version}
+
 Name:           %{pkg_name}
 Version:        0.8
 Release:        0
@@ -26,19 +28,33 @@ URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-groundhog-devel
+BuildRequires:  ghc-groundhog-prof
 BuildRequires:  ghc-monad-control-devel
+BuildRequires:  ghc-monad-control-prof
 BuildRequires:  ghc-monad-logger-devel
+BuildRequires:  ghc-monad-logger-prof
 BuildRequires:  ghc-mysql-devel
+BuildRequires:  ghc-mysql-prof
 BuildRequires:  ghc-mysql-simple-devel
+BuildRequires:  ghc-mysql-simple-prof
 BuildRequires:  ghc-resource-pool-devel
+BuildRequires:  ghc-resource-pool-prof
 BuildRequires:  ghc-resourcet-devel
+BuildRequires:  ghc-resourcet-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-transformers-prof
 
 %description
 This package uses mysql-simple and mysql.
@@ -58,6 +74,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -83,5 +117,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc changelog
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

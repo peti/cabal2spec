@@ -17,6 +17,8 @@
 
 
 %global pkg_name general-games
+%global pkgver %{pkg_name}-%{version}
+
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        1.0.5
@@ -28,13 +30,21 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-MonadRandom-devel
+BuildRequires:  ghc-MonadRandom-prof
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-monad-loops-devel
+BuildRequires:  ghc-monad-loops-prof
 BuildRequires:  ghc-random-devel
+BuildRequires:  ghc-random-prof
 BuildRequires:  ghc-random-shuffle-devel
+BuildRequires:  ghc-random-shuffle-prof
 BuildRequires:  ghc-rpm-macros
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
+BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-hspec-devel
+BuildRequires:  ghc-hspec-prof
 %endif
 
 %description
@@ -56,6 +66,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -84,5 +112,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc README.md
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

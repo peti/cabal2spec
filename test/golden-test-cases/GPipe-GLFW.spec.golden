@@ -17,6 +17,8 @@
 
 
 %global pkg_name GPipe-GLFW
+%global pkgver %{pkg_name}-%{version}
+
 Name:           %{pkg_name}
 Version:        1.4.1.1
 Release:        0
@@ -27,11 +29,18 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-GLFW-b-devel
+BuildRequires:  ghc-GLFW-b-prof
 BuildRequires:  ghc-GPipe-devel
+BuildRequires:  ghc-GPipe-prof
 BuildRequires:  ghc-async-devel
+BuildRequires:  ghc-async-prof
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-stm-devel
+BuildRequires:  ghc-stm-prof
 
 %description
 GPipe-GLFW is a utility library to enable the use of GLFW as the OpenGL window
@@ -53,6 +62,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -78,5 +105,10 @@ This package provides the Haskell %{name} library development files.
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

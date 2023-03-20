@@ -17,6 +17,8 @@
 
 
 %global pkg_name scalpel-core
+%global pkgver %{pkg_name}-%{version}
+
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        0.5.1
@@ -27,18 +29,30 @@ URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-data-default-devel
+BuildRequires:  ghc-data-default-prof
 BuildRequires:  ghc-fail-devel
+BuildRequires:  ghc-fail-prof
 BuildRequires:  ghc-regex-base-devel
+BuildRequires:  ghc-regex-base-prof
 BuildRequires:  ghc-regex-tdfa-devel
+BuildRequires:  ghc-regex-tdfa-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-tagsoup-devel
+BuildRequires:  ghc-tagsoup-prof
 BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-vector-devel
+BuildRequires:  ghc-vector-prof
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
+BuildRequires:  ghc-HUnit-prof
 %endif
 
 %description
@@ -61,6 +75,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -89,5 +121,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc CHANGELOG.md README.md
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

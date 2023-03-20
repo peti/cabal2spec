@@ -17,6 +17,8 @@
 
 
 %global pkg_name HTF
+%global pkgver %{pkg_name}-%{version}
+
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        0.13.2.2
@@ -29,36 +31,67 @@ ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-Diff-devel
+BuildRequires:  ghc-Diff-prof
 BuildRequires:  ghc-HUnit-devel
+BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-array-devel
+BuildRequires:  ghc-array-prof
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-base64-bytestring-devel
+BuildRequires:  ghc-base64-bytestring-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-cpphs-devel
+BuildRequires:  ghc-cpphs-prof
 BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-haskell-src-devel
+BuildRequires:  ghc-haskell-src-prof
 BuildRequires:  ghc-lifted-base-devel
+BuildRequires:  ghc-lifted-base-prof
 BuildRequires:  ghc-monad-control-devel
+BuildRequires:  ghc-monad-control-prof
 BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-old-time-devel
+BuildRequires:  ghc-old-time-prof
 BuildRequires:  ghc-pretty-devel
+BuildRequires:  ghc-pretty-prof
 BuildRequires:  ghc-process-devel
+BuildRequires:  ghc-process-prof
 BuildRequires:  ghc-random-devel
+BuildRequires:  ghc-random-prof
 BuildRequires:  ghc-regex-compat-devel
+BuildRequires:  ghc-regex-compat-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-unix-devel
+BuildRequires:  ghc-unix-prof
 BuildRequires:  ghc-vector-devel
+BuildRequires:  ghc-vector-prof
 BuildRequires:  ghc-xmlgen-devel
+BuildRequires:  ghc-xmlgen-prof
 %if %{with tests}
 BuildRequires:  ghc-aeson-pretty-devel
+BuildRequires:  ghc-aeson-pretty-prof
 BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-template-haskell-prof
 BuildRequires:  ghc-temporary-devel
+BuildRequires:  ghc-temporary-prof
 BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-unordered-containers-prof
 %endif
 
 %description
@@ -93,6 +126,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
 
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
+
 %prep
 %autosetup
 
@@ -122,5 +173,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc ChangeLog README.md TODO.org
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

@@ -17,6 +17,8 @@
 
 
 %global pkg_name kawhi
+%global pkgver %{pkg_name}-%{version}
+
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        0.3.0
@@ -28,22 +30,39 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-exceptions-devel
+BuildRequires:  ghc-exceptions-prof
 BuildRequires:  ghc-http-client-devel
+BuildRequires:  ghc-http-client-prof
 BuildRequires:  ghc-http-conduit-devel
+BuildRequires:  ghc-http-conduit-prof
 BuildRequires:  ghc-http-types-devel
+BuildRequires:  ghc-http-types-prof
 BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-safe-devel
+BuildRequires:  ghc-safe-prof
 BuildRequires:  ghc-scientific-devel
+BuildRequires:  ghc-scientific-prof
 BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-prof
 %if %{with tests}
 BuildRequires:  ghc-smallcheck-devel
+BuildRequires:  ghc-smallcheck-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-tasty-hunit-prof
+BuildRequires:  ghc-tasty-prof
 BuildRequires:  ghc-tasty-quickcheck-devel
+BuildRequires:  ghc-tasty-quickcheck-prof
 BuildRequires:  ghc-tasty-smallcheck-devel
+BuildRequires:  ghc-tasty-smallcheck-prof
 %endif
 
 %description
@@ -64,6 +83,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -92,5 +129,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc README.md changelog.md
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

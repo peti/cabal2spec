@@ -17,6 +17,8 @@
 
 
 %global pkg_name online
+%global pkgver %{pkg_name}-%{version}
+
 Name:           %{pkg_name}
 Version:        0.2.0
 Release:        0
@@ -26,13 +28,21 @@ URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-foldl-devel
+BuildRequires:  ghc-foldl-prof
 BuildRequires:  ghc-numhask-devel
+BuildRequires:  ghc-numhask-prof
 BuildRequires:  ghc-protolude-devel
+BuildRequires:  ghc-protolude-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-tdigest-devel
+BuildRequires:  ghc-tdigest-prof
 BuildRequires:  ghc-vector-algorithms-devel
+BuildRequires:  ghc-vector-algorithms-prof
 BuildRequires:  ghc-vector-devel
+BuildRequires:  ghc-vector-prof
 
 %description
 Transformation of statistics to online algorithms.
@@ -52,6 +62,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -77,5 +105,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc readme.md
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

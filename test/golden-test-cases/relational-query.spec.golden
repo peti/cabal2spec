@@ -17,6 +17,8 @@
 
 
 %global pkg_name relational-query
+%global pkgver %{pkg_name}-%{version}
+
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        0.11.0.0
@@ -28,22 +30,39 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-array-devel
+BuildRequires:  ghc-array-prof
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-dlist-devel
+BuildRequires:  ghc-dlist-prof
 BuildRequires:  ghc-names-th-devel
+BuildRequires:  ghc-names-th-prof
 BuildRequires:  ghc-persistable-record-devel
+BuildRequires:  ghc-persistable-record-prof
 BuildRequires:  ghc-product-isomorphic-devel
+BuildRequires:  ghc-product-isomorphic-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-sql-words-devel
+BuildRequires:  ghc-sql-words-prof
 BuildRequires:  ghc-template-haskell-devel
+BuildRequires:  ghc-template-haskell-prof
 BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-th-reify-compat-devel
+BuildRequires:  ghc-th-reify-compat-prof
 BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-time-locale-compat-devel
+BuildRequires:  ghc-time-locale-compat-prof
+BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-transformers-prof
 %if %{with tests}
 BuildRequires:  ghc-quickcheck-simple-devel
+BuildRequires:  ghc-quickcheck-simple-prof
 %endif
 
 %description
@@ -67,6 +86,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -95,5 +132,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc ChangeLog.md
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

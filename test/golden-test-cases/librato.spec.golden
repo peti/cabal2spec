@@ -17,6 +17,8 @@
 
 
 %global pkg_name librato
+%global pkgver %{pkg_name}-%{version}
+
 Name:           %{pkg_name}
 Version:        0.2.0.1
 Release:        0
@@ -27,19 +29,34 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-attoparsec-devel
+BuildRequires:  ghc-attoparsec-prof
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-either-devel
+BuildRequires:  ghc-either-prof
 BuildRequires:  ghc-http-client-devel
+BuildRequires:  ghc-http-client-prof
 BuildRequires:  ghc-http-conduit-devel
+BuildRequires:  ghc-http-conduit-prof
 BuildRequires:  ghc-http-types-devel
+BuildRequires:  ghc-http-types-prof
 BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-resourcet-devel
+BuildRequires:  ghc-resourcet-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-unordered-containers-devel
+BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-uri-templater-devel
+BuildRequires:  ghc-uri-templater-prof
 BuildRequires:  ghc-vector-devel
+BuildRequires:  ghc-vector-prof
 
 %description
 Bindings to the Librato API.
@@ -59,6 +76,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
+
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
 
 %prep
 %autosetup
@@ -84,5 +119,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc README.md
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

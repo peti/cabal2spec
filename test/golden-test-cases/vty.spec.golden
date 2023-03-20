@@ -17,6 +17,8 @@
 
 
 %global pkg_name vty
+%global pkgver %{pkg_name}-%{version}
+
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        5.19.1
@@ -28,37 +30,68 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-blaze-builder-devel
+BuildRequires:  ghc-blaze-builder-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-deepseq-devel
+BuildRequires:  ghc-deepseq-prof
 BuildRequires:  ghc-directory-devel
+BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-filepath-devel
+BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-hashable-prof
 BuildRequires:  ghc-microlens-devel
 BuildRequires:  ghc-microlens-mtl-devel
+BuildRequires:  ghc-microlens-mtl-prof
+BuildRequires:  ghc-microlens-prof
 BuildRequires:  ghc-microlens-th-devel
+BuildRequires:  ghc-microlens-th-prof
 BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-parallel-devel
+BuildRequires:  ghc-parallel-prof
 BuildRequires:  ghc-parsec-devel
+BuildRequires:  ghc-parsec-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-stm-devel
+BuildRequires:  ghc-stm-prof
 BuildRequires:  ghc-terminfo-devel
+BuildRequires:  ghc-terminfo-prof
 BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-unix-devel
+BuildRequires:  ghc-unix-prof
 BuildRequires:  ghc-utf8-string-devel
+BuildRequires:  ghc-utf8-string-prof
 BuildRequires:  ghc-vector-devel
+BuildRequires:  ghc-vector-prof
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
+BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-quickcheck-assertions-devel
+BuildRequires:  ghc-quickcheck-assertions-prof
 BuildRequires:  ghc-random-devel
+BuildRequires:  ghc-random-prof
 BuildRequires:  ghc-smallcheck-devel
+BuildRequires:  ghc-smallcheck-prof
 BuildRequires:  ghc-string-qq-devel
+BuildRequires:  ghc-string-qq-prof
 BuildRequires:  ghc-test-framework-devel
 BuildRequires:  ghc-test-framework-hunit-devel
+BuildRequires:  ghc-test-framework-hunit-prof
+BuildRequires:  ghc-test-framework-prof
 BuildRequires:  ghc-test-framework-smallcheck-devel
+BuildRequires:  ghc-test-framework-smallcheck-prof
 %endif
 
 %description
@@ -95,6 +128,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
 
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
+
 %prep
 %autosetup
 
@@ -125,5 +176,10 @@ This package provides the Haskell %{name} library development files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc AUTHORS CHANGELOG.md README.md
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

@@ -17,6 +17,8 @@
 
 
 %global pkg_name hasql
+%global pkgver %{pkg_name}-%{version}
+
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        1.1.1
@@ -28,35 +30,65 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-attoparsec-devel
+BuildRequires:  ghc-attoparsec-prof
+BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-base-prelude-devel
+BuildRequires:  ghc-base-prelude-prof
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-bytestring-strict-builder-devel
+BuildRequires:  ghc-bytestring-strict-builder-prof
 BuildRequires:  ghc-contravariant-devel
 BuildRequires:  ghc-contravariant-extras-devel
+BuildRequires:  ghc-contravariant-extras-prof
+BuildRequires:  ghc-contravariant-prof
 BuildRequires:  ghc-data-default-class-devel
+BuildRequires:  ghc-data-default-class-prof
 BuildRequires:  ghc-dlist-devel
+BuildRequires:  ghc-dlist-prof
 BuildRequires:  ghc-hashable-devel
+BuildRequires:  ghc-hashable-prof
 BuildRequires:  ghc-hashtables-devel
+BuildRequires:  ghc-hashtables-prof
 BuildRequires:  ghc-loch-th-devel
+BuildRequires:  ghc-loch-th-prof
 BuildRequires:  ghc-mtl-devel
+BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-placeholders-devel
+BuildRequires:  ghc-placeholders-prof
 BuildRequires:  ghc-postgresql-binary-devel
+BuildRequires:  ghc-postgresql-binary-prof
 BuildRequires:  ghc-postgresql-libpq-devel
+BuildRequires:  ghc-postgresql-libpq-prof
 BuildRequires:  ghc-profunctors-devel
+BuildRequires:  ghc-profunctors-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-semigroups-devel
+BuildRequires:  ghc-semigroups-prof
 BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-vector-devel
+BuildRequires:  ghc-vector-prof
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
+BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-bug-devel
+BuildRequires:  ghc-bug-prof
 BuildRequires:  ghc-quickcheck-instances-devel
+BuildRequires:  ghc-quickcheck-instances-prof
 BuildRequires:  ghc-rebase-devel
+BuildRequires:  ghc-rebase-prof
 BuildRequires:  ghc-rerebase-devel
+BuildRequires:  ghc-rerebase-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-tasty-hunit-prof
+BuildRequires:  ghc-tasty-prof
 BuildRequires:  ghc-tasty-quickcheck-devel
+BuildRequires:  ghc-tasty-quickcheck-prof
 %endif
 
 %description
@@ -83,6 +115,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
 
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
+
 %prep
 %autosetup
 
@@ -108,5 +158,10 @@ This package provides the Haskell %{name} library development files.
 %license LICENSE
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog

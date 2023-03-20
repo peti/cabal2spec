@@ -17,6 +17,8 @@
 
 
 %global pkg_name persistent-mysql-haskell
+%global pkgver %{pkg_name}-%{version}
+
 Name:           %{pkg_name}
 Version:        0.3.6
 Release:        0
@@ -28,23 +30,42 @@ ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-aeson-devel
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-base-devel
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-conduit-devel
+BuildRequires:  ghc-conduit-prof
 BuildRequires:  ghc-containers-devel
+BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-io-streams-devel
+BuildRequires:  ghc-io-streams-prof
 BuildRequires:  ghc-monad-control-devel
+BuildRequires:  ghc-monad-control-prof
 BuildRequires:  ghc-monad-logger-devel
+BuildRequires:  ghc-monad-logger-prof
 BuildRequires:  ghc-mysql-haskell-devel
+BuildRequires:  ghc-mysql-haskell-prof
 BuildRequires:  ghc-network-devel
+BuildRequires:  ghc-network-prof
 BuildRequires:  ghc-persistent-devel
+BuildRequires:  ghc-persistent-prof
 BuildRequires:  ghc-persistent-template-devel
+BuildRequires:  ghc-persistent-template-prof
 BuildRequires:  ghc-resource-pool-devel
+BuildRequires:  ghc-resource-pool-prof
 BuildRequires:  ghc-resourcet-devel
+BuildRequires:  ghc-resourcet-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-tls-devel
+BuildRequires:  ghc-tls-prof
 BuildRequires:  ghc-transformers-devel
+BuildRequires:  ghc-transformers-prof
 
 %description
 This package contains a backend for persistent using the MySQL database server.
@@ -75,6 +96,24 @@ Requires(postun): ghc-compiler = %{ghc_version}
 This package provides the Haskell %{name} library development
 files.
 
+%package doc
+Summary:        Haskell %{pkg_name} library documentation
+BuildArch:      noarch
+Requires:       ghc-filesystem
+
+%description doc
+This package provides the Haskell %{pkg_name} library documentation.
+
+
+%package prof
+Summary:        Haskell %{pkg_name} profiling library
+Requires:       %{name}-devel = %{version}-%{release}
+Supplements:    (%{name}-devel and ghc-prof)
+
+%description prof
+This package provides the Haskell %{pkg_name} profiling library.
+
+
 %prep
 %autosetup
 
@@ -101,5 +140,10 @@ files.
 
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc ChangeLog.md README.md
+
+%files doc -f %{name}-doc.files
+%license LICENSE
+
+%files prof -f %{name}-prof.files
 
 %changelog
