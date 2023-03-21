@@ -37,6 +37,8 @@ BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-rpm-macros
 %if %{with tests}
+BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-Cabal-prof
 BuildRequires:  ghc-QuickCheck-devel
 BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-cabal-test-quickcheck-devel

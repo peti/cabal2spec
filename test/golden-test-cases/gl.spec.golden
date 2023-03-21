@@ -29,6 +29,7 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  Mesa-libGL-devel
 BuildRequires:  ghc-Cabal-devel
+BuildRequires:  ghc-Cabal-prof
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-containers-devel
