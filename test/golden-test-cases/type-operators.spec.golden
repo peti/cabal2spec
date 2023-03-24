@@ -63,8 +63,8 @@ This package provides the Haskell %{pkg_name} library documentation.
 
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
-Requires:       %{name}-devel = %{version}-%{release}
-Supplements:    (%{name}-devel and ghc-prof)
+Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
+Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
