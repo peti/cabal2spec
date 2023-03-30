@@ -139,9 +139,6 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
   when hasLib $
     putDef "pkg_name" name
 
-  when hasSubLib $
-    putDef "has_internal_sub_libraries" "1"
-
   unless (null testsuiteDeps) $
     if runTests
        then put "%bcond_without tests"
