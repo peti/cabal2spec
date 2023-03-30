@@ -71,7 +71,7 @@ This package provides the Haskell %{pkg_name} profiling library.
 %autosetup
 
 %build
-%ghc_lib_build_without_haddock
+%ghc_lib_build
 
 %install
 %ghc_lib_install

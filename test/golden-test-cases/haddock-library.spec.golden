@@ -19,9 +19,6 @@
 %global pkg_name haddock-library
 %global pkgver %{pkg_name}-%{version}
 
-%global has_internal_sub_libraries 1
-%global pkgver %{pkg_name}-%{version}
-
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        1.5.0.1
@@ -105,7 +102,7 @@ This package provides the Haskell %{pkg_name} profiling library.
 %autosetup
 
 %build
-%ghc_lib_build_without_haddock
+%ghc_lib_build
 
 %install
 %ghc_lib_install
