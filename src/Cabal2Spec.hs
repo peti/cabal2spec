@@ -71,8 +71,6 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
       name = unPackageName (packageName pkg)
       hasExec = hasExes pkgDesc
       hasLib = hasLibs pkgDesc
-      hasSubLib = not (null (subLibraries pkgDesc))
-      hasPublicModules = maybe False (not . null . exposedModules) (library pkgDesc)
   (pkgname, binlib) <- getPkgName (Just specFile) pkgDesc forceBinary
 
   let pkg_name = if pkgname == name then "%{name}" else "%{pkg_name}"
@@ -223,8 +221,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     let cabalFlags = [ "-f" ++ (if b then "" else "-") ++ unFlagName n | (n, b) <- unFlagAssignment flagAssignment ]
     put $ "%define cabal_configure_options " ++ unwords (sort cabalFlags)
   let pkgType = if hasLib then "lib" else "bin"
-      noHaddockModifier = if hasSubLib || (hasLib && not hasPublicModules) then "_without_haddock" else ""
-  put $ "%ghc_" ++ pkgType ++ "_build" ++ noHaddockModifier -- https://github.com/haskell/cabal/issues/4969
+  put $ "%ghc_" ++ pkgType ++ "_build"
   putNewline
 
   put "%install"
