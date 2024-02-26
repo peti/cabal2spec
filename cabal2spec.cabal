@@ -14,7 +14,7 @@ license:            GPL-3
 license-file:       LICENSE
 author:             Peter Simons, Bryan O'Sullivan, Jens Petersen
 maintainer:         simons@cryp.to
-tested-with:        GHC == 9.2.7, GHC == 9.4.4, GHC == 9.6.1
+tested-with:        GHC == 9.2.8 || == 9.4.8 || == 9.6.4 || == 9.8.2
 category:           Distribution
 homepage:           https://github.com/peti/cabal2spec
 build-type:         Simple
