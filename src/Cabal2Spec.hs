@@ -127,13 +127,10 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
   let descr = rstrip isSpace (fromShortText (description pkgDesc))
   let descLines = (formatParagraphs . initialCapital . filterSymbols . finalPeriod) $ if badDescription descr then syn' else descr
       finalPeriod cs = if last cs == '.' then cs else cs ++ "."
-      filterSymbols (c:cs) =
-        if c `notElem` "@\\" then c: filterSymbols cs
-        else case c of
-          '@' -> '\'': filterSymbols cs
-          '\\' -> head cs: filterSymbols (tail cs)
-          _ -> c: filterSymbols cs
-      filterSymbols [] = []
+      filterSymbols ('@':cs)    = '\'' : filterSymbols cs
+      filterSymbols ('\\':c:cs) = c : filterSymbols cs
+      filterSymbols (c:cs)      = c : filterSymbols cs
+      filterSymbols []          = []
   when hasLib $
     putDef "pkg_name" name
 
@@ -267,7 +264,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
                         mapM_ (put . (("%{_datadir}/" ++ pkg_name ++ "-%{version}/")++) . avoidSquareBrackets) (sort (dataFiles pkgDesc))
 
       listDirs :: [FilePath] -> [FilePath]
-      listDirs = nub . concatMap (map joinPath . tail . inits) . nub . map init . filter (\p -> length p > 1) . map splitDirectories
+      listDirs = nub . concatMap (map joinPath . drop 1 . inits) . nub . map init . filter (\p -> length p > 1) . map splitDirectories
 
   when hasExecPkg $ do
     put "%files"
