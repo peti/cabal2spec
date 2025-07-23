@@ -8,9 +8,9 @@
 #
 # For more information, see https://github.com/haskell-CI/haskell-ci
 #
-# version: 0.19.20250604
+# version: 0.19.20250722
 #
-# REGENDATA ("0.19.20250604",["--doctest","--doctest-version=^>= 0.22","--installed=+all -Cabal","github","cabal2spec.cabal"])
+# REGENDATA ("0.19.20250722",["--doctest","--doctest-version=^>= 0.22","--installed=+all -Cabal","github","cabal2spec.cabal"])
 #
 name: Haskell-CI
 on:
@@ -28,6 +28,16 @@ jobs:
     strategy:
       matrix:
         include:
+          - compiler: ghc-9.12.2
+            compilerKind: ghc
+            compilerVersion: 9.12.2
+            setup-method: ghcup
+            allow-failure: false
+          - compiler: ghc-9.10.2
+            compilerKind: ghc
+            compilerVersion: 9.10.2
+            setup-method: ghcup
+            allow-failure: false
           - compiler: ghc-9.8.4
             compilerKind: ghc
             compilerVersion: 9.8.4
@@ -178,7 +188,11 @@ jobs:
           touch cabal.project.local
           echo "packages: ${PKGDIR_cabal2spec}" >> cabal.project
           echo "package cabal2spec" >> cabal.project
-          echo "    ghc-options: -Werror=missing-methods" >> cabal.project
+          echo "    ghc-options: -Werror=missing-methods -Werror=missing-fields" >> cabal.project
+          if [ $((HCNUMVER >= 90400)) -ne 0 ] ; then echo "package cabal2spec" >> cabal.project ; fi
+          if [ $((HCNUMVER >= 90400)) -ne 0 ] ; then echo "    ghc-options: -Werror=unused-packages" >> cabal.project ; fi
+          echo "package cabal2spec" >> cabal.project
+          echo "    ghc-options: -Werror=incomplete-patterns -Werror=incomplete-uni-patterns" >> cabal.project
           cat >> cabal.project <<EOF
           EOF
           $HCPKG list --simple-output --names-only | perl -ne 'for (split /\s+/) { print "constraints: any.$_ installed\n" unless /^(Cabal|cabal2spec)$/; }' >> cabal.project.local
