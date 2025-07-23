@@ -15,7 +15,7 @@ import Distribution.Simple.PackageDescription
 import Distribution.System
 import Distribution.Text
 import Distribution.Types.ComponentRequestedSpec
-import Distribution.Utils.Path ( getSymbolicPath )
+import Distribution.Utils.Path ( getSymbolicPath, makeSymbolicPath )
 import Distribution.Utils.ShortText ( fromShortText )
 import Distribution.Verbosity
 import Distribution.Version
@@ -29,7 +29,7 @@ type CopyrightYear = Int
 cabal2spec :: Platform -> CompilerId -> FlagAssignment -> ForceBinary -> RunTests -> Maybe CopyrightYear
            -> FilePath -> FilePath -> IO ()
 cabal2spec platform compilerId flags forceBinary runTests copyrightYear cabalFile specFile = do
-  gpd <- readGenericPackageDescription silent cabalFile
+  gpd <- readGenericPackageDescription silent Nothing (makeSymbolicPath cabalFile)
   case finalizePD flags requestedComponents (const True) platform (unknownCompilerInfo compilerId NoAbiTag) [] gpd of
     Left missing -> fail ("finalizePD: " ++ show missing)
     Right (pd,_) -> createSpecFile specFile pd forceBinary runTests flags copyrightYear
@@ -231,8 +231,8 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
   let licensefiles = map getSymbolicPath (licenseFiles pkgDesc)
 
   -- remove docs from datafiles (#38)
-  docsUnfiltered <- fmap sort (findDocs (extraSrcFiles pkgDesc ++ extraDocFiles pkgDesc) licensefiles)
-  let datafiles = dataFiles pkgDesc
+  docsUnfiltered <- fmap sort (findDocs (map getSymbolicPath (extraSrcFiles pkgDesc) ++ map getSymbolicPath (extraDocFiles pkgDesc)) licensefiles)
+  let datafiles = map getSymbolicPath (dataFiles pkgDesc)
       dupdocs   = docsUnfiltered `intersect` datafiles
       docs      = docsUnfiltered \\ datafiles
   unless (null dupdocs) $
@@ -260,8 +260,8 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
 
   let listDataFiles = unless (null (dataFiles pkgDesc)) $ do
                         put ("%dir %{_datadir}/" ++ pkg_name ++ "-%{version}")
-                        mapM_ (put . (("%dir %{_datadir}/" ++ pkg_name ++ "-%{version}/")++) . avoidSquareBrackets) (sort (listDirs (dataFiles pkgDesc)))
-                        mapM_ (put . (("%{_datadir}/" ++ pkg_name ++ "-%{version}/")++) . avoidSquareBrackets) (sort (dataFiles pkgDesc))
+                        mapM_ (put . (("%dir %{_datadir}/" ++ pkg_name ++ "-%{version}/")++) . avoidSquareBrackets) (sort (listDirs (map getSymbolicPath (dataFiles pkgDesc))))
+                        mapM_ (put . (("%{_datadir}/" ++ pkg_name ++ "-%{version}/")++) . avoidSquareBrackets) (sort (map getSymbolicPath (dataFiles pkgDesc)))
 
       listDirs :: [FilePath] -> [FilePath]
       listDirs = nub . concatMap (map joinPath . drop 1 . inits) . nub . map init . filter (\p -> length p > 1) . map splitDirectories
