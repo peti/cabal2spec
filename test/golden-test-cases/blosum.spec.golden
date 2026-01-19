@@ -30,26 +30,28 @@ ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-fasta-devel
-BuildRequires:  ghc-fasta-prof
 BuildRequires:  ghc-lens-devel
-BuildRequires:  ghc-lens-prof
 BuildRequires:  ghc-optparse-applicative-devel
-BuildRequires:  ghc-optparse-applicative-prof
 BuildRequires:  ghc-pipes-devel
-BuildRequires:  ghc-pipes-prof
 BuildRequires:  ghc-pipes-text-devel
-BuildRequires:  ghc-pipes-text-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-split-devel
-BuildRequires:  ghc-split-prof
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-text-show-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-fasta-prof
+BuildRequires:  ghc-lens-prof
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-text-show-prof
+BuildRequires:  ghc-optparse-applicative-prof
+BuildRequires:  ghc-pipes-prof
+BuildRequires:  ghc-pipes-text-prof
+BuildRequires:  ghc-split-prof
+%endif
 
 %description
 Generates BLOSUMs for use with finding the degree of amino acid conservation.
@@ -79,6 +81,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -86,6 +89,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -116,6 +120,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

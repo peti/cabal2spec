@@ -30,78 +30,80 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-aeson-devel
-BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-attoparsec-devel
-BuildRequires:  ghc-attoparsec-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-base16-bytestring-devel
-BuildRequires:  ghc-base16-bytestring-prof
 BuildRequires:  ghc-base64-bytestring-devel
-BuildRequires:  ghc-base64-bytestring-prof
 BuildRequires:  ghc-blaze-builder-devel
-BuildRequires:  ghc-blaze-builder-prof
 BuildRequires:  ghc-byteable-devel
-BuildRequires:  ghc-byteable-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-case-insensitive-devel
-BuildRequires:  ghc-case-insensitive-prof
 BuildRequires:  ghc-cereal-devel
-BuildRequires:  ghc-cereal-prof
 BuildRequires:  ghc-conduit-devel
 BuildRequires:  ghc-conduit-extra-devel
-BuildRequires:  ghc-conduit-extra-prof
-BuildRequires:  ghc-conduit-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-cryptonite-devel
-BuildRequires:  ghc-cryptonite-prof
 BuildRequires:  ghc-data-default-devel
-BuildRequires:  ghc-data-default-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-filepath-devel
-BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-http-conduit-devel
-BuildRequires:  ghc-http-conduit-prof
 BuildRequires:  ghc-http-types-devel
-BuildRequires:  ghc-http-types-prof
 BuildRequires:  ghc-lifted-base-devel
-BuildRequires:  ghc-lifted-base-prof
 BuildRequires:  ghc-memory-devel
-BuildRequires:  ghc-memory-prof
 BuildRequires:  ghc-monad-control-devel
-BuildRequires:  ghc-monad-control-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-network-devel
-BuildRequires:  ghc-network-prof
 BuildRequires:  ghc-old-locale-devel
-BuildRequires:  ghc-old-locale-prof
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-resourcet-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-safe-devel
-BuildRequires:  ghc-safe-prof
 BuildRequires:  ghc-scientific-devel
-BuildRequires:  ghc-scientific-prof
 BuildRequires:  ghc-tagged-devel
-BuildRequires:  ghc-tagged-prof
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-time-devel
-BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-transformers-devel
-BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-unordered-containers-devel
-BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-utf8-string-devel
-BuildRequires:  ghc-utf8-string-prof
 BuildRequires:  ghc-vector-devel
-BuildRequires:  ghc-vector-prof
 BuildRequires:  ghc-xml-conduit-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-attoparsec-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-base16-bytestring-prof
+BuildRequires:  ghc-base64-bytestring-prof
+BuildRequires:  ghc-blaze-builder-prof
+BuildRequires:  ghc-byteable-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-case-insensitive-prof
+BuildRequires:  ghc-cereal-prof
+BuildRequires:  ghc-conduit-prof
+BuildRequires:  ghc-conduit-extra-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-cryptonite-prof
+BuildRequires:  ghc-data-default-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-filepath-prof
+BuildRequires:  ghc-http-conduit-prof
+BuildRequires:  ghc-http-types-prof
+BuildRequires:  ghc-lifted-base-prof
+BuildRequires:  ghc-memory-prof
+BuildRequires:  ghc-monad-control-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-network-prof
+BuildRequires:  ghc-old-locale-prof
+BuildRequires:  ghc-resourcet-prof
+BuildRequires:  ghc-safe-prof
+BuildRequires:  ghc-scientific-prof
+BuildRequires:  ghc-tagged-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-time-prof
+BuildRequires:  ghc-transformers-prof
+BuildRequires:  ghc-unordered-containers-prof
+BuildRequires:  ghc-utf8-string-prof
+BuildRequires:  ghc-vector-prof
 BuildRequires:  ghc-xml-conduit-prof
+%endif
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
 BuildRequires:  ghc-QuickCheck-prof
@@ -155,6 +157,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -162,6 +165,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -195,6 +199,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

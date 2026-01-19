@@ -30,28 +30,30 @@ ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-blaze-html-devel
-BuildRequires:  ghc-blaze-html-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-data-default-devel
-BuildRequires:  ghc-data-default-prof
 BuildRequires:  ghc-deepseq-devel
-BuildRequires:  ghc-deepseq-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-syb-devel
-BuildRequires:  ghc-syb-prof
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-uniplate-devel
-BuildRequires:  ghc-uniplate-prof
 BuildRequires:  ghc-xss-sanitize-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-blaze-html-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-data-default-prof
+BuildRequires:  ghc-deepseq-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-syb-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-uniplate-prof
 BuildRequires:  ghc-xss-sanitize-prof
+BuildRequires:  ghc-bytestring-prof
+%endif
 
 %description
 This is an experimental Markdown processor in pure Haskell. It aims to process
@@ -88,6 +90,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -95,6 +98,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -127,6 +131,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

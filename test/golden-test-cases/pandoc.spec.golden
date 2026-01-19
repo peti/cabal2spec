@@ -30,112 +30,114 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-Cabal-prof
 BuildRequires:  ghc-Glob-devel
-BuildRequires:  ghc-Glob-prof
 BuildRequires:  ghc-HTTP-devel
-BuildRequires:  ghc-HTTP-prof
 BuildRequires:  ghc-JuicyPixels-devel
-BuildRequires:  ghc-JuicyPixels-prof
 BuildRequires:  ghc-SHA-devel
-BuildRequires:  ghc-SHA-prof
 BuildRequires:  ghc-aeson-devel
 BuildRequires:  ghc-aeson-pretty-devel
-BuildRequires:  ghc-aeson-pretty-prof
-BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-base-compat-devel
-BuildRequires:  ghc-base-compat-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-base64-bytestring-devel
-BuildRequires:  ghc-base64-bytestring-prof
 BuildRequires:  ghc-binary-devel
-BuildRequires:  ghc-binary-prof
 BuildRequires:  ghc-blaze-html-devel
-BuildRequires:  ghc-blaze-html-prof
 BuildRequires:  ghc-blaze-markup-devel
-BuildRequires:  ghc-blaze-markup-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-case-insensitive-devel
-BuildRequires:  ghc-case-insensitive-prof
 BuildRequires:  ghc-cmark-gfm-devel
-BuildRequires:  ghc-cmark-gfm-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-data-default-devel
-BuildRequires:  ghc-data-default-prof
 BuildRequires:  ghc-deepseq-devel
-BuildRequires:  ghc-deepseq-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-doctemplates-devel
-BuildRequires:  ghc-doctemplates-prof
 BuildRequires:  ghc-exceptions-devel
-BuildRequires:  ghc-exceptions-prof
 BuildRequires:  ghc-filepath-devel
-BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-haddock-library-devel
-BuildRequires:  ghc-haddock-library-prof
 BuildRequires:  ghc-hslua-devel
 BuildRequires:  ghc-hslua-module-text-devel
-BuildRequires:  ghc-hslua-module-text-prof
-BuildRequires:  ghc-hslua-prof
 BuildRequires:  ghc-http-client-devel
-BuildRequires:  ghc-http-client-prof
 BuildRequires:  ghc-http-client-tls-devel
-BuildRequires:  ghc-http-client-tls-prof
 BuildRequires:  ghc-http-types-devel
-BuildRequires:  ghc-http-types-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-network-devel
-BuildRequires:  ghc-network-prof
 BuildRequires:  ghc-network-uri-devel
-BuildRequires:  ghc-network-uri-prof
 BuildRequires:  ghc-pandoc-types-devel
-BuildRequires:  ghc-pandoc-types-prof
 BuildRequires:  ghc-parsec-devel
-BuildRequires:  ghc-parsec-prof
 BuildRequires:  ghc-process-devel
-BuildRequires:  ghc-process-prof
 BuildRequires:  ghc-random-devel
-BuildRequires:  ghc-random-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-safe-devel
-BuildRequires:  ghc-safe-prof
 BuildRequires:  ghc-scientific-devel
-BuildRequires:  ghc-scientific-prof
 BuildRequires:  ghc-skylighting-devel
-BuildRequires:  ghc-skylighting-prof
 BuildRequires:  ghc-split-devel
-BuildRequires:  ghc-split-prof
 BuildRequires:  ghc-syb-devel
-BuildRequires:  ghc-syb-prof
 BuildRequires:  ghc-tagsoup-devel
-BuildRequires:  ghc-tagsoup-prof
 BuildRequires:  ghc-temporary-devel
-BuildRequires:  ghc-temporary-prof
 BuildRequires:  ghc-texmath-devel
-BuildRequires:  ghc-texmath-prof
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-time-devel
-BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-unix-devel
-BuildRequires:  ghc-unix-prof
 BuildRequires:  ghc-unordered-containers-devel
-BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-vector-devel
-BuildRequires:  ghc-vector-prof
 BuildRequires:  ghc-xml-devel
-BuildRequires:  ghc-xml-prof
 BuildRequires:  ghc-yaml-devel
-BuildRequires:  ghc-yaml-prof
 BuildRequires:  ghc-zip-archive-devel
-BuildRequires:  ghc-zip-archive-prof
 BuildRequires:  ghc-zlib-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-Glob-prof
+BuildRequires:  ghc-HTTP-prof
+BuildRequires:  ghc-JuicyPixels-prof
+BuildRequires:  ghc-SHA-prof
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-aeson-pretty-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-base-compat-prof
+BuildRequires:  ghc-base64-bytestring-prof
+BuildRequires:  ghc-binary-prof
+BuildRequires:  ghc-blaze-html-prof
+BuildRequires:  ghc-blaze-markup-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-case-insensitive-prof
+BuildRequires:  ghc-cmark-gfm-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-data-default-prof
+BuildRequires:  ghc-deepseq-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-doctemplates-prof
+BuildRequires:  ghc-exceptions-prof
+BuildRequires:  ghc-filepath-prof
+BuildRequires:  ghc-haddock-library-prof
+BuildRequires:  ghc-hslua-prof
+BuildRequires:  ghc-hslua-module-text-prof
+BuildRequires:  ghc-http-client-prof
+BuildRequires:  ghc-http-client-tls-prof
+BuildRequires:  ghc-http-types-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-network-prof
+BuildRequires:  ghc-network-uri-prof
+BuildRequires:  ghc-pandoc-types-prof
+BuildRequires:  ghc-parsec-prof
+BuildRequires:  ghc-process-prof
+BuildRequires:  ghc-random-prof
+BuildRequires:  ghc-safe-prof
+BuildRequires:  ghc-scientific-prof
+BuildRequires:  ghc-skylighting-prof
+BuildRequires:  ghc-split-prof
+BuildRequires:  ghc-syb-prof
+BuildRequires:  ghc-tagsoup-prof
+BuildRequires:  ghc-temporary-prof
+BuildRequires:  ghc-texmath-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-time-prof
+BuildRequires:  ghc-unix-prof
+BuildRequires:  ghc-unordered-containers-prof
+BuildRequires:  ghc-vector-prof
+BuildRequires:  ghc-xml-prof
+BuildRequires:  ghc-yaml-prof
+BuildRequires:  ghc-zip-archive-prof
 BuildRequires:  ghc-zlib-prof
+BuildRequires:  ghc-Cabal-prof
+%endif
 %if %{with tests}
 BuildRequires:  ghc-Diff-devel
 BuildRequires:  ghc-Diff-prof
@@ -197,6 +199,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -204,6 +207,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -386,6 +390,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license COPYING.md
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

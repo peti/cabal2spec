@@ -30,34 +30,36 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-aeson-devel
-BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-conduit-devel
 BuildRequires:  ghc-conduit-extra-devel
-BuildRequires:  ghc-conduit-extra-prof
-BuildRequires:  ghc-conduit-prof
 BuildRequires:  ghc-exceptions-devel
-BuildRequires:  ghc-exceptions-prof
 BuildRequires:  ghc-http-client-devel
-BuildRequires:  ghc-http-client-prof
 BuildRequires:  ghc-http-client-tls-devel
-BuildRequires:  ghc-http-client-tls-prof
 BuildRequires:  ghc-http-types-devel
-BuildRequires:  ghc-http-types-prof
 BuildRequires:  ghc-lifted-base-devel
-BuildRequires:  ghc-lifted-base-prof
 BuildRequires:  ghc-monad-control-devel
-BuildRequires:  ghc-monad-control-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-resourcet-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-transformers-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-conduit-prof
+BuildRequires:  ghc-conduit-extra-prof
+BuildRequires:  ghc-exceptions-prof
+BuildRequires:  ghc-http-client-prof
+BuildRequires:  ghc-http-client-tls-prof
+BuildRequires:  ghc-http-types-prof
+BuildRequires:  ghc-lifted-base-prof
+BuildRequires:  ghc-monad-control-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-resourcet-prof
 BuildRequires:  ghc-transformers-prof
+%endif
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
 BuildRequires:  ghc-HUnit-prof
@@ -124,6 +126,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -131,6 +134,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -164,6 +168,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

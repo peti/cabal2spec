@@ -30,26 +30,28 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-aeson-devel
-BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-genvalidity-devel
-BuildRequires:  ghc-genvalidity-prof
 BuildRequires:  ghc-genvalidity-scientific-devel
-BuildRequires:  ghc-genvalidity-scientific-prof
 BuildRequires:  ghc-genvalidity-text-devel
-BuildRequires:  ghc-genvalidity-text-prof
 BuildRequires:  ghc-genvalidity-unordered-containers-devel
-BuildRequires:  ghc-genvalidity-unordered-containers-prof
 BuildRequires:  ghc-genvalidity-vector-devel
-BuildRequires:  ghc-genvalidity-vector-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-validity-aeson-devel
-BuildRequires:  ghc-validity-aeson-prof
 BuildRequires:  ghc-validity-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-genvalidity-prof
+BuildRequires:  ghc-genvalidity-scientific-prof
+BuildRequires:  ghc-genvalidity-text-prof
+BuildRequires:  ghc-genvalidity-unordered-containers-prof
+BuildRequires:  ghc-genvalidity-vector-prof
 BuildRequires:  ghc-validity-prof
+BuildRequires:  ghc-validity-aeson-prof
+%endif
 %if %{with tests}
 BuildRequires:  ghc-genvalidity-hspec-devel
 BuildRequires:  ghc-genvalidity-hspec-prof
@@ -85,6 +87,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -92,6 +95,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -123,6 +127,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

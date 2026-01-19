@@ -26,24 +26,26 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-extra-devel
-BuildRequires:  ghc-extra-prof
 BuildRequires:  ghc-filepath-devel
-BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-ghc-prof-devel
-BuildRequires:  ghc-ghc-prof-prof
 BuildRequires:  ghc-hashable-devel
-BuildRequires:  ghc-hashable-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-scientific-devel
-BuildRequires:  ghc-scientific-prof
 BuildRequires:  ghc-text-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-extra-prof
+BuildRequires:  ghc-filepath-prof
+BuildRequires:  ghc-ghc-prof-prof
+BuildRequires:  ghc-hashable-prof
+BuildRequires:  ghc-scientific-prof
 BuildRequires:  ghc-text-prof
+%endif
 
 %description
 Given a GHC profile output, this tool generates alternative views on the data,

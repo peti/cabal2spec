@@ -30,42 +30,44 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-aeson-devel
-BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bifunctors-devel
-BuildRequires:  ghc-bifunctors-prof
 BuildRequires:  ghc-binary-devel
-BuildRequires:  ghc-binary-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-data-default-class-devel
-BuildRequires:  ghc-data-default-class-prof
 BuildRequires:  ghc-deepseq-devel
-BuildRequires:  ghc-deepseq-prof
 BuildRequires:  ghc-hashable-devel
-BuildRequires:  ghc-hashable-prof
 BuildRequires:  ghc-keys-devel
-BuildRequires:  ghc-keys-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-profunctors-devel
-BuildRequires:  ghc-profunctors-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-semigroupoids-devel
-BuildRequires:  ghc-semigroupoids-prof
 BuildRequires:  ghc-transformers-compat-devel
-BuildRequires:  ghc-transformers-compat-prof
 BuildRequires:  ghc-transformers-devel
-BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-unordered-containers-devel
-BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-vector-devel
 BuildRequires:  ghc-vector-instances-devel
-BuildRequires:  ghc-vector-instances-prof
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-bifunctors-prof
+BuildRequires:  ghc-binary-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-data-default-class-prof
+BuildRequires:  ghc-deepseq-prof
+BuildRequires:  ghc-hashable-prof
+BuildRequires:  ghc-keys-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-profunctors-prof
+BuildRequires:  ghc-semigroupoids-prof
+BuildRequires:  ghc-transformers-prof
+BuildRequires:  ghc-transformers-compat-prof
+BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-vector-prof
+BuildRequires:  ghc-vector-instances-prof
+%endif
 %if %{with tests}
 BuildRequires:  ghc-quickcheck-instances-devel
 BuildRequires:  ghc-quickcheck-instances-prof
@@ -113,6 +115,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -120,6 +123,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -153,6 +157,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

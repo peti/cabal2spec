@@ -29,38 +29,40 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-X11-devel
-BuildRequires:  ghc-X11-prof
 BuildRequires:  ghc-X11-xft-devel
-BuildRequires:  ghc-X11-xft-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-extensible-exceptions-devel
-BuildRequires:  ghc-extensible-exceptions-prof
 BuildRequires:  ghc-filepath-devel
-BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-old-locale-devel
-BuildRequires:  ghc-old-locale-prof
 BuildRequires:  ghc-old-time-devel
-BuildRequires:  ghc-old-time-prof
 BuildRequires:  ghc-process-devel
-BuildRequires:  ghc-process-prof
 BuildRequires:  ghc-random-devel
-BuildRequires:  ghc-random-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-unix-devel
-BuildRequires:  ghc-unix-prof
 BuildRequires:  ghc-utf8-string-devel
-BuildRequires:  ghc-utf8-string-prof
 BuildRequires:  ghc-xmonad-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-X11-prof
+BuildRequires:  ghc-X11-xft-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-extensible-exceptions-prof
+BuildRequires:  ghc-filepath-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-old-locale-prof
+BuildRequires:  ghc-old-time-prof
+BuildRequires:  ghc-process-prof
+BuildRequires:  ghc-random-prof
+BuildRequires:  ghc-unix-prof
+BuildRequires:  ghc-utf8-string-prof
 BuildRequires:  ghc-xmonad-prof
+%endif
 
 %description
 Third party tiling algorithms, configurations and scripts to xmonad, a tiling
@@ -101,6 +103,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -108,6 +111,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -138,6 +142,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog
