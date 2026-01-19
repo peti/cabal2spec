@@ -31,64 +31,66 @@ ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-Glob-devel
-BuildRequires:  ghc-Glob-prof
 BuildRequires:  ghc-aeson-devel
-BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-ansi-wl-pprint-devel
-BuildRequires:  ghc-ansi-wl-pprint-prof
 BuildRequires:  ghc-base-compat-devel
-BuildRequires:  ghc-base-compat-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-binary-devel
-BuildRequires:  ghc-binary-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-cassava-devel
-BuildRequires:  ghc-cassava-prof
 BuildRequires:  ghc-code-page-devel
-BuildRequires:  ghc-code-page-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-deepseq-devel
-BuildRequires:  ghc-deepseq-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-exceptions-devel
-BuildRequires:  ghc-exceptions-prof
 BuildRequires:  ghc-filepath-devel
-BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-js-flot-devel
-BuildRequires:  ghc-js-flot-prof
 BuildRequires:  ghc-js-jquery-devel
-BuildRequires:  ghc-js-jquery-prof
 BuildRequires:  ghc-microstache-devel
-BuildRequires:  ghc-microstache-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-mwc-random-devel
-BuildRequires:  ghc-mwc-random-prof
 BuildRequires:  ghc-optparse-applicative-devel
-BuildRequires:  ghc-optparse-applicative-prof
 BuildRequires:  ghc-parsec-devel
-BuildRequires:  ghc-parsec-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-semigroups-devel
-BuildRequires:  ghc-semigroups-prof
 BuildRequires:  ghc-statistics-devel
-BuildRequires:  ghc-statistics-prof
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-time-devel
-BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-transformers-compat-devel
-BuildRequires:  ghc-transformers-compat-prof
 BuildRequires:  ghc-transformers-devel
-BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-vector-algorithms-devel
-BuildRequires:  ghc-vector-algorithms-prof
 BuildRequires:  ghc-vector-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-Glob-prof
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-ansi-wl-pprint-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-base-compat-prof
+BuildRequires:  ghc-binary-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-cassava-prof
+BuildRequires:  ghc-code-page-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-deepseq-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-exceptions-prof
+BuildRequires:  ghc-filepath-prof
+BuildRequires:  ghc-js-flot-prof
+BuildRequires:  ghc-js-jquery-prof
+BuildRequires:  ghc-microstache-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-mwc-random-prof
+BuildRequires:  ghc-optparse-applicative-prof
+BuildRequires:  ghc-parsec-prof
+BuildRequires:  ghc-semigroups-prof
+BuildRequires:  ghc-statistics-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-time-prof
+BuildRequires:  ghc-transformers-prof
+BuildRequires:  ghc-transformers-compat-prof
 BuildRequires:  ghc-vector-prof
+BuildRequires:  ghc-vector-algorithms-prof
+%endif
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
 BuildRequires:  ghc-HUnit-prof
@@ -140,6 +142,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -147,6 +150,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -188,6 +192,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

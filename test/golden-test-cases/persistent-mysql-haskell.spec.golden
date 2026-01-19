@@ -30,42 +30,44 @@ ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-aeson-devel
-BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-conduit-devel
-BuildRequires:  ghc-conduit-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-io-streams-devel
-BuildRequires:  ghc-io-streams-prof
 BuildRequires:  ghc-monad-control-devel
-BuildRequires:  ghc-monad-control-prof
 BuildRequires:  ghc-monad-logger-devel
-BuildRequires:  ghc-monad-logger-prof
 BuildRequires:  ghc-mysql-haskell-devel
-BuildRequires:  ghc-mysql-haskell-prof
 BuildRequires:  ghc-network-devel
-BuildRequires:  ghc-network-prof
 BuildRequires:  ghc-persistent-devel
-BuildRequires:  ghc-persistent-prof
 BuildRequires:  ghc-persistent-template-devel
-BuildRequires:  ghc-persistent-template-prof
 BuildRequires:  ghc-resource-pool-devel
-BuildRequires:  ghc-resource-pool-prof
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-resourcet-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-time-devel
-BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-tls-devel
-BuildRequires:  ghc-tls-prof
 BuildRequires:  ghc-transformers-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-conduit-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-io-streams-prof
+BuildRequires:  ghc-monad-control-prof
+BuildRequires:  ghc-monad-logger-prof
+BuildRequires:  ghc-mysql-haskell-prof
+BuildRequires:  ghc-network-prof
+BuildRequires:  ghc-persistent-prof
+BuildRequires:  ghc-resource-pool-prof
+BuildRequires:  ghc-resourcet-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-time-prof
+BuildRequires:  ghc-tls-prof
 BuildRequires:  ghc-transformers-prof
+BuildRequires:  ghc-persistent-template-prof
+%endif
 
 %description
 This package contains a backend for persistent using the MySQL database server.
@@ -105,6 +107,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -112,6 +115,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -144,6 +148,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

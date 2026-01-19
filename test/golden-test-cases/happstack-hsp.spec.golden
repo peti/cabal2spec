@@ -29,26 +29,28 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-happstack-server-devel
-BuildRequires:  ghc-happstack-server-prof
 BuildRequires:  ghc-harp-devel
-BuildRequires:  ghc-harp-prof
 BuildRequires:  ghc-hsp-devel
-BuildRequires:  ghc-hsp-prof
 BuildRequires:  ghc-hsx2hs-devel
-BuildRequires:  ghc-hsx2hs-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-syb-devel
-BuildRequires:  ghc-syb-prof
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-utf8-string-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-happstack-server-prof
+BuildRequires:  ghc-harp-prof
+BuildRequires:  ghc-hsp-prof
+BuildRequires:  ghc-hsx2hs-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-syb-prof
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-utf8-string-prof
+%endif
 
 %description
 Happstack is a web application framework. HSP is an XML templating solution.
@@ -79,6 +81,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -86,6 +89,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -114,6 +118,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

@@ -31,32 +31,34 @@ ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-binary-devel
-BuildRequires:  ghc-binary-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-data-binary-ieee754-devel
-BuildRequires:  ghc-data-binary-ieee754-prof
 BuildRequires:  ghc-deepseq-devel
-BuildRequires:  ghc-deepseq-prof
 BuildRequires:  ghc-groom-devel
-BuildRequires:  ghc-groom-prof
 BuildRequires:  ghc-hashable-devel
-BuildRequires:  ghc-hashable-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-unordered-containers-devel
-BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-vector-devel
-BuildRequires:  ghc-vector-prof
 BuildRequires:  ghc-void-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-binary-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-data-binary-ieee754-prof
+BuildRequires:  ghc-deepseq-prof
+BuildRequires:  ghc-hashable-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-unordered-containers-prof
+BuildRequires:  ghc-vector-prof
 BuildRequires:  ghc-void-prof
+BuildRequires:  ghc-groom-prof
+%endif
 %if %{with tests}
 BuildRequires:  ghc-hspec-devel
 BuildRequires:  ghc-hspec-prof
@@ -94,6 +96,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -101,6 +104,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -134,6 +138,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

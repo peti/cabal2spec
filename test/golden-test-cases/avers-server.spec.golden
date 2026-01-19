@@ -29,54 +29,56 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-aeson-devel
-BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-avers-api-devel
-BuildRequires:  ghc-avers-api-prof
 BuildRequires:  ghc-avers-devel
-BuildRequires:  ghc-avers-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-base64-bytestring-devel
-BuildRequires:  ghc-base64-bytestring-prof
 BuildRequires:  ghc-bytestring-conversion-devel
-BuildRequires:  ghc-bytestring-conversion-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-cookie-devel
-BuildRequires:  ghc-cookie-prof
 BuildRequires:  ghc-cryptonite-devel
-BuildRequires:  ghc-cryptonite-prof
 BuildRequires:  ghc-http-types-devel
-BuildRequires:  ghc-http-types-prof
 BuildRequires:  ghc-memory-devel
-BuildRequires:  ghc-memory-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-resource-pool-devel
-BuildRequires:  ghc-resource-pool-prof
 BuildRequires:  ghc-rethinkdb-client-driver-devel
-BuildRequires:  ghc-rethinkdb-client-driver-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-servant-devel
-BuildRequires:  ghc-servant-prof
 BuildRequires:  ghc-servant-server-devel
-BuildRequires:  ghc-servant-server-prof
 BuildRequires:  ghc-stm-devel
-BuildRequires:  ghc-stm-prof
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-time-devel
-BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-transformers-devel
-BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-wai-devel
-BuildRequires:  ghc-wai-prof
 BuildRequires:  ghc-wai-websockets-devel
-BuildRequires:  ghc-wai-websockets-prof
 BuildRequires:  ghc-websockets-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-avers-prof
+BuildRequires:  ghc-avers-api-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-base64-bytestring-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-bytestring-conversion-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-cookie-prof
+BuildRequires:  ghc-cryptonite-prof
+BuildRequires:  ghc-http-types-prof
+BuildRequires:  ghc-memory-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-resource-pool-prof
+BuildRequires:  ghc-rethinkdb-client-driver-prof
+BuildRequires:  ghc-servant-prof
+BuildRequires:  ghc-servant-server-prof
+BuildRequires:  ghc-stm-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-time-prof
+BuildRequires:  ghc-transformers-prof
+BuildRequires:  ghc-wai-prof
+BuildRequires:  ghc-wai-websockets-prof
 BuildRequires:  ghc-websockets-prof
+%endif
 
 %description
 Server implementation of the Avers API.
@@ -106,6 +108,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -113,6 +116,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -141,6 +145,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

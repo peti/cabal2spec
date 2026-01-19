@@ -30,32 +30,34 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-aeson-devel
-BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bifunctors-devel
-BuildRequires:  ghc-bifunctors-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-email-validate-devel
-BuildRequires:  ghc-email-validate-prof
 BuildRequires:  ghc-http-api-data-devel
-BuildRequires:  ghc-http-api-data-prof
 BuildRequires:  ghc-opaleye-devel
-BuildRequires:  ghc-opaleye-prof
 BuildRequires:  ghc-path-pieces-devel
-BuildRequires:  ghc-path-pieces-prof
 BuildRequires:  ghc-persistent-devel
-BuildRequires:  ghc-persistent-prof
 BuildRequires:  ghc-postgresql-simple-devel
-BuildRequires:  ghc-postgresql-simple-prof
 BuildRequires:  ghc-product-profunctors-devel
-BuildRequires:  ghc-product-profunctors-prof
 BuildRequires:  ghc-profunctors-devel
-BuildRequires:  ghc-profunctors-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-bifunctors-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-email-validate-prof
+BuildRequires:  ghc-http-api-data-prof
+BuildRequires:  ghc-opaleye-prof
+BuildRequires:  ghc-path-pieces-prof
+BuildRequires:  ghc-persistent-prof
+BuildRequires:  ghc-postgresql-simple-prof
+BuildRequires:  ghc-product-profunctors-prof
+BuildRequires:  ghc-profunctors-prof
 BuildRequires:  ghc-text-prof
+%endif
 %if %{with tests}
 BuildRequires:  ghc-Glob-devel
 BuildRequires:  ghc-Glob-prof
@@ -91,6 +93,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -98,6 +101,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -131,6 +135,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

@@ -29,26 +29,28 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-optparse-applicative-devel
-BuildRequires:  ghc-optparse-applicative-prof
 BuildRequires:  ghc-reducers-devel
-BuildRequires:  ghc-reducers-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-split-devel
-BuildRequires:  ghc-split-prof
 BuildRequires:  ghc-stm-devel
-BuildRequires:  ghc-stm-prof
 BuildRequires:  ghc-tagged-devel
-BuildRequires:  ghc-tagged-prof
 BuildRequires:  ghc-tasty-devel
-BuildRequires:  ghc-tasty-prof
 BuildRequires:  ghc-transformers-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-optparse-applicative-prof
+BuildRequires:  ghc-reducers-prof
+BuildRequires:  ghc-split-prof
+BuildRequires:  ghc-stm-prof
+BuildRequires:  ghc-tagged-prof
+BuildRequires:  ghc-tasty-prof
 BuildRequires:  ghc-transformers-prof
+%endif
 
 %description
 This ingredient adds the ability to run tests by first filtering the test tree
@@ -119,6 +121,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -126,6 +129,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -156,6 +160,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

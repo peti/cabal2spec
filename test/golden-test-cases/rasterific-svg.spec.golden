@@ -30,44 +30,46 @@ ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-FontyFruity-devel
-BuildRequires:  ghc-FontyFruity-prof
 BuildRequires:  ghc-JuicyPixels-devel
-BuildRequires:  ghc-JuicyPixels-prof
 BuildRequires:  ghc-Rasterific-devel
-BuildRequires:  ghc-Rasterific-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-binary-devel
-BuildRequires:  ghc-binary-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-filepath-devel
-BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-lens-devel
-BuildRequires:  ghc-lens-prof
 BuildRequires:  ghc-linear-devel
-BuildRequires:  ghc-linear-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-optparse-applicative-devel
-BuildRequires:  ghc-optparse-applicative-prof
 BuildRequires:  ghc-primitive-devel
-BuildRequires:  ghc-primitive-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-scientific-devel
-BuildRequires:  ghc-scientific-prof
 BuildRequires:  ghc-svg-tree-devel
-BuildRequires:  ghc-svg-tree-prof
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-transformers-devel
-BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-vector-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-FontyFruity-prof
+BuildRequires:  ghc-JuicyPixels-prof
+BuildRequires:  ghc-Rasterific-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-binary-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-filepath-prof
+BuildRequires:  ghc-lens-prof
+BuildRequires:  ghc-linear-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-primitive-prof
+BuildRequires:  ghc-scientific-prof
+BuildRequires:  ghc-svg-tree-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-vector-prof
+BuildRequires:  ghc-optparse-applicative-prof
+%endif
 
 %description
 SVG renderer that will let you render svg-tree parsed SVG file to a JuicyPixel
@@ -98,6 +100,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -105,6 +108,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -137,6 +141,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

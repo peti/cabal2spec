@@ -30,48 +30,50 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-aeson-devel
-BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-ansi-wl-pprint-devel
-BuildRequires:  ghc-ansi-wl-pprint-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bifunctors-devel
-BuildRequires:  ghc-bifunctors-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-comonad-devel
-BuildRequires:  ghc-comonad-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-double-conversion-devel
-BuildRequires:  ghc-double-conversion-prof
 BuildRequires:  ghc-filepath-devel
-BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-free-devel
-BuildRequires:  ghc-free-prof
 BuildRequires:  ghc-lens-devel
-BuildRequires:  ghc-lens-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-parsers-devel
-BuildRequires:  ghc-parsers-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-scientific-devel
-BuildRequires:  ghc-scientific-prof
 BuildRequires:  ghc-semigroups-devel
-BuildRequires:  ghc-semigroups-prof
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-text-format-devel
-BuildRequires:  ghc-text-format-prof
 BuildRequires:  ghc-text-manipulate-devel
-BuildRequires:  ghc-text-manipulate-prof
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-trifecta-devel
-BuildRequires:  ghc-trifecta-prof
 BuildRequires:  ghc-unordered-containers-devel
-BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-vector-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-ansi-wl-pprint-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-bifunctors-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-comonad-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-double-conversion-prof
+BuildRequires:  ghc-filepath-prof
+BuildRequires:  ghc-free-prof
+BuildRequires:  ghc-lens-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-parsers-prof
+BuildRequires:  ghc-scientific-prof
+BuildRequires:  ghc-semigroups-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-text-format-prof
+BuildRequires:  ghc-text-manipulate-prof
+BuildRequires:  ghc-trifecta-prof
+BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-vector-prof
+%endif
 %if %{with tests}
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-golden-devel
@@ -129,6 +131,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -136,6 +139,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -174,6 +178,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

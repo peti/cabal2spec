@@ -31,52 +31,54 @@ ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-aeson-devel
-BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-attoparsec-devel
-BuildRequires:  ghc-attoparsec-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-base64-bytestring-devel
-BuildRequires:  ghc-base64-bytestring-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-concise-devel
-BuildRequires:  ghc-concise-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-cryptonite-devel
-BuildRequires:  ghc-cryptonite-prof
 BuildRequires:  ghc-lens-devel
-BuildRequires:  ghc-lens-prof
 BuildRequires:  ghc-memory-devel
-BuildRequires:  ghc-memory-prof
 BuildRequires:  ghc-monad-time-devel
-BuildRequires:  ghc-monad-time-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-network-uri-devel
-BuildRequires:  ghc-network-uri-prof
 BuildRequires:  ghc-quickcheck-instances-devel
-BuildRequires:  ghc-quickcheck-instances-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-safe-devel
-BuildRequires:  ghc-safe-prof
 BuildRequires:  ghc-semigroups-devel
-BuildRequires:  ghc-semigroups-prof
 BuildRequires:  ghc-template-haskell-devel
-BuildRequires:  ghc-template-haskell-prof
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-time-devel
-BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-unordered-containers-devel
-BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-vector-devel
-BuildRequires:  ghc-vector-prof
 BuildRequires:  ghc-x509-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-attoparsec-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-base64-bytestring-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-concise-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-cryptonite-prof
+BuildRequires:  ghc-lens-prof
+BuildRequires:  ghc-memory-prof
+BuildRequires:  ghc-monad-time-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-network-uri-prof
+BuildRequires:  ghc-quickcheck-instances-prof
+BuildRequires:  ghc-safe-prof
+BuildRequires:  ghc-semigroups-prof
+BuildRequires:  ghc-template-haskell-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-time-prof
+BuildRequires:  ghc-unordered-containers-prof
+BuildRequires:  ghc-vector-prof
 BuildRequires:  ghc-x509-prof
+%endif
 %if %{with tests}
 BuildRequires:  ghc-hspec-devel
 BuildRequires:  ghc-hspec-prof
@@ -128,6 +130,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -135,6 +138,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -170,6 +174,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

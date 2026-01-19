@@ -30,55 +30,57 @@ ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-base-prelude-devel
-BuildRequires:  ghc-base-prelude-prof
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bifunctors-devel
-BuildRequires:  ghc-bifunctors-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-contravariant-devel
 BuildRequires:  ghc-contravariant-extras-devel
-BuildRequires:  ghc-contravariant-extras-prof
-BuildRequires:  ghc-contravariant-prof
 BuildRequires:  ghc-deepseq-devel
-BuildRequires:  ghc-deepseq-prof
 BuildRequires:  ghc-dlist-devel
-BuildRequires:  ghc-dlist-prof
 BuildRequires:  ghc-either-devel
-BuildRequires:  ghc-either-prof
 BuildRequires:  ghc-fail-devel
-BuildRequires:  ghc-fail-prof
 BuildRequires:  ghc-hashable-devel
-BuildRequires:  ghc-hashable-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-profunctors-devel
-BuildRequires:  ghc-profunctors-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-scientific-devel
-BuildRequires:  ghc-scientific-prof
 BuildRequires:  ghc-semigroupoids-devel
-BuildRequires:  ghc-semigroupoids-prof
 BuildRequires:  ghc-semigroups-devel
-BuildRequires:  ghc-semigroups-prof
 BuildRequires:  ghc-stm-devel
-BuildRequires:  ghc-stm-prof
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-time-devel
-BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-transformers-devel
-BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-unordered-containers-devel
-BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-uuid-devel
-BuildRequires:  ghc-uuid-prof
 BuildRequires:  ghc-vector-devel
-BuildRequires:  ghc-vector-prof
 BuildRequires:  ghc-void-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-base-prelude-prof
+BuildRequires:  ghc-bifunctors-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-contravariant-prof
+BuildRequires:  ghc-contravariant-extras-prof
+BuildRequires:  ghc-deepseq-prof
+BuildRequires:  ghc-dlist-prof
+BuildRequires:  ghc-either-prof
+BuildRequires:  ghc-fail-prof
+BuildRequires:  ghc-hashable-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-profunctors-prof
+BuildRequires:  ghc-scientific-prof
+BuildRequires:  ghc-semigroupoids-prof
+BuildRequires:  ghc-semigroups-prof
+BuildRequires:  ghc-stm-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-time-prof
+BuildRequires:  ghc-transformers-prof
+BuildRequires:  ghc-unordered-containers-prof
+BuildRequires:  ghc-uuid-prof
+BuildRequires:  ghc-vector-prof
 BuildRequires:  ghc-void-prof
+%endif
 
 %description
 This package is intended for those who are tired of keeping long lists of
@@ -125,6 +127,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -132,6 +135,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -160,6 +164,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

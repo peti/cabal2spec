@@ -29,28 +29,30 @@ Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-gnuidn-devel
-BuildRequires:  ghc-gnuidn-prof
 BuildRequires:  ghc-gnutls-devel
-BuildRequires:  ghc-gnutls-prof
 BuildRequires:  ghc-gsasl-devel
-BuildRequires:  ghc-gsasl-prof
 BuildRequires:  ghc-libxml-sax-devel
-BuildRequires:  ghc-libxml-sax-prof
 BuildRequires:  ghc-monads-tf-devel
-BuildRequires:  ghc-monads-tf-prof
 BuildRequires:  ghc-network-devel
-BuildRequires:  ghc-network-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-transformers-devel
-BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-xml-types-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-gnuidn-prof
+BuildRequires:  ghc-gnutls-prof
+BuildRequires:  ghc-gsasl-prof
+BuildRequires:  ghc-libxml-sax-prof
+BuildRequires:  ghc-monads-tf-prof
+BuildRequires:  ghc-network-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-xml-types-prof
+%endif
 
 %description
 Client library for the XMPP protocol.
@@ -81,6 +83,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -88,6 +91,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -116,6 +120,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license license.txt
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

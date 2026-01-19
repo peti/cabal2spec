@@ -26,20 +26,22 @@ URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
 ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-Cabal-prof
 BuildRequires:  ghc-array-devel
-BuildRequires:  ghc-array-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-filepath-devel
-BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-rpm-macros
+%if %{with ghc_prof}
+BuildRequires:  ghc-array-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-Cabal-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-filepath-prof
+%endif
 %if %{with tests}
 BuildRequires:  ghc-process-devel
 BuildRequires:  ghc-process-prof

@@ -31,56 +31,58 @@ ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-Diff-devel
-BuildRequires:  ghc-Diff-prof
 BuildRequires:  ghc-HUnit-devel
-BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-aeson-devel
-BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-array-devel
-BuildRequires:  ghc-array-prof
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-base64-bytestring-devel
-BuildRequires:  ghc-base64-bytestring-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-cpphs-devel
-BuildRequires:  ghc-cpphs-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-haskell-src-devel
-BuildRequires:  ghc-haskell-src-prof
 BuildRequires:  ghc-lifted-base-devel
-BuildRequires:  ghc-lifted-base-prof
 BuildRequires:  ghc-monad-control-devel
-BuildRequires:  ghc-monad-control-prof
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-old-time-devel
-BuildRequires:  ghc-old-time-prof
 BuildRequires:  ghc-pretty-devel
-BuildRequires:  ghc-pretty-prof
 BuildRequires:  ghc-process-devel
-BuildRequires:  ghc-process-prof
 BuildRequires:  ghc-random-devel
-BuildRequires:  ghc-random-prof
 BuildRequires:  ghc-regex-compat-devel
-BuildRequires:  ghc-regex-compat-prof
 BuildRequires:  ghc-rpm-macros
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-time-devel
-BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-unix-devel
-BuildRequires:  ghc-unix-prof
 BuildRequires:  ghc-vector-devel
-BuildRequires:  ghc-vector-prof
 BuildRequires:  ghc-xmlgen-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-Diff-prof
+BuildRequires:  ghc-HUnit-prof
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-aeson-prof
+BuildRequires:  ghc-array-prof
+BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-base64-bytestring-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-cpphs-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-haskell-src-prof
+BuildRequires:  ghc-lifted-base-prof
+BuildRequires:  ghc-monad-control-prof
+BuildRequires:  ghc-mtl-prof
+BuildRequires:  ghc-old-time-prof
+BuildRequires:  ghc-pretty-prof
+BuildRequires:  ghc-process-prof
+BuildRequires:  ghc-random-prof
+BuildRequires:  ghc-regex-compat-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-time-prof
+BuildRequires:  ghc-unix-prof
+BuildRequires:  ghc-vector-prof
 BuildRequires:  ghc-xmlgen-prof
+%endif
 %if %{with tests}
 BuildRequires:  ghc-aeson-pretty-devel
 BuildRequires:  ghc-aeson-pretty-prof
@@ -135,6 +137,7 @@ Requires:       ghc-filesystem
 This package provides the Haskell %{pkg_name} library documentation.
 
 
+%if %{with ghc_prof}
 %package -n ghc-%{pkg_name}-prof
 Summary:        Haskell %{pkg_name} profiling library
 Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
@@ -142,6 +145,7 @@ Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
 
 %description -n ghc-%{pkg_name}-prof
 This package provides the Haskell %{pkg_name} profiling library.
+%endif
 
 
 %prep
@@ -177,6 +181,8 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
 %license LICENSE
 
+%if %{with ghc_prof}
 %files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%endif
 
 %changelog

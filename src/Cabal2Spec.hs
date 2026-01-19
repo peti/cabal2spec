@@ -51,8 +51,9 @@ mkTools tools' = filter excludedTools $ nub $ map mapTools tools'
 
 createSpecFile :: FilePath -> PackageDescription -> ForceBinary -> RunTests -> FlagAssignment -> Maybe CopyrightYear -> IO ()
 createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYear = do
-  let deps :: [String]
-      deps = map showDevelDep deps' ++ map showProfDep deps'
+  let develDeps, profDeps :: [String]
+      develDeps = map showDevelDep deps'
+      profDeps = map showProfDep deps'
       deps' :: [String]
       selfdep :: Bool
       (deps', selfdep) = buildDependencies pkgDesc name
@@ -153,14 +154,18 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
   putHdr "ExcludeArch" "%{ix86}"
 
   let fixedDeps = ["ghc-Cabal-devel", "ghc-rpm-macros"]
-  let alldeps = sort $ nub $ fixedDeps ++ deps ++ tools ++ clibs ++ pkgcfgs ++ ["pkgconfig" | not (null pkgcfgs)]
-  let extraTestDeps = sort $ testsuiteDeps \\ deps
-  unless (null $ alldeps ++ extraTestDeps) $ do
-    mapM_ (putHdr "BuildRequires") alldeps
-    unless (null extraTestDeps) $ do
-      put "%if %{with tests}"
-      mapM_ (putHdr "BuildRequires") extraTestDeps
-      put "%endif"
+  let unconditialDeps = sort $ nub $ fixedDeps ++ develDeps ++ tools ++ clibs ++ pkgcfgs ++ ["pkgconfig" | not (null pkgcfgs)]
+  let extraTestDeps = sort $ testsuiteDeps \\ (develDeps ++ profDeps)
+
+  mapM_ (putHdr "BuildRequires") unconditialDeps
+  unless (null profDeps) $ do
+    put "%if %{with ghc_prof}"
+    mapM_ (putHdr "BuildRequires") profDeps
+    put "%endif"
+  unless (null extraTestDeps) $ do
+    put "%if %{with tests}"
+    mapM_ (putHdr "BuildRequires") extraTestDeps
+    put "%endif"
 
   putNewline
 
@@ -197,6 +202,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
         , "This package provides the Haskell %{pkg_name} library documentation."
         , ""
         , ""
+        , "%if %{with ghc_prof}"
         , "%package -n ghc-%{pkg_name}-prof"
         , "Summary:        Haskell %{pkg_name} profiling library"
         , "Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}"
@@ -204,6 +210,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
         , ""
         , "%description -n ghc-%{pkg_name}-prof"
         , "This package provides the Haskell %{pkg_name} profiling library."
+        , "%endif"
         , ""
         ]
 
@@ -293,7 +300,9 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     put "%files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files"
     mapM_ (\ l -> put $ license_macro +-+ l) licensefiles
     putNewline
+    put "%if %{with ghc_prof}"
     put "%files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files"
+    put "%endif"
     putNewline
 
   put "%changelog"
