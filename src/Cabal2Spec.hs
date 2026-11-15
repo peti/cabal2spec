@@ -1,3 +1,5 @@
+{-# LANGUAGE CPP #-}
+
 module Cabal2Spec ( cabal2spec, createSpecFile, ForceBinary, RunTests, CopyrightYear ) where
 
 import Control.Monad
@@ -15,6 +17,9 @@ import Distribution.Simple.PackageDescription
 import Distribution.System
 import Distribution.Text
 import Distribution.Types.ComponentRequestedSpec
+#if MIN_VERSION_Cabal(3,15,0)
+import Distribution.Types.DependencySatisfaction ( DependencySatisfaction(Satisfied) )
+#endif
 import Distribution.Utils.Path ( getSymbolicPath, makeSymbolicPath )
 import Distribution.Utils.ShortText ( fromShortText )
 import Distribution.Verbosity
@@ -29,10 +34,25 @@ type CopyrightYear = Int
 cabal2spec :: Platform -> CompilerId -> FlagAssignment -> ForceBinary -> RunTests -> Maybe CopyrightYear
            -> FilePath -> FilePath -> IO ()
 cabal2spec platform compilerId flags forceBinary runTests copyrightYear cabalFile specFile = do
-  gpd <- readGenericPackageDescription silent Nothing (makeSymbolicPath cabalFile)
-  case finalizePD flags requestedComponents (const True) platform (unknownCompilerInfo compilerId NoAbiTag) [] gpd of
+  gpd <- readGenericPackageDescription silentVerbosity Nothing (makeSymbolicPath cabalFile)
+  case finalizePD flags requestedComponents (const satisfied) platform (unknownCompilerInfo compilerId NoAbiTag) [] gpd of
     Left missing -> fail ("finalizePD: " ++ show missing)
     Right (pd,_) -> createSpecFile specFile pd forceBinary runTests flags copyrightYear
+
+#if MIN_VERSION_Cabal(3,15,0)
+satisfied :: DependencySatisfaction
+satisfied = Satisfied
+#else
+satisfied :: Bool
+satisfied = True
+#endif
+
+silentVerbosity :: Verbosity
+#if MIN_VERSION_Cabal(3,17,0)
+silentVerbosity = mkVerbosity defaultVerbosityHandles silent
+#else
+silentVerbosity = silent
+#endif
 
 requestedComponents :: ComponentRequestedSpec
 requestedComponents = defaultComponentRequestedSpec
