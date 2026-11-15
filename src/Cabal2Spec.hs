@@ -334,7 +334,7 @@ isBuildable exe = buildable $ buildInfo exe
 
 findDocs :: [FilePath] -> [FilePath] -> IO [FilePath]
 findDocs contents licensefiles = do
-  let docs = filter likely (sort (nub (map (head . splitDirectories) contents)))
+  let docs = filter likely (sort (nub (concatMap (take 1 . splitDirectories) contents)))
   return $ if null licensefiles
            then docs
            else filter (`notElem` licensefiles) docs
