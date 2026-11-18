@@ -1,12 +1,34 @@
 # Revision history for cabal2spec
 
-## 2.9.0 (unreleased)
+## 2.9.0 (2026-11-18)
 
 - Generated spec files now wrap every reference to profiling packages in
   `%if %{with ghc_prof}`: the `-prof` build dependencies, including those
   of the test suite; the `-prof` sub-package; and its `%files` section.
   Packages now build even when profiling is disabled.
+- Emit `%bcond_with ghc_prof`, so that profiling can be enabled with
+  `--with ghc_prof`. Without this declaration, the option had no effect.
 - Generated spec files require `ghc-rpm-macros >= 2.9.2`.
+- Stop excluding dependencies on `ghc-bignum`. Since GHC 9.14, `base` no
+  longer depends on it, so `ghc-base-devel` doesn't pull it in any more,
+  and packages that use it need an explicit `ghc-ghc-bignum` dependency.
+- Always generate `%autosetup -p1`, so that adding a patch only requires
+  declaring it.
+- Escape every `%` in `Summary:` and `%description` as `%%`, so that rpm
+  shows the text literally instead of trying to expand macros.
+- Mark license files that appear among the documentation files with
+  `%license` instead of `%doc`.
+- Use `LicenseRef-SUSE-Public-Domain` for public domain packages.
+- Match the output of the current `spec-cleaner` more closely:
+  * Use the new SUSE copyright header ("SUSE LLC and contributors").
+  * Refer to `%pkg_name` without braces in `Name:`, `pkgver`,
+    `%ghc_fix_rpath`, and the `-doc` and `-prof` sub-package definitions.
+  * Define `pkgver` after the `Release:` tag.
+  * Emit `ExcludeArch:` after the unconditional build dependencies.
+  * Sort the `-prof` build dependencies and the `Requires:` of the
+    `-devel` package.
+  * List `Requires:` before `BuildArch:` in the `-doc` sub-package.
+  * Collapse consecutive blank lines in descriptions.
 
 ## 2.8.2 (2026-11-15)
 
