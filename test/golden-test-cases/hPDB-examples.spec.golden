@@ -65,11 +65,13 @@ BuildRequires:  ghc-OpenGL-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-IfElse-devel
-BuildRequires:  ghc-IfElse-prof
 BuildRequires:  ghc-process-devel
-BuildRequires:  ghc-process-prof
 BuildRequires:  ghc-time-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-IfElse-prof
+BuildRequires:  ghc-process-prof
 BuildRequires:  ghc-time-prof
+%endif
 %endif
 
 %description

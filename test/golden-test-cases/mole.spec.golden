@@ -79,15 +79,17 @@ BuildRequires:  ghc-unix-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-hspec-devel
-BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-hspec-smallcheck-devel
-BuildRequires:  ghc-hspec-smallcheck-prof
 BuildRequires:  ghc-smallcheck-devel
-BuildRequires:  ghc-smallcheck-prof
 BuildRequires:  ghc-unordered-containers-devel
-BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-vector-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-hspec-prof
+BuildRequires:  ghc-hspec-smallcheck-prof
+BuildRequires:  ghc-smallcheck-prof
+BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-vector-prof
+%endif
 %endif
 
 %description

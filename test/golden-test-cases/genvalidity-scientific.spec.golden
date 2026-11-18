@@ -46,9 +46,11 @@ BuildRequires:  ghc-validity-scientific-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-genvalidity-hspec-devel
-BuildRequires:  ghc-genvalidity-hspec-prof
 BuildRequires:  ghc-hspec-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-genvalidity-hspec-prof
 BuildRequires:  ghc-hspec-prof
+%endif
 %endif
 
 %description

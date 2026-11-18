@@ -42,9 +42,11 @@ BuildRequires:  ghc-transformers-compat-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-quickcheck-simple-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-quickcheck-simple-prof
+%endif
 %endif
 
 %description

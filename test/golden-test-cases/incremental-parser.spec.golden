@@ -38,13 +38,15 @@ BuildRequires:  ghc-monoid-subclasses-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-checkers-devel
-BuildRequires:  ghc-checkers-prof
 BuildRequires:  ghc-tasty-devel
-BuildRequires:  ghc-tasty-prof
 BuildRequires:  ghc-tasty-quickcheck-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-checkers-prof
+BuildRequires:  ghc-tasty-prof
 BuildRequires:  ghc-tasty-quickcheck-prof
+%endif
 %endif
 
 %description

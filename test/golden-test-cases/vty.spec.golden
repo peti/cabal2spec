@@ -77,25 +77,27 @@ BuildRequires:  ghc-vector-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-Cabal-prof
 BuildRequires:  ghc-HUnit-devel
-BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-quickcheck-assertions-devel
-BuildRequires:  ghc-quickcheck-assertions-prof
 BuildRequires:  ghc-random-devel
-BuildRequires:  ghc-random-prof
 BuildRequires:  ghc-smallcheck-devel
-BuildRequires:  ghc-smallcheck-prof
 BuildRequires:  ghc-string-qq-devel
-BuildRequires:  ghc-string-qq-prof
 BuildRequires:  ghc-test-framework-devel
 BuildRequires:  ghc-test-framework-hunit-devel
+BuildRequires:  ghc-test-framework-smallcheck-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-Cabal-prof
+BuildRequires:  ghc-HUnit-prof
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-quickcheck-assertions-prof
+BuildRequires:  ghc-random-prof
+BuildRequires:  ghc-smallcheck-prof
+BuildRequires:  ghc-string-qq-prof
 BuildRequires:  ghc-test-framework-hunit-prof
 BuildRequires:  ghc-test-framework-prof
-BuildRequires:  ghc-test-framework-smallcheck-devel
 BuildRequires:  ghc-test-framework-smallcheck-prof
+%endif
 %endif
 
 %description

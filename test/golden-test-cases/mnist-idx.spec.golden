@@ -42,9 +42,11 @@ BuildRequires:  ghc-vector-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-hspec-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-hspec-prof
+%endif
 %endif
 
 %description

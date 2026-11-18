@@ -52,7 +52,9 @@ BuildRequires:  ghc-utility-ht-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-random-devel
+%if %{with ghc_prof}
 BuildRequires:  ghc-random-prof
+%endif
 %endif
 
 %description

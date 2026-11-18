@@ -46,7 +46,9 @@ BuildRequires:  ghc-network-transport-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-network-transport-tests-devel
+%if %{with ghc_prof}
 BuildRequires:  ghc-network-transport-tests-prof
+%endif
 %endif
 
 %description

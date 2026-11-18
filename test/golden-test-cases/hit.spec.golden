@@ -70,11 +70,13 @@ BuildRequires:  ghc-zlib-bindings-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-bytedump-devel
-BuildRequires:  ghc-bytedump-prof
 BuildRequires:  ghc-tasty-devel
-BuildRequires:  ghc-tasty-prof
 BuildRequires:  ghc-tasty-quickcheck-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-bytedump-prof
+BuildRequires:  ghc-tasty-prof
 BuildRequires:  ghc-tasty-quickcheck-prof
+%endif
 %endif
 
 %description

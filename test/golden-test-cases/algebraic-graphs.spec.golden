@@ -40,9 +40,11 @@ BuildRequires:  ghc-containers-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-extra-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-extra-prof
+%endif
 %endif
 
 %description

@@ -42,9 +42,11 @@ BuildRequires:  ghc-unordered-containers-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-time-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-time-prof
+%endif
 %endif
 
 %description

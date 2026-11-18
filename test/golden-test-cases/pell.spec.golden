@@ -40,13 +40,15 @@ BuildRequires:  ghc-containers-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-Cabal-devel
-BuildRequires:  ghc-Cabal-prof
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-cabal-test-quickcheck-devel
-BuildRequires:  ghc-cabal-test-quickcheck-prof
 BuildRequires:  ghc-primes-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-Cabal-prof
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-cabal-test-quickcheck-prof
 BuildRequires:  ghc-primes-prof
+%endif
 %endif
 
 %description

@@ -55,13 +55,15 @@ BuildRequires:  ghc-cabal-doctest-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-doctest-devel
-BuildRequires:  ghc-doctest-prof
 BuildRequires:  ghc-generic-deriving-devel
-BuildRequires:  ghc-generic-deriving-prof
 BuildRequires:  ghc-semigroups-devel
-BuildRequires:  ghc-semigroups-prof
 BuildRequires:  ghc-simple-reflect-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-doctest-prof
+BuildRequires:  ghc-generic-deriving-prof
+BuildRequires:  ghc-semigroups-prof
 BuildRequires:  ghc-simple-reflect-prof
+%endif
 %endif
 
 %description

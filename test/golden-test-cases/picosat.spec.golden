@@ -40,9 +40,11 @@ BuildRequires:  ghc-transformers-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-random-devel
-BuildRequires:  ghc-random-prof
 BuildRequires:  ghc-rdtsc-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-random-prof
 BuildRequires:  ghc-rdtsc-prof
+%endif
 %endif
 
 %description

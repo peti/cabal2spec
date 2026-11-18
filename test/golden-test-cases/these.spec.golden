@@ -70,11 +70,13 @@ BuildRequires:  ghc-vector-instances-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-quickcheck-instances-devel
-BuildRequires:  ghc-quickcheck-instances-prof
 BuildRequires:  ghc-tasty-devel
-BuildRequires:  ghc-tasty-prof
 BuildRequires:  ghc-tasty-quickcheck-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-quickcheck-instances-prof
+BuildRequires:  ghc-tasty-prof
 BuildRequires:  ghc-tasty-quickcheck-prof
+%endif
 %endif
 
 %description

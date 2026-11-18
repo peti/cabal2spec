@@ -175,16 +175,21 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
 
   let fixedDeps = ["ghc-Cabal-devel", "ghc-rpm-macros >= 2.9.2"]
   let unconditialDeps = sort $ nub $ fixedDeps ++ develDeps ++ tools ++ clibs ++ pkgcfgs ++ ["pkgconfig" | not (null pkgcfgs)]
-  let extraTestDeps = sort $ testsuiteDeps \\ (develDeps ++ profDeps)
+  let extraTestDevelDeps = sort $ map showDevelDep testsuiteDeps \\ develDeps
+      extraTestProfDeps = sort $ map showProfDep testsuiteDeps \\ profDeps
 
   mapM_ (putHdr "BuildRequires") unconditialDeps
   unless (null profDeps) $ do
     put "%if %{with ghc_prof}"
     mapM_ (putHdr "BuildRequires") profDeps
     put "%endif"
-  unless (null extraTestDeps) $ do
+  unless (null extraTestDevelDeps && null extraTestProfDeps) $ do
     put "%if %{with tests}"
-    mapM_ (putHdr "BuildRequires") extraTestDeps
+    mapM_ (putHdr "BuildRequires") extraTestDevelDeps
+    unless (null extraTestProfDeps) $ do
+      put "%if %{with ghc_prof}"
+      mapM_ (putHdr "BuildRequires") extraTestProfDeps
+      put "%endif"
     put "%endif"
 
   putNewline
@@ -499,9 +504,8 @@ resolveLib name | "lib" `isPrefixOf` name = name ++ "-devel"
 testsuiteDependencies :: PackageDescription -- ^pkg description
                       -> String             -- ^self
                       -> [String]           -- ^depends
-testsuiteDependencies pkgDesc self = map showDevelDep deps ++ map showProfDep deps
-  where deps = delete self . filter (excludedPkgs pkgDesc) . nub . map depName $
-                 concatMap targetBuildDepends (filter buildable (map testBuildInfo (testSuites pkgDesc)))
+testsuiteDependencies pkgDesc self = delete self . filter (excludedPkgs pkgDesc) . nub . map depName $
+    concatMap targetBuildDepends (filter buildable (map testBuildInfo (testSuites pkgDesc)))
 
 badDescription :: String -> Bool
 badDescription s = null s

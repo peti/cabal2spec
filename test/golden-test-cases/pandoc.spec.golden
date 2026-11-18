@@ -140,19 +140,21 @@ BuildRequires:  ghc-Cabal-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-Diff-devel
-BuildRequires:  ghc-Diff-prof
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-executable-path-devel
-BuildRequires:  ghc-executable-path-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-golden-devel
-BuildRequires:  ghc-tasty-golden-prof
 BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-tasty-quickcheck-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-Diff-prof
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-executable-path-prof
+BuildRequires:  ghc-tasty-golden-prof
 BuildRequires:  ghc-tasty-hunit-prof
 BuildRequires:  ghc-tasty-prof
-BuildRequires:  ghc-tasty-quickcheck-devel
 BuildRequires:  ghc-tasty-quickcheck-prof
+%endif
 %endif
 
 %description

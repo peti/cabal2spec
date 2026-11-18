@@ -50,13 +50,15 @@ BuildRequires:  ghc-hspec-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-doctest-devel
-BuildRequires:  ghc-doctest-prof
 BuildRequires:  ghc-genvalidity-aeson-devel
-BuildRequires:  ghc-genvalidity-aeson-prof
 BuildRequires:  ghc-genvalidity-text-devel
-BuildRequires:  ghc-genvalidity-text-prof
 BuildRequires:  ghc-text-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-doctest-prof
+BuildRequires:  ghc-genvalidity-aeson-prof
+BuildRequires:  ghc-genvalidity-text-prof
 BuildRequires:  ghc-text-prof
+%endif
 %endif
 
 %description

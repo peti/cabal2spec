@@ -46,11 +46,13 @@ BuildRequires:  ghc-unix-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-chell-devel
-BuildRequires:  ghc-chell-prof
 BuildRequires:  ghc-temporary-devel
-BuildRequires:  ghc-temporary-prof
 BuildRequires:  ghc-transformers-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-chell-prof
+BuildRequires:  ghc-temporary-prof
 BuildRequires:  ghc-transformers-prof
+%endif
 %endif
 
 %description

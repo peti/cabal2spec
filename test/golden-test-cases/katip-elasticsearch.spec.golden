@@ -72,23 +72,25 @@ BuildRequires:  ghc-uuid-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-lens-aeson-devel
-BuildRequires:  ghc-lens-aeson-prof
 BuildRequires:  ghc-lens-devel
-BuildRequires:  ghc-lens-prof
 BuildRequires:  ghc-quickcheck-instances-devel
-BuildRequires:  ghc-quickcheck-instances-prof
 BuildRequires:  ghc-tagged-devel
-BuildRequires:  ghc-tagged-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-tasty-quickcheck-devel
+BuildRequires:  ghc-vector-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-containers-prof
+BuildRequires:  ghc-lens-aeson-prof
+BuildRequires:  ghc-lens-prof
+BuildRequires:  ghc-quickcheck-instances-prof
+BuildRequires:  ghc-tagged-prof
 BuildRequires:  ghc-tasty-hunit-prof
 BuildRequires:  ghc-tasty-prof
-BuildRequires:  ghc-tasty-quickcheck-devel
 BuildRequires:  ghc-tasty-quickcheck-prof
-BuildRequires:  ghc-vector-devel
 BuildRequires:  ghc-vector-prof
+%endif
 %endif
 
 %description

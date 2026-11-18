@@ -39,7 +39,9 @@ BuildRequires:  ghc-containers-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
+%if %{with ghc_prof}
 BuildRequires:  ghc-HUnit-prof
+%endif
 %endif
 
 %description

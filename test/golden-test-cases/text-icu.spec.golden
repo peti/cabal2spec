@@ -43,21 +43,23 @@ BuildRequires:  ghc-text-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
-BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-array-devel
-BuildRequires:  ghc-array-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-random-devel
-BuildRequires:  ghc-random-prof
 BuildRequires:  ghc-test-framework-devel
 BuildRequires:  ghc-test-framework-hunit-devel
+BuildRequires:  ghc-test-framework-quickcheck2-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-HUnit-prof
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-array-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-random-prof
 BuildRequires:  ghc-test-framework-hunit-prof
 BuildRequires:  ghc-test-framework-prof
-BuildRequires:  ghc-test-framework-quickcheck2-devel
 BuildRequires:  ghc-test-framework-quickcheck2-prof
+%endif
 %endif
 
 %description

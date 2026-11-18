@@ -88,21 +88,23 @@ BuildRequires:  ghc-unordered-containers-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-quickcheck-instances-devel
-BuildRequires:  ghc-quickcheck-instances-prof
 BuildRequires:  ghc-regex-tdfa-devel
-BuildRequires:  ghc-regex-tdfa-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-golden-devel
-BuildRequires:  ghc-tasty-golden-prof
 BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-tasty-quickcheck-devel
+BuildRequires:  ghc-time-locale-compat-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-quickcheck-instances-prof
+BuildRequires:  ghc-regex-tdfa-prof
+BuildRequires:  ghc-tasty-golden-prof
 BuildRequires:  ghc-tasty-hunit-prof
 BuildRequires:  ghc-tasty-prof
-BuildRequires:  ghc-tasty-quickcheck-devel
 BuildRequires:  ghc-tasty-quickcheck-prof
-BuildRequires:  ghc-time-locale-compat-devel
 BuildRequires:  ghc-time-locale-compat-prof
+%endif
 %endif
 
 %description

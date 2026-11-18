@@ -51,10 +51,12 @@ BuildRequires:  ghc-th-orphans-prof
 %if %{with tests}
 BuildRequires:  ghc-hspec-devel
 BuildRequires:  ghc-hspec-discover-devel
+BuildRequires:  ghc-transformers-devel
+%if %{with ghc_prof}
 BuildRequires:  ghc-hspec-discover-prof
 BuildRequires:  ghc-hspec-prof
-BuildRequires:  ghc-transformers-devel
 BuildRequires:  ghc-transformers-prof
+%endif
 %endif
 
 %description

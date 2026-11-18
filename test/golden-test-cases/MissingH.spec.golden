@@ -68,11 +68,13 @@ BuildRequires:  ghc-unix-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-errorcall-eq-instance-devel
-BuildRequires:  ghc-errorcall-eq-instance-prof
 BuildRequires:  ghc-testpack-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-errorcall-eq-instance-prof
 BuildRequires:  ghc-testpack-prof
+%endif
 %endif
 
 %description

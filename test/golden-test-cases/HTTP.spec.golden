@@ -50,31 +50,33 @@ BuildRequires:  ghc-time-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
-BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-case-insensitive-devel
-BuildRequires:  ghc-case-insensitive-prof
 BuildRequires:  ghc-conduit-devel
 BuildRequires:  ghc-conduit-extra-devel
-BuildRequires:  ghc-conduit-extra-prof
-BuildRequires:  ghc-conduit-prof
 BuildRequires:  ghc-deepseq-devel
-BuildRequires:  ghc-deepseq-prof
 BuildRequires:  ghc-http-types-devel
-BuildRequires:  ghc-http-types-prof
 BuildRequires:  ghc-httpd-shed-devel
-BuildRequires:  ghc-httpd-shed-prof
 BuildRequires:  ghc-pureMD5-devel
-BuildRequires:  ghc-pureMD5-prof
 BuildRequires:  ghc-split-devel
-BuildRequires:  ghc-split-prof
 BuildRequires:  ghc-test-framework-devel
 BuildRequires:  ghc-test-framework-hunit-devel
+BuildRequires:  ghc-wai-devel
+BuildRequires:  ghc-warp-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-HUnit-prof
+BuildRequires:  ghc-case-insensitive-prof
+BuildRequires:  ghc-conduit-extra-prof
+BuildRequires:  ghc-conduit-prof
+BuildRequires:  ghc-deepseq-prof
+BuildRequires:  ghc-http-types-prof
+BuildRequires:  ghc-httpd-shed-prof
+BuildRequires:  ghc-pureMD5-prof
+BuildRequires:  ghc-split-prof
 BuildRequires:  ghc-test-framework-hunit-prof
 BuildRequires:  ghc-test-framework-prof
-BuildRequires:  ghc-wai-devel
 BuildRequires:  ghc-wai-prof
-BuildRequires:  ghc-warp-devel
 BuildRequires:  ghc-warp-prof
+%endif
 %endif
 
 %description

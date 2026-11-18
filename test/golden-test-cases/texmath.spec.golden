@@ -48,21 +48,23 @@ BuildRequires:  ghc-xml-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-filepath-devel
-BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-process-devel
-BuildRequires:  ghc-process-prof
 BuildRequires:  ghc-split-devel
-BuildRequires:  ghc-split-prof
 BuildRequires:  ghc-temporary-devel
-BuildRequires:  ghc-temporary-prof
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-utf8-string-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-filepath-prof
+BuildRequires:  ghc-process-prof
+BuildRequires:  ghc-split-prof
+BuildRequires:  ghc-temporary-prof
+BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-utf8-string-prof
+%endif
 %endif
 
 %description

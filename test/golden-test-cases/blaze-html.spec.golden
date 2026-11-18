@@ -44,17 +44,19 @@ BuildRequires:  ghc-text-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
-BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-test-framework-devel
 BuildRequires:  ghc-test-framework-hunit-devel
+BuildRequires:  ghc-test-framework-quickcheck2-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-HUnit-prof
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-test-framework-hunit-prof
 BuildRequires:  ghc-test-framework-prof
-BuildRequires:  ghc-test-framework-quickcheck2-devel
 BuildRequires:  ghc-test-framework-quickcheck2-prof
+%endif
 %endif
 
 %description

@@ -62,15 +62,17 @@ BuildRequires:  ghc-transformers-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-basic-prelude-devel
-BuildRequires:  ghc-basic-prelude-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-hspec-devel
-BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-lens-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-basic-prelude-prof
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-lens-prof
+%endif
 %endif
 
 %description

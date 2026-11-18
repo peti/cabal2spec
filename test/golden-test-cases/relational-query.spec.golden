@@ -64,7 +64,9 @@ BuildRequires:  ghc-transformers-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-quickcheck-simple-devel
+%if %{with ghc_prof}
 BuildRequires:  ghc-quickcheck-simple-prof
+%endif
 %endif
 
 %description

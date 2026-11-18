@@ -106,25 +106,27 @@ BuildRequires:  ghc-xml-conduit-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-conduit-combinators-devel
-BuildRequires:  ghc-conduit-combinators-prof
 BuildRequires:  ghc-errors-devel
-BuildRequires:  ghc-errors-prof
 BuildRequires:  ghc-http-client-devel
-BuildRequires:  ghc-http-client-prof
 BuildRequires:  ghc-http-client-tls-devel
-BuildRequires:  ghc-http-client-tls-prof
 BuildRequires:  ghc-quickcheck-instances-devel
-BuildRequires:  ghc-quickcheck-instances-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-tasty-quickcheck-devel
+BuildRequires:  ghc-transformers-base-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-conduit-combinators-prof
+BuildRequires:  ghc-errors-prof
+BuildRequires:  ghc-http-client-prof
+BuildRequires:  ghc-http-client-tls-prof
+BuildRequires:  ghc-quickcheck-instances-prof
 BuildRequires:  ghc-tasty-hunit-prof
 BuildRequires:  ghc-tasty-prof
-BuildRequires:  ghc-tasty-quickcheck-devel
 BuildRequires:  ghc-tasty-quickcheck-prof
-BuildRequires:  ghc-transformers-base-devel
 BuildRequires:  ghc-transformers-base-prof
+%endif
 %endif
 
 %description

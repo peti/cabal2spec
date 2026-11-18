@@ -48,21 +48,23 @@ BuildRequires:  ghc-transformers-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-HTF-devel
-BuildRequires:  ghc-HTF-prof
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-free-devel
-BuildRequires:  ghc-free-prof
 BuildRequires:  ghc-loch-th-devel
-BuildRequires:  ghc-loch-th-prof
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-mtl-prelude-devel
+BuildRequires:  ghc-placeholders-devel
+BuildRequires:  ghc-unordered-containers-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-HTF-prof
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-free-prof
+BuildRequires:  ghc-loch-th-prof
 BuildRequires:  ghc-mtl-prelude-prof
 BuildRequires:  ghc-mtl-prof
-BuildRequires:  ghc-placeholders-devel
 BuildRequires:  ghc-placeholders-prof
-BuildRequires:  ghc-unordered-containers-devel
 BuildRequires:  ghc-unordered-containers-prof
+%endif
 %endif
 
 %description

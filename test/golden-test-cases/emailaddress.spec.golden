@@ -60,9 +60,11 @@ BuildRequires:  ghc-text-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-Glob-devel
-BuildRequires:  ghc-Glob-prof
 BuildRequires:  ghc-doctest-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-Glob-prof
 BuildRequires:  ghc-doctest-prof
+%endif
 %endif
 
 %description

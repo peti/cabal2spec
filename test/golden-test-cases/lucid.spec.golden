@@ -54,13 +54,15 @@ BuildRequires:  ghc-unordered-containers-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
-BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-bifunctors-devel
-BuildRequires:  ghc-bifunctors-prof
 BuildRequires:  ghc-hspec-devel
-BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-parsec-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-HUnit-prof
+BuildRequires:  ghc-bifunctors-prof
+BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-parsec-prof
+%endif
 %endif
 
 %description

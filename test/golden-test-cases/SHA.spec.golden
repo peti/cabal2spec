@@ -42,11 +42,13 @@ BuildRequires:  ghc-bytestring-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-test-framework-devel
-BuildRequires:  ghc-test-framework-prof
 BuildRequires:  ghc-test-framework-quickcheck2-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-test-framework-prof
 BuildRequires:  ghc-test-framework-quickcheck2-prof
+%endif
 %endif
 
 %description

@@ -44,19 +44,21 @@ BuildRequires:  ghc-deepseq-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-base-compat-devel
-BuildRequires:  ghc-base-compat-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-filepath-devel
-BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-hspec-devel
-BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-optparse-applicative-devel
-BuildRequires:  ghc-optparse-applicative-prof
 BuildRequires:  ghc-tree-diff-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-base-compat-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-filepath-prof
+BuildRequires:  ghc-hspec-prof
+BuildRequires:  ghc-optparse-applicative-prof
 BuildRequires:  ghc-tree-diff-prof
+%endif
 %endif
 
 %description

@@ -48,9 +48,11 @@ BuildRequires:  ghc-vivid-osc-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-microspec-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-microspec-prof
+%endif
 %endif
 
 %description

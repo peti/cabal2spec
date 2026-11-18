@@ -57,19 +57,21 @@ BuildRequires:  ghc-optparse-applicative-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-Glob-devel
-BuildRequires:  ghc-Glob-prof
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-doctest-devel
-BuildRequires:  ghc-doctest-prof
 BuildRequires:  ghc-filepath-devel
-BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-hlint-devel
-BuildRequires:  ghc-hlint-prof
 BuildRequires:  ghc-quickcheck-instances-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-Glob-prof
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-doctest-prof
+BuildRequires:  ghc-filepath-prof
+BuildRequires:  ghc-hlint-prof
 BuildRequires:  ghc-quickcheck-instances-prof
+%endif
 %endif
 
 %description

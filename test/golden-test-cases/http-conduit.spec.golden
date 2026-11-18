@@ -62,39 +62,41 @@ BuildRequires:  ghc-transformers-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
-BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-blaze-builder-devel
-BuildRequires:  ghc-blaze-builder-prof
 BuildRequires:  ghc-case-insensitive-devel
-BuildRequires:  ghc-case-insensitive-prof
 BuildRequires:  ghc-connection-devel
-BuildRequires:  ghc-connection-prof
 BuildRequires:  ghc-cookie-devel
-BuildRequires:  ghc-cookie-prof
 BuildRequires:  ghc-data-default-class-devel
-BuildRequires:  ghc-data-default-class-prof
 BuildRequires:  ghc-hspec-devel
-BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-network-devel
-BuildRequires:  ghc-network-prof
 BuildRequires:  ghc-streaming-commons-devel
-BuildRequires:  ghc-streaming-commons-prof
 BuildRequires:  ghc-temporary-devel
-BuildRequires:  ghc-temporary-prof
 BuildRequires:  ghc-text-devel
-BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-time-devel
-BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-utf8-string-devel
-BuildRequires:  ghc-utf8-string-prof
 BuildRequires:  ghc-wai-conduit-devel
-BuildRequires:  ghc-wai-conduit-prof
 BuildRequires:  ghc-wai-devel
-BuildRequires:  ghc-wai-prof
 BuildRequires:  ghc-warp-devel
-BuildRequires:  ghc-warp-prof
 BuildRequires:  ghc-warp-tls-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-HUnit-prof
+BuildRequires:  ghc-blaze-builder-prof
+BuildRequires:  ghc-case-insensitive-prof
+BuildRequires:  ghc-connection-prof
+BuildRequires:  ghc-cookie-prof
+BuildRequires:  ghc-data-default-class-prof
+BuildRequires:  ghc-hspec-prof
+BuildRequires:  ghc-network-prof
+BuildRequires:  ghc-streaming-commons-prof
+BuildRequires:  ghc-temporary-prof
+BuildRequires:  ghc-text-prof
+BuildRequires:  ghc-time-prof
+BuildRequires:  ghc-utf8-string-prof
+BuildRequires:  ghc-wai-conduit-prof
+BuildRequires:  ghc-wai-prof
+BuildRequires:  ghc-warp-prof
 BuildRequires:  ghc-warp-tls-prof
+%endif
 %endif
 
 %description

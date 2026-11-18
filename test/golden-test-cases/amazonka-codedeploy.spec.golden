@@ -38,19 +38,21 @@ BuildRequires:  ghc-base-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-amazonka-test-devel
-BuildRequires:  ghc-amazonka-test-prof
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-text-devel
+BuildRequires:  ghc-time-devel
+BuildRequires:  ghc-unordered-containers-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-amazonka-test-prof
+BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-tasty-hunit-prof
 BuildRequires:  ghc-tasty-prof
-BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-text-prof
-BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-time-prof
-BuildRequires:  ghc-unordered-containers-devel
 BuildRequires:  ghc-unordered-containers-prof
+%endif
 %endif
 
 %description

@@ -56,8 +56,10 @@ BuildRequires:  ghc-optparse-applicative-prof
 %if %{with tests}
 BuildRequires:  ghc-hspec-devel
 BuildRequires:  ghc-hspec-megaparsec-devel
+%if %{with ghc_prof}
 BuildRequires:  ghc-hspec-megaparsec-prof
 BuildRequires:  ghc-hspec-prof
+%endif
 %endif
 
 %description

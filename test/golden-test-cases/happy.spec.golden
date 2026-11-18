@@ -44,7 +44,9 @@ BuildRequires:  ghc-filepath-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-process-devel
+%if %{with ghc_prof}
 BuildRequires:  ghc-process-prof
+%endif
 %endif
 
 %description

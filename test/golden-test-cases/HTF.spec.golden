@@ -85,15 +85,17 @@ BuildRequires:  ghc-xmlgen-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-aeson-pretty-devel
-BuildRequires:  ghc-aeson-pretty-prof
 BuildRequires:  ghc-filepath-devel
-BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-template-haskell-devel
-BuildRequires:  ghc-template-haskell-prof
 BuildRequires:  ghc-temporary-devel
-BuildRequires:  ghc-temporary-prof
 BuildRequires:  ghc-unordered-containers-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-aeson-pretty-prof
+BuildRequires:  ghc-filepath-prof
+BuildRequires:  ghc-template-haskell-prof
+BuildRequires:  ghc-temporary-prof
 BuildRequires:  ghc-unordered-containers-prof
+%endif
 %endif
 
 %description

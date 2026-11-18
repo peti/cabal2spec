@@ -52,11 +52,13 @@ BuildRequires:  ghc-vector-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-hspec-devel
 BuildRequires:  ghc-hspec-discover-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-hspec-discover-prof
 BuildRequires:  ghc-hspec-prof
+%endif
 %endif
 
 %description

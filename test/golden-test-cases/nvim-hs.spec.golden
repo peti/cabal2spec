@@ -107,13 +107,15 @@ BuildRequires:  ghc-void-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
-BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-hspec-devel
 BuildRequires:  ghc-hspec-discover-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-HUnit-prof
+BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-hspec-discover-prof
 BuildRequires:  ghc-hspec-prof
+%endif
 %endif
 
 %description

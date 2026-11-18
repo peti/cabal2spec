@@ -97,29 +97,31 @@ BuildRequires:  ghc-cabal-doctest-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
-BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-deepseq-devel
-BuildRequires:  ghc-deepseq-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-doctest-devel
-BuildRequires:  ghc-doctest-prof
 BuildRequires:  ghc-generic-deriving-devel
-BuildRequires:  ghc-generic-deriving-prof
 BuildRequires:  ghc-nats-devel
-BuildRequires:  ghc-nats-prof
 BuildRequires:  ghc-simple-reflect-devel
-BuildRequires:  ghc-simple-reflect-prof
 BuildRequires:  ghc-test-framework-devel
 BuildRequires:  ghc-test-framework-hunit-devel
+BuildRequires:  ghc-test-framework-quickcheck2-devel
+BuildRequires:  ghc-test-framework-th-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-HUnit-prof
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-deepseq-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-doctest-prof
+BuildRequires:  ghc-generic-deriving-prof
+BuildRequires:  ghc-nats-prof
+BuildRequires:  ghc-simple-reflect-prof
 BuildRequires:  ghc-test-framework-hunit-prof
 BuildRequires:  ghc-test-framework-prof
-BuildRequires:  ghc-test-framework-quickcheck2-devel
 BuildRequires:  ghc-test-framework-quickcheck2-prof
-BuildRequires:  ghc-test-framework-th-devel
 BuildRequires:  ghc-test-framework-th-prof
+%endif
 %endif
 
 %description

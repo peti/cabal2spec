@@ -50,13 +50,15 @@ BuildRequires:  ghc-transformers-compat-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-either-devel
-BuildRequires:  ghc-either-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-text-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-either-prof
 BuildRequires:  ghc-tasty-hunit-prof
 BuildRequires:  ghc-tasty-prof
-BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-text-prof
+%endif
 %endif
 
 %description

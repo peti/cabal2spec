@@ -96,9 +96,11 @@ BuildRequires:  ghc-vector-instances-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-file-embed-devel
-BuildRequires:  ghc-file-embed-prof
 BuildRequires:  ghc-hspec-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-file-embed-prof
 BuildRequires:  ghc-hspec-prof
+%endif
 %endif
 
 %description

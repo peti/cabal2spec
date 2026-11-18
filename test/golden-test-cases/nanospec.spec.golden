@@ -36,9 +36,11 @@ BuildRequires:  ghc-base-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-hspec-devel
-BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-silently-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-silently-prof
+%endif
 %endif
 
 %description

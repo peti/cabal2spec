@@ -46,7 +46,9 @@ BuildRequires:  ghc-syb-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-array-devel
+%if %{with ghc_prof}
 BuildRequires:  ghc-array-prof
+%endif
 %endif
 
 %description

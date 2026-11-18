@@ -63,11 +63,13 @@ BuildRequires:  ghc-unix-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-hspec-devel
-BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-regex-compat-devel
-BuildRequires:  ghc-regex-compat-prof
 BuildRequires:  ghc-temporary-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-hspec-prof
+BuildRequires:  ghc-regex-compat-prof
 BuildRequires:  ghc-temporary-prof
+%endif
 %endif
 
 %description

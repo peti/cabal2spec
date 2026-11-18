@@ -52,13 +52,15 @@ BuildRequires:  ghc-uuid-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
-BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-eventful-test-helpers-devel
-BuildRequires:  ghc-eventful-test-helpers-prof
 BuildRequires:  ghc-hspec-devel
-BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-persistent-sqlite-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-HUnit-prof
+BuildRequires:  ghc-eventful-test-helpers-prof
+BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-persistent-sqlite-prof
+%endif
 %endif
 
 %description

@@ -43,8 +43,10 @@ BuildRequires:  ghc-parsec-prof
 %if %{with tests}
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-hunit-devel
+%if %{with ghc_prof}
 BuildRequires:  ghc-tasty-hunit-prof
 BuildRequires:  ghc-tasty-prof
+%endif
 %endif
 
 %description

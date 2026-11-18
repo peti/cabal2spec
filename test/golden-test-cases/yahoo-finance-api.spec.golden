@@ -58,15 +58,17 @@ BuildRequires:  ghc-vector-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-Glob-devel
-BuildRequires:  ghc-Glob-prof
 BuildRequires:  ghc-doctest-devel
-BuildRequires:  ghc-doctest-prof
 BuildRequires:  ghc-hspec-devel
-BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-http-client-tls-devel
-BuildRequires:  ghc-http-client-tls-prof
 BuildRequires:  ghc-safe-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-Glob-prof
+BuildRequires:  ghc-doctest-prof
+BuildRequires:  ghc-hspec-prof
+BuildRequires:  ghc-http-client-tls-prof
 BuildRequires:  ghc-safe-prof
+%endif
 %endif
 
 %description

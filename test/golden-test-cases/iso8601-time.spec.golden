@@ -38,9 +38,11 @@ BuildRequires:  ghc-time-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
-BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-hspec-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-HUnit-prof
 BuildRequires:  ghc-hspec-prof
+%endif
 %endif
 
 %description

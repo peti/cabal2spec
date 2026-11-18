@@ -40,11 +40,13 @@ BuildRequires:  ghc-tagged-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-doctest-devel
-BuildRequires:  ghc-doctest-prof
 BuildRequires:  ghc-inspection-testing-devel
-BuildRequires:  ghc-inspection-testing-prof
 BuildRequires:  ghc-lens-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-doctest-prof
+BuildRequires:  ghc-inspection-testing-prof
 BuildRequires:  ghc-lens-prof
+%endif
 %endif
 
 %description

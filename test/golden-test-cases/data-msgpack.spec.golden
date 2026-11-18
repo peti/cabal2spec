@@ -61,7 +61,9 @@ BuildRequires:  ghc-groom-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-hspec-devel
+%if %{with ghc_prof}
 BuildRequires:  ghc-hspec-prof
+%endif
 %endif
 
 %description

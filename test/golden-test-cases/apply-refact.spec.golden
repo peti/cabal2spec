@@ -64,13 +64,15 @@ BuildRequires:  ghc-optparse-applicative-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-silently-devel
-BuildRequires:  ghc-silently-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-expected-failure-devel
-BuildRequires:  ghc-tasty-expected-failure-prof
 BuildRequires:  ghc-tasty-golden-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-silently-prof
+BuildRequires:  ghc-tasty-expected-failure-prof
 BuildRequires:  ghc-tasty-golden-prof
 BuildRequires:  ghc-tasty-prof
+%endif
 %endif
 
 %description

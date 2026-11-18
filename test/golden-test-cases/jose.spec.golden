@@ -81,13 +81,15 @@ BuildRequires:  ghc-x509-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-hspec-devel
-BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-hspec-devel
+BuildRequires:  ghc-tasty-quickcheck-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-tasty-hspec-prof
 BuildRequires:  ghc-tasty-prof
-BuildRequires:  ghc-tasty-quickcheck-devel
 BuildRequires:  ghc-tasty-quickcheck-prof
+%endif
 %endif
 
 %description

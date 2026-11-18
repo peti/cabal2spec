@@ -58,19 +58,21 @@ BuildRequires:  ghc-text-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-Glob-devel
-BuildRequires:  ghc-Glob-prof
 BuildRequires:  ghc-doctest-devel
-BuildRequires:  ghc-doctest-prof
 BuildRequires:  ghc-hspec-wai-devel
-BuildRequires:  ghc-hspec-wai-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-hspec-devel
-BuildRequires:  ghc-tasty-hspec-prof
 BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-wai-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-Glob-prof
+BuildRequires:  ghc-doctest-prof
+BuildRequires:  ghc-hspec-wai-prof
+BuildRequires:  ghc-tasty-hspec-prof
 BuildRequires:  ghc-tasty-hunit-prof
 BuildRequires:  ghc-tasty-prof
-BuildRequires:  ghc-wai-devel
 BuildRequires:  ghc-wai-prof
+%endif
 %endif
 
 %description

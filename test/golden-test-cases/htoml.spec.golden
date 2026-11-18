@@ -52,15 +52,17 @@ BuildRequires:  ghc-vector-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-file-embed-devel
-BuildRequires:  ghc-file-embed-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-hspec-devel
-BuildRequires:  ghc-tasty-hspec-prof
 BuildRequires:  ghc-tasty-hunit-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-file-embed-prof
+BuildRequires:  ghc-tasty-hspec-prof
 BuildRequires:  ghc-tasty-hunit-prof
 BuildRequires:  ghc-tasty-prof
+%endif
 %endif
 
 %description

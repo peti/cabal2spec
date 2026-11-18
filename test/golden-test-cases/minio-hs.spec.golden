@@ -96,19 +96,21 @@ BuildRequires:  ghc-xml-conduit-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-tasty-devel
 BuildRequires:  ghc-tasty-hunit-devel
+BuildRequires:  ghc-tasty-quickcheck-devel
+BuildRequires:  ghc-tasty-smallcheck-devel
+BuildRequires:  ghc-temporary-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
+BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-tasty-hunit-prof
 BuildRequires:  ghc-tasty-prof
-BuildRequires:  ghc-tasty-quickcheck-devel
 BuildRequires:  ghc-tasty-quickcheck-prof
-BuildRequires:  ghc-tasty-smallcheck-devel
 BuildRequires:  ghc-tasty-smallcheck-prof
-BuildRequires:  ghc-temporary-devel
 BuildRequires:  ghc-temporary-prof
+%endif
 %endif
 
 %description

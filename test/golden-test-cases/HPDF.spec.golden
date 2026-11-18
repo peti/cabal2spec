@@ -56,7 +56,9 @@ BuildRequires:  ghc-zlib-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-HTF-devel
+%if %{with ghc_prof}
 BuildRequires:  ghc-HTF-prof
+%endif
 %endif
 
 %description

@@ -48,13 +48,15 @@ BuildRequires:  ghc-utf8-string-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-Diff-devel
-BuildRequires:  ghc-Diff-prof
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-filepath-devel
-BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-process-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-Diff-prof
+BuildRequires:  ghc-directory-prof
+BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-process-prof
+%endif
 %endif
 
 %description

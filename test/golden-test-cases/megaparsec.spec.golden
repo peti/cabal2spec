@@ -54,11 +54,13 @@ BuildRequires:  ghc-transformers-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-QuickCheck-devel
-BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-hspec-devel
 BuildRequires:  ghc-hspec-expectations-devel
+%if %{with ghc_prof}
+BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-hspec-expectations-prof
 BuildRequires:  ghc-hspec-prof
+%endif
 %endif
 
 %description
