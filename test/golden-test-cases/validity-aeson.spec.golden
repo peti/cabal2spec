@@ -30,7 +30,7 @@ ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-aeson-devel
 BuildRequires:  ghc-base-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-validity-devel
 BuildRequires:  ghc-validity-scientific-devel
 BuildRequires:  ghc-validity-text-devel

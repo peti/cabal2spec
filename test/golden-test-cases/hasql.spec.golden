@@ -46,7 +46,7 @@ BuildRequires:  ghc-placeholders-devel
 BuildRequires:  ghc-postgresql-binary-devel
 BuildRequires:  ghc-postgresql-libpq-devel
 BuildRequires:  ghc-profunctors-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-transformers-devel

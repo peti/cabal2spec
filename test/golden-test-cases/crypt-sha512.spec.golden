@@ -33,7 +33,7 @@ BuildRequires:  ghc-attoparsec-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-cryptohash-sha512-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 %if %{with ghc_prof}
 BuildRequires:  ghc-attoparsec-prof
 BuildRequires:  ghc-base-prof

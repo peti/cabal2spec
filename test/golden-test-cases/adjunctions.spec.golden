@@ -37,7 +37,7 @@ BuildRequires:  ghc-distributive-devel
 BuildRequires:  ghc-free-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-profunctors-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-semigroupoids-devel
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-tagged-devel

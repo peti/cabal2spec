@@ -36,7 +36,7 @@ BuildRequires:  ghc-deepseq-devel
 BuildRequires:  ghc-genvalidity-devel
 BuildRequires:  ghc-genvalidity-hspec-devel
 BuildRequires:  ghc-hspec-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 %if %{with ghc_prof}
 BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-base-prof

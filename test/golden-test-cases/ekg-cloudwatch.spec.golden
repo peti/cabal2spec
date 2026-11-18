@@ -36,7 +36,7 @@ BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-ekg-core-devel
 BuildRequires:  ghc-lens-devel
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-time-devel

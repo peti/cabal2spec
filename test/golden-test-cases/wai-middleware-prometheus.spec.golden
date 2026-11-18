@@ -35,7 +35,7 @@ BuildRequires:  ghc-clock-devel
 BuildRequires:  ghc-data-default-devel
 BuildRequires:  ghc-http-types-devel
 BuildRequires:  ghc-prometheus-client-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-wai-devel
 %if %{with ghc_prof}

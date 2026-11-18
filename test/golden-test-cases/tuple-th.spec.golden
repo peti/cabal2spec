@@ -30,7 +30,7 @@ ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-template-haskell-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-base-prof

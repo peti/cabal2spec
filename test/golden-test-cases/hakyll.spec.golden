@@ -57,7 +57,7 @@ BuildRequires:  ghc-random-devel
 BuildRequires:  ghc-regex-base-devel
 BuildRequires:  ghc-regex-tdfa-devel
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-scientific-devel
 BuildRequires:  ghc-system-filepath-devel
 BuildRequires:  ghc-tagsoup-devel

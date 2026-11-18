@@ -59,7 +59,7 @@ BuildRequires:  ghc-network-uri-devel
 BuildRequires:  ghc-newtype-devel
 BuildRequires:  ghc-openpgp-asciiarmor-devel
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-securemem-devel
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-split-devel

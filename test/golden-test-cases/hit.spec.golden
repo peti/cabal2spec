@@ -40,7 +40,7 @@ BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-parsec-devel
 BuildRequires:  ghc-patience-devel
 BuildRequires:  ghc-random-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-system-fileio-devel
 BuildRequires:  ghc-system-filepath-devel
 BuildRequires:  ghc-unix-compat-devel

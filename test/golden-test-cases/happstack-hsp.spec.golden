@@ -35,7 +35,7 @@ BuildRequires:  ghc-harp-devel
 BuildRequires:  ghc-hsp-devel
 BuildRequires:  ghc-hsx2hs-devel
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-syb-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-utf8-string-devel

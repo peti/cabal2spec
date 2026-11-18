@@ -33,7 +33,7 @@ BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-crypto-api-devel
 BuildRequires:  ghc-exceptions-devel
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-tagged-devel
 BuildRequires:  ghc-transformers-compat-devel
 BuildRequires:  ghc-transformers-devel

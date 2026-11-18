@@ -40,7 +40,7 @@ BuildRequires:  ghc-data-default-class-devel
 BuildRequires:  ghc-http-types-devel
 BuildRequires:  ghc-kansas-comet-devel
 BuildRequires:  ghc-mime-types-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-scotty-devel
 BuildRequires:  ghc-stm-devel
 BuildRequires:  ghc-text-devel

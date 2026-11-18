@@ -36,7 +36,7 @@ BuildRequires:  ghc-gsasl-devel
 BuildRequires:  ghc-libxml-sax-devel
 BuildRequires:  ghc-monads-tf-devel
 BuildRequires:  ghc-network-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-transformers-devel
 BuildRequires:  ghc-xml-types-devel

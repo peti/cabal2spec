@@ -35,7 +35,7 @@ BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-parsec-devel
 BuildRequires:  ghc-regex-pcre-builtin-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-utf8-string-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-base-prof

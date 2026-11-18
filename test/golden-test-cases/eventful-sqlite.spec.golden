@@ -36,7 +36,7 @@ BuildRequires:  ghc-eventful-core-devel
 BuildRequires:  ghc-eventful-sql-common-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-persistent-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-uuid-devel
 %if %{with ghc_prof}

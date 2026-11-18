@@ -36,7 +36,7 @@ BuildRequires:  ghc-data-default-devel
 BuildRequires:  ghc-fail-devel
 BuildRequires:  ghc-regex-base-devel
 BuildRequires:  ghc-regex-tdfa-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-tagsoup-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-vector-devel

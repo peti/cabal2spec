@@ -33,7 +33,7 @@ BuildRequires:  ghc-atomic-primops-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-hashable-devel
 BuildRequires:  ghc-primitive-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-stm-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-atomic-primops-prof

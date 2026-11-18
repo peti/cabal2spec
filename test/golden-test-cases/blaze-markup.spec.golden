@@ -32,7 +32,7 @@ BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-blaze-builder-devel
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-base-prof

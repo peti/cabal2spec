@@ -36,7 +36,7 @@ BuildRequires:  ghc-conduit-extra-devel
 BuildRequires:  ghc-directory-devel
 BuildRequires:  ghc-process-devel
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-safe-devel
 BuildRequires:  ghc-terminfo-devel
 BuildRequires:  ghc-text-devel

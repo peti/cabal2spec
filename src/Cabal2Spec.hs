@@ -173,7 +173,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     putHdr "Source1" $ "https://hackage.haskell.org/package/" ++ pkg_name ++ "-%{version}/revision/" ++ revision ++ ".cabal#/" ++ pkg_name ++ ".cabal"
   putHdr "ExcludeArch" "%{ix86}"
 
-  let fixedDeps = ["ghc-Cabal-devel", "ghc-rpm-macros"]
+  let fixedDeps = ["ghc-Cabal-devel", "ghc-rpm-macros >= 2.9.2"]
   let unconditialDeps = sort $ nub $ fixedDeps ++ develDeps ++ tools ++ clibs ++ pkgcfgs ++ ["pkgconfig" | not (null pkgcfgs)]
   let extraTestDeps = sort $ testsuiteDeps \\ (develDeps ++ profDeps)
 

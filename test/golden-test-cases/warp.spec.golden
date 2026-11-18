@@ -44,7 +44,7 @@ BuildRequires:  ghc-http-types-devel
 BuildRequires:  ghc-http2-devel
 BuildRequires:  ghc-iproute-devel
 BuildRequires:  ghc-network-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-simple-sendfile-devel
 BuildRequires:  ghc-stm-devel
 BuildRequires:  ghc-streaming-commons-devel

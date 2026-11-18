@@ -38,7 +38,7 @@ BuildRequires:  ghc-ghc-paths-devel
 BuildRequires:  ghc-ghci-devel
 BuildRequires:  ghc-haskeline-devel
 BuildRequires:  ghc-process-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-syb-devel
 BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-transformers-devel

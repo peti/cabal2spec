@@ -34,7 +34,7 @@ BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-options-devel
 BuildRequires:  ghc-patience-devel
 BuildRequires:  ghc-random-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-template-haskell-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-transformers-devel

@@ -34,7 +34,7 @@ BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-drifter-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-postgresql-simple-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-transformers-compat-devel
 BuildRequires:  ghc-transformers-devel

@@ -35,7 +35,7 @@ BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-hashable-devel
 BuildRequires:  ghc-primitive-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-vector-devel
 %if %{with ghc_prof}

@@ -34,7 +34,7 @@ BuildRequires:  ghc-binary-devel
 BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-data-binary-ieee754-devel
 BuildRequires:  ghc-deepseq-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-split-devel
 BuildRequires:  ghc-vector-devel
 BuildRequires:  ghc-vector-split-devel

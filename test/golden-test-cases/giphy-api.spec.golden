@@ -39,7 +39,7 @@ BuildRequires:  ghc-microlens-devel
 BuildRequires:  ghc-microlens-th-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-network-uri-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-servant-client-devel
 BuildRequires:  ghc-servant-devel
 BuildRequires:  ghc-text-devel

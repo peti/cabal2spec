@@ -34,7 +34,7 @@ BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-convertible-devel
 BuildRequires:  ghc-persistable-record-devel
 BuildRequires:  ghc-relational-query-HDBC-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-postgresql-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-HDBC-prof

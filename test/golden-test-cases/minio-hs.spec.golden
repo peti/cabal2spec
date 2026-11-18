@@ -53,7 +53,7 @@ BuildRequires:  ghc-memory-devel
 BuildRequires:  ghc-monad-control-devel
 BuildRequires:  ghc-protolude-devel
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-text-format-devel
 BuildRequires:  ghc-time-devel

@@ -34,7 +34,7 @@ BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-pandoc-types-devel
 BuildRequires:  ghc-parsec-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-syb-devel
 BuildRequires:  ghc-xml-devel
 %if %{with ghc_prof}

@@ -33,7 +33,7 @@ BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-explicit-exception-devel
 BuildRequires:  ghc-extensible-exceptions-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-sample-frame-devel
 BuildRequires:  ghc-storablevector-devel
 BuildRequires:  ghc-transformers-devel

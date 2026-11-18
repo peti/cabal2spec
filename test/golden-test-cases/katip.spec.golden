@@ -43,7 +43,7 @@ BuildRequires:  ghc-monad-control-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-old-locale-devel
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-safe-exceptions-devel
 BuildRequires:  ghc-scientific-devel
 BuildRequires:  ghc-semigroups-devel

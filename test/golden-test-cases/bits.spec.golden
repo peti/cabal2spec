@@ -33,7 +33,7 @@ BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-bytes-devel
 BuildRequires:  ghc-cabal-doctest-devel
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-transformers-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-base-prof

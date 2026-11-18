@@ -65,7 +65,7 @@ BuildRequires:  ghc-pandoc-types-devel
 BuildRequires:  ghc-parsec-devel
 BuildRequires:  ghc-process-devel
 BuildRequires:  ghc-random-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-safe-devel
 BuildRequires:  ghc-scientific-devel
 BuildRequires:  ghc-skylighting-devel

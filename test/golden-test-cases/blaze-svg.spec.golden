@@ -31,7 +31,7 @@ BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-blaze-markup-devel
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 %if %{with ghc_prof}
 BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-blaze-markup-prof

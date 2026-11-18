@@ -55,7 +55,7 @@ BuildRequires:  ghc-network-devel
 BuildRequires:  ghc-optparse-applicative-devel
 BuildRequires:  ghc-process-devel
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-setenv-devel
 BuildRequires:  ghc-stm-devel
 BuildRequires:  ghc-streaming-commons-devel

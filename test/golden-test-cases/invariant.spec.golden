@@ -37,7 +37,7 @@ BuildRequires:  ghc-comonad-devel
 BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-contravariant-devel
 BuildRequires:  ghc-profunctors-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-stm-devel
 BuildRequires:  ghc-tagged-devel

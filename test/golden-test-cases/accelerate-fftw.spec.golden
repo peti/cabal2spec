@@ -33,7 +33,7 @@ BuildRequires:  ghc-accelerate-io-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-carray-devel
 BuildRequires:  ghc-fft-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-storable-complex-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-accelerate-prof

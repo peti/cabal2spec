@@ -44,7 +44,7 @@ BuildRequires:  ghc-parsec-devel
 BuildRequires:  ghc-process-devel
 BuildRequires:  ghc-random-devel
 BuildRequires:  ghc-regex-compat-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-unix-devel
 %if %{with ghc_prof}

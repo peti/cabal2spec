@@ -34,7 +34,7 @@ BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-data-default-class-devel
 BuildRequires:  ghc-hashable-devel
 BuildRequires:  ghc-kan-extensions-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-semigroupoids-devel
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-stm-devel

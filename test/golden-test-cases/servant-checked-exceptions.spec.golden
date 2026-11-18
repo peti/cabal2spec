@@ -35,7 +35,7 @@ BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-deepseq-devel
 BuildRequires:  ghc-http-media-devel
 BuildRequires:  ghc-profunctors-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-servant-client-devel
 BuildRequires:  ghc-servant-devel
 BuildRequires:  ghc-servant-docs-devel

@@ -37,7 +37,7 @@ BuildRequires:  ghc-hashable-devel
 BuildRequires:  ghc-primitive-devel
 BuildRequires:  ghc-profunctors-devel
 BuildRequires:  ghc-promises-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-transformers-compat-devel
 BuildRequires:  ghc-transformers-devel

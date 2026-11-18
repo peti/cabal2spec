@@ -41,7 +41,7 @@ BuildRequires:  ghc-old-locale-devel
 BuildRequires:  ghc-old-time-devel
 BuildRequires:  ghc-process-devel
 BuildRequires:  ghc-random-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-unix-devel
 BuildRequires:  ghc-utf8-string-devel
 BuildRequires:  ghc-xmonad-devel

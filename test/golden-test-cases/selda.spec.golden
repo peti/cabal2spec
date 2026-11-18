@@ -34,7 +34,7 @@ BuildRequires:  ghc-exceptions-devel
 BuildRequires:  ghc-hashable-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-psqueues-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-unordered-containers-devel

@@ -31,7 +31,7 @@ BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-X11-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-directory-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-unix-devel
 BuildRequires:  ghc-utf8-string-devel
 %if %{with ghc_prof}

@@ -33,7 +33,7 @@ BuildRequires:  ghc-GPipe-devel
 BuildRequires:  ghc-async-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-stm-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-GLFW-b-prof

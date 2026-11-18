@@ -38,7 +38,7 @@ BuildRequires:  ghc-contravariant-devel
 BuildRequires:  ghc-hashable-devel
 BuildRequires:  ghc-keys-devel
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-semigroupoids-devel
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-transformers-base-devel

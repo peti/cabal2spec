@@ -33,7 +33,7 @@ BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-optparse-applicative-devel
 BuildRequires:  ghc-reducers-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-split-devel
 BuildRequires:  ghc-stm-devel
 BuildRequires:  ghc-tagged-devel

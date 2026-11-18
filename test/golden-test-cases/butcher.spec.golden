@@ -40,7 +40,7 @@ BuildRequires:  ghc-microlens-th-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-multistate-devel
 BuildRequires:  ghc-pretty-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-transformers-devel
 BuildRequires:  ghc-unsafe-devel
 BuildRequires:  ghc-void-devel

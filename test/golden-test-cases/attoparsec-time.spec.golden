@@ -34,7 +34,7 @@ BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-base-prelude-devel
 BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-cabal-doctest-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-scientific-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-time-devel

@@ -35,7 +35,7 @@ BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-dhall-devel
 BuildRequires:  ghc-neat-interpolation-devel
 BuildRequires:  ghc-optparse-generic-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-shell-escape-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-text-format-devel

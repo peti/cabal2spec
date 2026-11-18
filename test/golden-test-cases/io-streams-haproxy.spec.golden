@@ -34,7 +34,7 @@ BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-io-streams-devel
 BuildRequires:  ghc-network-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-transformers-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-attoparsec-prof

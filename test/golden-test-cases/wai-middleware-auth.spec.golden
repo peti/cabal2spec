@@ -49,7 +49,7 @@ BuildRequires:  ghc-http-reverse-proxy-devel
 BuildRequires:  ghc-http-types-devel
 BuildRequires:  ghc-optparse-simple-devel
 BuildRequires:  ghc-regex-posix-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-safe-exceptions-devel
 BuildRequires:  ghc-shakespeare-devel
 BuildRequires:  ghc-text-devel

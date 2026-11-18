@@ -38,7 +38,7 @@ BuildRequires:  ghc-http-conduit-devel
 BuildRequires:  ghc-http-types-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-unordered-containers-devel
 BuildRequires:  ghc-uri-templater-devel

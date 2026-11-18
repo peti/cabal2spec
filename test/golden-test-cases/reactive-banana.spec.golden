@@ -33,7 +33,7 @@ BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-hashable-devel
 BuildRequires:  ghc-pqueue-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-transformers-devel
 BuildRequires:  ghc-unordered-containers-devel
 BuildRequires:  ghc-vault-devel

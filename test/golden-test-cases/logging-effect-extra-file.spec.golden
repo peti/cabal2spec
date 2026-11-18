@@ -31,7 +31,7 @@ BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-logging-effect-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-template-haskell-devel
 BuildRequires:  ghc-wl-pprint-text-devel
 %if %{with ghc_prof}

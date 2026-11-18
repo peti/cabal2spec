@@ -34,7 +34,7 @@ BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-deepseq-devel
 BuildRequires:  ghc-directory-devel
 BuildRequires:  ghc-old-time-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-tagged-devel
 BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-transformers-devel

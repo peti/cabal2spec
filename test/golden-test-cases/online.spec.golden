@@ -32,7 +32,7 @@ BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-foldl-devel
 BuildRequires:  ghc-numhask-devel
 BuildRequires:  ghc-protolude-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-tdigest-devel
 BuildRequires:  ghc-vector-algorithms-devel
 BuildRequires:  ghc-vector-devel

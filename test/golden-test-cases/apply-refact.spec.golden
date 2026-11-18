@@ -40,7 +40,7 @@ BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-optparse-applicative-devel
 BuildRequires:  ghc-process-devel
 BuildRequires:  ghc-refact-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-syb-devel
 BuildRequires:  ghc-temporary-devel
 BuildRequires:  ghc-transformers-devel

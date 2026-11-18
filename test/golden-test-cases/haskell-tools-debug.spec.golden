@@ -39,7 +39,7 @@ BuildRequires:  ghc-haskell-tools-builtin-refactorings-devel
 BuildRequires:  ghc-haskell-tools-prettyprint-devel
 BuildRequires:  ghc-haskell-tools-refactor-devel
 BuildRequires:  ghc-references-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-split-devel
 BuildRequires:  ghc-template-haskell-devel
 %if %{with ghc_prof}

@@ -42,7 +42,7 @@ BuildRequires:  ghc-free-devel
 BuildRequires:  ghc-lens-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-parsers-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-scientific-devel
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-text-devel

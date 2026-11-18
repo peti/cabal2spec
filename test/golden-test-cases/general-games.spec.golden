@@ -34,7 +34,7 @@ BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-monad-loops-devel
 BuildRequires:  ghc-random-devel
 BuildRequires:  ghc-random-shuffle-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 %if %{with ghc_prof}
 BuildRequires:  ghc-MonadRandom-prof
 BuildRequires:  ghc-base-prof

@@ -32,7 +32,7 @@ BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-arithmoi-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-containers-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 %if %{with ghc_prof}
 BuildRequires:  ghc-arithmoi-prof
 BuildRequires:  ghc-base-prof

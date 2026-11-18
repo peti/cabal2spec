@@ -36,7 +36,7 @@ BuildRequires:  ghc-exceptions-devel
 BuildRequires:  ghc-http-api-data-devel
 BuildRequires:  ghc-path-pieces-devel
 BuildRequires:  ghc-persistent-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-QuickCheck-prof

@@ -34,7 +34,7 @@ BuildRequires:  ghc-enclosed-exceptions-devel
 BuildRequires:  ghc-http-types-devel
 BuildRequires:  ghc-lifted-base-devel
 BuildRequires:  ghc-process-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-temporary-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-wai-devel

@@ -36,7 +36,7 @@ BuildRequires:  ghc-lens-devel
 BuildRequires:  ghc-optparse-applicative-devel
 BuildRequires:  ghc-pipes-devel
 BuildRequires:  ghc-pipes-text-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-split-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-text-show-devel

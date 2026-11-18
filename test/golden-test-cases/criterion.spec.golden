@@ -51,7 +51,7 @@ BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-mwc-random-devel
 BuildRequires:  ghc-optparse-applicative-devel
 BuildRequires:  ghc-parsec-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-statistics-devel
 BuildRequires:  ghc-text-devel

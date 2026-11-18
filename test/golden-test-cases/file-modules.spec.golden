@@ -36,7 +36,7 @@ BuildRequires:  ghc-filepath-devel
 BuildRequires:  ghc-haskell-src-exts-devel
 BuildRequires:  ghc-regex-compat-devel
 BuildRequires:  ghc-regex-pcre-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 %if %{with ghc_prof}
 BuildRequires:  ghc-MissingH-prof
 BuildRequires:  ghc-async-prof

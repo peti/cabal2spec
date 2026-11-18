@@ -36,7 +36,7 @@ BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-errors-devel
 BuildRequires:  ghc-http-api-data-devel
 BuildRequires:  ghc-network-uri-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-attoparsec-prof

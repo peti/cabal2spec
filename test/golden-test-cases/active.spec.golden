@@ -32,7 +32,7 @@ BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-lens-devel
 BuildRequires:  ghc-linear-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-semigroupoids-devel
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-vector-devel

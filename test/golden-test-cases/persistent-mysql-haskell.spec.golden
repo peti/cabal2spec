@@ -43,7 +43,7 @@ BuildRequires:  ghc-persistent-devel
 BuildRequires:  ghc-persistent-template-devel
 BuildRequires:  ghc-resource-pool-devel
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-tls-devel

@@ -32,7 +32,7 @@ BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-monad-primitive-devel
 BuildRequires:  ghc-mwc-random-devel
 BuildRequires:  ghc-primitive-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-transformers-devel
 BuildRequires:  ghc-vector-devel
 %if %{with ghc_prof}

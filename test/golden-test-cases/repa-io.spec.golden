@@ -34,7 +34,7 @@ BuildRequires:  ghc-bmp-devel
 BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-old-time-devel
 BuildRequires:  ghc-repa-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-vector-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-base-prof

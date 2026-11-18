@@ -32,7 +32,7 @@ BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-aeson-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-lens-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-split-devel
 BuildRequires:  ghc-template-haskell-devel
 BuildRequires:  ghc-text-devel

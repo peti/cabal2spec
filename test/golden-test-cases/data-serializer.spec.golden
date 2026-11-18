@@ -35,7 +35,7 @@ BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-cereal-devel
 BuildRequires:  ghc-data-endian-devel
 BuildRequires:  ghc-parsers-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-split-devel
 %if %{with ghc_prof}

@@ -45,7 +45,7 @@ BuildRequires:  ghc-monad-time-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-network-uri-devel
 BuildRequires:  ghc-quickcheck-instances-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-safe-devel
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-template-haskell-devel

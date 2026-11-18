@@ -32,7 +32,7 @@ BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-ansi-terminal-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-base-unicode-symbols-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-ansi-terminal-prof

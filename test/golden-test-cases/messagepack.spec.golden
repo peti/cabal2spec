@@ -34,7 +34,7 @@ BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-cereal-devel
 BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-deepseq-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 %if %{with ghc_prof}
 BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-prof

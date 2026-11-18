@@ -36,7 +36,7 @@ BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-data-default-devel
 BuildRequires:  ghc-deepseq-devel
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-syb-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-uniplate-devel

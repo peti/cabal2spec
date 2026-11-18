@@ -36,7 +36,7 @@ BuildRequires:  ghc-mcmc-types-devel
 BuildRequires:  ghc-mwc-probability-devel
 BuildRequires:  ghc-pipes-devel
 BuildRequires:  ghc-primitive-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-transformers-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-base-prof

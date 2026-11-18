@@ -40,7 +40,7 @@ BuildRequires:  ghc-http-client-devel
 BuildRequires:  ghc-http-types-devel
 BuildRequires:  ghc-katip-devel
 BuildRequires:  ghc-retry-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-scientific-devel
 BuildRequires:  ghc-stm-chans-devel
 BuildRequires:  ghc-stm-devel

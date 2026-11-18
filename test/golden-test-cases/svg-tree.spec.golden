@@ -36,7 +36,7 @@ BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-lens-devel
 BuildRequires:  ghc-linear-devel
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-scientific-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-transformers-devel

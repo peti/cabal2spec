@@ -36,7 +36,7 @@ BuildRequires:  ghc-data-default-class-devel
 BuildRequires:  ghc-lens-family-devel
 BuildRequires:  ghc-parsec-devel
 BuildRequires:  ghc-pretty-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-transformers-devel
 BuildRequires:  ghc-void-devel

@@ -38,7 +38,7 @@ BuildRequires:  ghc-mysql-devel
 BuildRequires:  ghc-mysql-simple-devel
 BuildRequires:  ghc-resource-pool-devel
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-transformers-devel

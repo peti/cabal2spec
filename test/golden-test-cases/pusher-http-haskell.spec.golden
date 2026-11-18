@@ -38,7 +38,7 @@ BuildRequires:  ghc-hashable-devel
 BuildRequires:  ghc-http-client-devel
 BuildRequires:  ghc-http-types-devel
 BuildRequires:  ghc-memory-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-transformers-devel

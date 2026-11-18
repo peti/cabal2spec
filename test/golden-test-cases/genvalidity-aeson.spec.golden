@@ -37,7 +37,7 @@ BuildRequires:  ghc-genvalidity-scientific-devel
 BuildRequires:  ghc-genvalidity-text-devel
 BuildRequires:  ghc-genvalidity-unordered-containers-devel
 BuildRequires:  ghc-genvalidity-vector-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-validity-aeson-devel
 BuildRequires:  ghc-validity-devel
 %if %{with ghc_prof}

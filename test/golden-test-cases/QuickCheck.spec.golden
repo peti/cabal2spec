@@ -33,7 +33,7 @@ BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-deepseq-devel
 BuildRequires:  ghc-random-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-template-haskell-devel
 BuildRequires:  ghc-tf-random-devel
 BuildRequires:  ghc-transformers-devel

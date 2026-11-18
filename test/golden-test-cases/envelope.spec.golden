@@ -33,7 +33,7 @@ BuildRequires:  ghc-aeson-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-http-api-data-devel
 BuildRequires:  ghc-mtl-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-aeson-prof

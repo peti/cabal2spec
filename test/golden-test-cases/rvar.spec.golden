@@ -32,7 +32,7 @@ BuildRequires:  ghc-MonadPrompt-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-random-source-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-transformers-devel
 %if %{with ghc_prof}
 BuildRequires:  ghc-MonadPrompt-prof

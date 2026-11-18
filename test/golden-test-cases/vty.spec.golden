@@ -44,7 +44,7 @@ BuildRequires:  ghc-microlens-th-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-parallel-devel
 BuildRequires:  ghc-parsec-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-stm-devel
 BuildRequires:  ghc-terminfo-devel
 BuildRequires:  ghc-text-devel

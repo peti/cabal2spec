@@ -32,7 +32,7 @@ BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-direct-sqlite-devel
 BuildRequires:  ghc-directory-devel
 BuildRequires:  ghc-exceptions-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-selda-devel
 BuildRequires:  ghc-text-devel
 %if %{with ghc_prof}

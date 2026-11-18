@@ -38,7 +38,7 @@ BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-errors-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-random-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-vector-devel
 BuildRequires:  ghc-zlib-devel
 %if %{with ghc_prof}

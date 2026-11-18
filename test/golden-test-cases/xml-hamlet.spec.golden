@@ -32,7 +32,7 @@ BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-parsec-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-shakespeare-devel
 BuildRequires:  ghc-template-haskell-devel
 BuildRequires:  ghc-text-devel

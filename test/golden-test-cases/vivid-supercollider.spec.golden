@@ -33,7 +33,7 @@ BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-binary-devel
 BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-cereal-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-split-devel
 BuildRequires:  ghc-utf8-string-devel
 BuildRequires:  ghc-vivid-osc-devel

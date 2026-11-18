@@ -55,7 +55,7 @@ BuildRequires:  ghc-old-locale-devel
 BuildRequires:  ghc-process-devel
 BuildRequires:  ghc-process-extras-devel
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-storable-tuple-devel
 BuildRequires:  ghc-tar-devel
 BuildRequires:  ghc-template-haskell-devel

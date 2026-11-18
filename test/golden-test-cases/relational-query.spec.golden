@@ -37,7 +37,7 @@ BuildRequires:  ghc-dlist-devel
 BuildRequires:  ghc-names-th-devel
 BuildRequires:  ghc-persistable-record-devel
 BuildRequires:  ghc-product-isomorphic-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-sql-words-devel
 BuildRequires:  ghc-template-haskell-devel
 BuildRequires:  ghc-text-devel

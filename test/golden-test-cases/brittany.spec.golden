@@ -52,7 +52,7 @@ BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-multistate-devel
 BuildRequires:  ghc-neat-interpolation-devel
 BuildRequires:  ghc-pretty-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-safe-devel
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-strict-devel

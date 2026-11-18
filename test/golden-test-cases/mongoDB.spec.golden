@@ -52,7 +52,7 @@ BuildRequires:  ghc-pureMD5-devel
 BuildRequires:  ghc-random-devel
 BuildRequires:  ghc-random-shuffle-devel
 BuildRequires:  ghc-resourcet-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-tagged-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-time-devel

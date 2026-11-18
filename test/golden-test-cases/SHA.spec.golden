@@ -33,7 +33,7 @@ BuildRequires:  ghc-array-devel
 BuildRequires:  ghc-base-devel
 BuildRequires:  ghc-binary-devel
 BuildRequires:  ghc-bytestring-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 %if %{with ghc_prof}
 BuildRequires:  ghc-array-prof
 BuildRequires:  ghc-base-prof

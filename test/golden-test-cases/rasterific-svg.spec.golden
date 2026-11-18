@@ -43,7 +43,7 @@ BuildRequires:  ghc-linear-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-optparse-applicative-devel
 BuildRequires:  ghc-primitive-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-scientific-devel
 BuildRequires:  ghc-svg-tree-devel
 BuildRequires:  ghc-text-devel

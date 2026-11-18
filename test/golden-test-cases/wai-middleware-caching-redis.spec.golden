@@ -34,7 +34,7 @@ BuildRequires:  ghc-blaze-builder-devel
 BuildRequires:  ghc-bytestring-devel
 BuildRequires:  ghc-hedis-devel
 BuildRequires:  ghc-http-types-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-wai-devel
 BuildRequires:  ghc-wai-middleware-caching-devel

@@ -40,7 +40,7 @@ BuildRequires:  ghc-containers-devel
 BuildRequires:  ghc-generics-sop-devel
 BuildRequires:  ghc-hashable-devel
 BuildRequires:  ghc-nats-devel
-BuildRequires:  ghc-rpm-macros
+BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-scientific-devel
 BuildRequires:  ghc-semigroups-devel
 BuildRequires:  ghc-tagged-devel
