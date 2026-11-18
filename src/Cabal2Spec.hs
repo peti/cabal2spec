@@ -240,7 +240,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
         ]
 
   put "%prep"
-  put $ "%autosetup" ++ (if pkgname /= name then " -n %{pkg_name}-%{version}" else "")
+  put $ "%autosetup -p1" ++ (if pkgname /= name then " -n %{pkg_name}-%{version}" else "")
   when (revision /= "0") $
     put $ "cp -p %{SOURCE1}" +-+ pkg_name ++ ".cabal"
   putNewline
