@@ -16,6 +16,7 @@
 #
 
 
+%bcond_with ghc_prof
 %bcond_with tests
 Name:           happy
 Version:        1.19.8

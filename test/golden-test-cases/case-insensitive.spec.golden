@@ -19,6 +19,7 @@
 %global pkg_name case-insensitive
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        1.2.0.10

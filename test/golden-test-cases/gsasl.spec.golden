@@ -19,6 +19,7 @@
 %global pkg_name gsasl
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.3.6
 Release:        0

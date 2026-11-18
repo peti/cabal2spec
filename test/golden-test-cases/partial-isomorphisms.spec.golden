@@ -19,6 +19,7 @@
 %global pkg_name partial-isomorphisms
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.2.2.1
 Release:        0

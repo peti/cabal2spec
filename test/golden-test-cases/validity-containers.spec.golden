@@ -19,6 +19,7 @@
 %global pkg_name validity-containers
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.2.0.0
 Release:        0

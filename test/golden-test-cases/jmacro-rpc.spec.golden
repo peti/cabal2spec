@@ -19,6 +19,7 @@
 %global pkg_name jmacro-rpc
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.3.2
 Release:        0

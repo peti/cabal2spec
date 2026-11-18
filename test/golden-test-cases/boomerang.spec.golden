@@ -19,6 +19,7 @@
 %global pkg_name boomerang
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        1.4.5.3
 Release:        0

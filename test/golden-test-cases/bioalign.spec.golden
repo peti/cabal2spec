@@ -19,6 +19,7 @@
 %global pkg_name bioalign
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.0.5
 Release:        0

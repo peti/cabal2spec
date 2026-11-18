@@ -19,6 +19,7 @@
 %global pkg_name gogol-admin-emailmigration
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.3.0
 Release:        0

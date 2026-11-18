@@ -19,6 +19,7 @@
 %global pkg_name hsx-jmacro
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        7.3.8
 Release:        0

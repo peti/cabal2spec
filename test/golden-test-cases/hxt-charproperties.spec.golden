@@ -19,6 +19,7 @@
 %global pkg_name hxt-charproperties
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        9.2.0.1
 Release:        0

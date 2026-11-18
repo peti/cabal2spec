@@ -16,6 +16,7 @@
 #
 
 
+%bcond_with ghc_prof
 %bcond_with tests
 Name:           mole
 Version:        0.0.6

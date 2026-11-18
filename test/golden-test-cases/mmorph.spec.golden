@@ -19,6 +19,7 @@
 %global pkg_name mmorph
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        1.1.0
 Release:        0

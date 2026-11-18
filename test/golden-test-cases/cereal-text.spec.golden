@@ -19,6 +19,7 @@
 %global pkg_name cereal-text
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.1.0.2
 Release:        0

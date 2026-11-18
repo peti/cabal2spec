@@ -19,6 +19,7 @@
 %global pkg_name Strafunski-StrategyLib
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        5.0.0.10
 Release:        0

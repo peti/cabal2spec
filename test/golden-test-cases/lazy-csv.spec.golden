@@ -19,6 +19,7 @@
 %global pkg_name lazy-csv
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.5.1
 Release:        0

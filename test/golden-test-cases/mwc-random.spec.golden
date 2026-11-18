@@ -19,6 +19,7 @@
 %global pkg_name mwc-random
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.13.6.0
 Release:        0

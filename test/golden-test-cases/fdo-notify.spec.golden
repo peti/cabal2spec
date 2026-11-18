@@ -19,6 +19,7 @@
 %global pkg_name fdo-notify
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.3.1
 Release:        0

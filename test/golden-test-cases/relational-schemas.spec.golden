@@ -19,6 +19,7 @@
 %global pkg_name relational-schemas
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.1.6.1
 Release:        0

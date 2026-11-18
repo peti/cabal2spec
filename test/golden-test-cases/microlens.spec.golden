@@ -19,6 +19,7 @@
 %global pkg_name microlens
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.4.8.1
 Release:        0

@@ -155,6 +155,9 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
   when hasLib $
     putDef "pkg_name" name
 
+  -- Declare the conditional so that "--with ghc_prof" can enable profiling.
+  -- Without this declaration, that option has no effect on %{with ghc_prof}.
+  put "%bcond_with ghc_prof"
   unless (null testsuiteDeps) $
     if runTests
        then put "%bcond_without tests"

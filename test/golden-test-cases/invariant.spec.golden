@@ -19,6 +19,7 @@
 %global pkg_name invariant
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 %bcond_with tests
 Name:           %{pkg_name}
 Version:        0.5

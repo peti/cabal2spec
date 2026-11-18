@@ -19,6 +19,7 @@
 %global pkg_name persistable-types-HDBC-pg
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.0.1.5
 Release:        0

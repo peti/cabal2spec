@@ -19,6 +19,7 @@
 %global pkg_name monadcryptorandom
 %global pkgver %{pkg_name}-%{version}
 
+%bcond_with ghc_prof
 Name:           %{pkg_name}
 Version:        0.7.1
 Release:        0
