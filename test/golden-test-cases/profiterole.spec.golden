@@ -1,7 +1,7 @@
 #
 # spec file for package profiterole
 #
-# Copyright (c) 2020 SUSE LLC
+# Copyright (c) 2020 SUSE LLC and contributors
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -52,7 +52,7 @@ Given a GHC profile output, this tool generates alternative views on the data,
 which are typically more concise and may reveal new insights.
 
 %prep
-%autosetup
+%autosetup -p1
 
 %build
 %ghc_bin_build
