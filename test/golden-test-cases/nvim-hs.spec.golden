@@ -17,18 +17,16 @@
 
 
 %global pkg_name nvim-hs
-%global pkgver %{pkg_name}-%{version}
-
 %bcond_with ghc_prof
 %bcond_with tests
-Name:           %{pkg_name}
+Name:           %pkg_name
 Version:        0.2.5
 Release:        0
+%global pkgver %pkg_name-%{version}
 Summary:        Haskell plugin backend for neovim
 License:        Apache-2.0
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-ansi-wl-pprint-devel
@@ -68,14 +66,15 @@ BuildRequires:  ghc-transformers-base-devel
 BuildRequires:  ghc-transformers-devel
 BuildRequires:  ghc-utf8-string-devel
 BuildRequires:  ghc-void-devel
+ExcludeArch:    %{ix86}
 %if %{with ghc_prof}
 BuildRequires:  ghc-ansi-wl-pprint-prof
 BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-prof
-BuildRequires:  ghc-cereal-prof
 BuildRequires:  ghc-cereal-conduit-prof
-BuildRequires:  ghc-conduit-prof
+BuildRequires:  ghc-cereal-prof
 BuildRequires:  ghc-conduit-extra-prof
+BuildRequires:  ghc-conduit-prof
 BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-data-default-prof
 BuildRequires:  ghc-deepseq-prof
@@ -99,10 +98,10 @@ BuildRequires:  ghc-stm-prof
 BuildRequires:  ghc-streaming-commons-prof
 BuildRequires:  ghc-template-haskell-prof
 BuildRequires:  ghc-text-prof
-BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-time-locale-compat-prof
-BuildRequires:  ghc-transformers-prof
+BuildRequires:  ghc-time-prof
 BuildRequires:  ghc-transformers-base-prof
+BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-utf8-string-prof
 BuildRequires:  ghc-void-prof
 %endif
@@ -156,22 +155,21 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
 
-%package -n ghc-%{pkg_name}-doc
+%package -n ghc-%pkg_name-doc
 Summary:        Haskell %{pkg_name} library documentation
-BuildArch:      noarch
 Requires:       ghc-filesystem
+BuildArch:      noarch
 
-%description -n ghc-%{pkg_name}-doc
+%description -n ghc-%pkg_name-doc
 This package provides the Haskell %{pkg_name} library documentation.
 
-
 %if %{with ghc_prof}
-%package -n ghc-%{pkg_name}-prof
+%package -n ghc-%pkg_name-prof
 Summary:        Haskell %{pkg_name} profiling library
-Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
-Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
+Requires:       ghc-%pkg_name-devel = %{version}-%{release}
+Supplements:    (ghc-%pkg_name-devel and ghc-prof)
 
-%description -n ghc-%{pkg_name}-prof
+%description -n ghc-%pkg_name-prof
 This package provides the Haskell %{pkg_name} profiling library.
 %endif
 
@@ -184,7 +182,7 @@ This package provides the Haskell %{pkg_name} profiling library.
 
 %install
 %ghc_lib_install
-%ghc_fix_rpath %{pkg_name}-%{version}
+%ghc_fix_rpath %pkg_name-%{version}
 
 %check
 %cabal_test
@@ -206,11 +204,11 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc CHANGELOG.md README.md
 
-%files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
+%files -n ghc-%pkg_name-doc -f ghc-%pkg_name-doc.files
 %license LICENSE
 
 %if %{with ghc_prof}
-%files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%files -n ghc-%pkg_name-prof -f ghc-%pkg_name-prof.files
 %endif
 
 %changelog

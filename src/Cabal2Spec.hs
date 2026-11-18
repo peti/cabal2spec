@@ -4,7 +4,7 @@ module Cabal2Spec ( cabal2spec, createSpecFile, ForceBinary, RunTests, Copyright
 
 import Control.Monad
 import Data.Char
-import Data.List ( delete, nub, sort, (\\), inits, intersect, isPrefixOf, groupBy )
+import Data.List ( delete, nub, partition, sort, (\\), inits, intersect, isPrefixOf, groupBy )
 import Data.Time.Clock
 import Data.Time.Format
 import Distribution.Compiler
@@ -73,7 +73,7 @@ createSpecFile :: FilePath -> PackageDescription -> ForceBinary -> RunTests -> F
 createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYear = do
   let develDeps, profDeps :: [String]
       develDeps = map showDevelDep deps'
-      profDeps = map showProfDep deps'
+      profDeps = sort $ map showProfDep deps'
       deps' :: [String]
       selfdep :: Bool
       (deps', selfdep) = buildDependencies pkgDesc name
@@ -110,9 +110,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
       padding hdr = replicate (14 - length hdr) ' ' ++ " "
       putNewline = hPutStrLn h ""
       put = hPutStrLn h
-      putDef v s = put $ unlines [ "%global" +-+ v +-+ s
-                                 , "%global pkgver %{pkg_name}-%{version}"
-                                 ]
+      putDef v s = put $ "%global" +-+ v +-+ s
       ghcPkg = if binlib then "-n ghc-%{name}" else ""
       ghcPkgDevel = if binlib then "-n ghc-%{name}-devel" else "devel"
 
@@ -165,16 +163,17 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
 
   let version = packageVersion pkg
       revision = show $ maybe (0::Int) read (lookup "x-revision" (customFieldsPD pkgDesc))
-  putHdr "Name" (if binlib then "%{pkg_name}" else basename)
+  putHdr "Name" (if binlib then "%pkg_name" else basename)
   putHdr "Version" (display version)
   putHdr "Release" "0"
-  putHdr "Summary" summary
+  when hasLib $
+    putDef "pkgver" "%pkg_name-%{version}"
+  putHdr "Summary" (escapeMacros summary)
   putHdr "License" $ either (show . pretty) showLicense (licenseRaw pkgDesc)
   putHdr "URL" $ "https://hackage.haskell.org/package/" ++ pkg_name
   putHdr "Source0" $ "https://hackage.haskell.org/package/" ++ pkg_name ++ "-%{version}/" ++ pkg_name ++ "-%{version}.tar.gz"
   when (revision /= "0") $
     putHdr "Source1" $ "https://hackage.haskell.org/package/" ++ pkg_name ++ "-%{version}/revision/" ++ revision ++ ".cabal#/" ++ pkg_name ++ ".cabal"
-  putHdr "ExcludeArch" "%{ix86}"
 
   let fixedDeps = ["ghc-Cabal-devel", "ghc-rpm-macros >= 2.9.2"]
   let unconditialDeps = sort $ nub $ fixedDeps ++ develDeps ++ tools ++ clibs ++ pkgcfgs ++ ["pkgconfig" | not (null pkgcfgs)]
@@ -182,6 +181,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
       extraTestProfDeps = sort $ map showProfDep testsuiteDeps \\ profDeps
 
   mapM_ (putHdr "BuildRequires") unconditialDeps
+  putHdr "ExcludeArch" "%{ix86}"
   unless (null profDeps) $ do
     put "%if %{with ghc_prof}"
     mapM_ (putHdr "BuildRequires") profDeps
@@ -198,7 +198,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
   putNewline
 
   put "%description"
-  mapM_ put descLines
+  mapM_ (put . escapeMacros) descLines
 
   let wrapGenDesc = wordwrap (79 - max 0 (length pkgname - length pkg_name))
 
@@ -211,32 +211,31 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
       put $ wrapGenDesc $ "This package provides the Haskell" +-+ pkg_name +-+ "shared library."
     put $ "%package" +-+ ghcPkgDevel
     putHdr "Summary" $ "Haskell" +-+ pkg_name +-+ "library development files"
-    putHdr "Requires" $ (if binlib then "ghc-%{name}" else "%{name}") +-+ "= %{version}-%{release}"
-    putHdr "Requires" "ghc-compiler = %{ghc_version}"
-    unless (null $ clibs ++ pkgcfgs) $
-      mapM_ (putHdr "Requires") $ sort (clibs ++ pkgcfgs ++ ["pkgconfig" | not (null pkgcfgs)])
+    mapM_ (putHdr "Requires") $ sort $
+      [ (if binlib then "ghc-%{name}" else "%{name}") +-+ "= %{version}-%{release}"
+      , "ghc-compiler = %{ghc_version}"
+      ] ++ clibs ++ pkgcfgs ++ ["pkgconfig" | not (null pkgcfgs)]
     putHdr "Requires(post)" "ghc-compiler = %{ghc_version}"
     putHdr "Requires(postun)" "ghc-compiler = %{ghc_version}"
     putNewline
     put $ "%description" +-+ ghcPkgDevel
     put $ wrapGenDesc $ "This package provides the Haskell" +-+ pkg_name +-+ "library development files."
     put $ unlines
-        [ "%package -n ghc-%{pkg_name}-doc"
+        [ "%package -n ghc-%pkg_name-doc"
         , "Summary:        Haskell %{pkg_name} library documentation"
-        , "BuildArch:      noarch"
         , "Requires:       ghc-filesystem"
+        , "BuildArch:      noarch"
         , ""
-        , "%description -n ghc-%{pkg_name}-doc"
+        , "%description -n ghc-%pkg_name-doc"
         , "This package provides the Haskell %{pkg_name} library documentation."
         , ""
-        , ""
         , "%if %{with ghc_prof}"
-        , "%package -n ghc-%{pkg_name}-prof"
+        , "%package -n ghc-%pkg_name-prof"
         , "Summary:        Haskell %{pkg_name} profiling library"
-        , "Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}"
-        , "Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)"
+        , "Requires:       ghc-%pkg_name-devel = %{version}-%{release}"
+        , "Supplements:    (ghc-%pkg_name-devel and ghc-prof)"
         , ""
-        , "%description -n ghc-%{pkg_name}-prof"
+        , "%description -n ghc-%pkg_name-prof"
         , "This package provides the Haskell %{pkg_name} profiling library."
         , "%endif"
         , ""
@@ -260,7 +259,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
   put $ "%ghc_" ++ pkgType ++ "_install"
 
   when selfdep $
-    put $ "%ghc_fix_rpath" +-+ "%{pkg_name}-%{version}"
+    put $ "%ghc_fix_rpath" +-+ "%pkg_name-%{version}"
 
   -- TODO: getSymbolicPath should not be used like this
   let licensefiles = map getSymbolicPath (licenseFiles pkgDesc)
@@ -290,6 +289,12 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     putInstallScript
 
   let license_macro = "%license"
+      (licenseDocs, otherDocs) = partition looksLikeLicense (sort docs)
+      looksLikeLicense f = any (`isPrefixOf` map toLower f) ["licen", "copying"]
+      putDocs = do
+        mapM_ (\ l -> put $ license_macro +-+ l) licenseDocs
+        unless (null otherDocs) $
+          put $ "%doc" +-+ unwords otherDocs
   let execs :: [String]
       execs = sort $ map (unUnqualComponentName . exeName) $ filter isBuildable $ executables pkgDesc
 
@@ -306,8 +311,7 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     -- Add the license file to the main package only if it wouldn't
     -- otherwise be empty.
     mapM_ (\ l -> put $ license_macro +-+ l) (sort licensefiles)
-    unless (null docs) $
-      put $ "%doc" +-+ unwords (sort docs)
+    putDocs
     mapM_ (\ p -> put $ "%{_bindir}/" ++ (if p == name then "%{name}" else p)) (sort execs)
     listDataFiles
     putNewline
@@ -322,14 +326,13 @@ createSpecFile specFile pkgDesc forceBinary runTests flagAssignment copyrightYea
     unless hasExecPkg listDataFiles
     putNewline
     put $ "%files" +-+ ghcPkgDevel +-+ develFiles
-    unless (null docs) $
-      put $ "%doc" +-+ unwords (sort docs)
+    putDocs
     putNewline
-    put "%files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files"
+    put "%files -n ghc-%pkg_name-doc -f ghc-%pkg_name-doc.files"
     mapM_ (\ l -> put $ license_macro +-+ l) licensefiles
     putNewline
     put "%if %{with ghc_prof}"
-    put "%files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files"
+    put "%files -n ghc-%pkg_name-prof -f ghc-%pkg_name-prof.files"
     put "%endif"
     putNewline
 
@@ -364,7 +367,7 @@ showLicense (LGPL (Just ver)) = "LGPL-" ++ display (normalizeVersion ver) ++ "-o
 showLicense BSD3 = "BSD-3-Clause"
 showLicense BSD4 = "BSD-4-Clause"
 showLicense MIT = "MIT"
-showLicense PublicDomain = "SUSE-Public-Domain"
+showLicense PublicDomain = "LicenseRef-SUSE-Public-Domain"
 showLicense AllRightsReserved = "SUSE-NonFree"
 showLicense OtherLicense = "Unknown"
 showLicense (UnknownLicense l) = "Unknown" +-+ l
@@ -398,7 +401,12 @@ formatParagraphs = map (wordwrap 79) . paragraphs . lines
     -- from http://stackoverflow.com/questions/930675/functional-paragraphs
     -- using split would be: map unlines . (Data.List.Split.splitWhen null)
     paragraphs :: [String] -> [String]
-    paragraphs = map (unlines . filter (not . null)) . groupBy (const $ not . null)
+    paragraphs = filter (not . null) . map (unlines . filter (not . null)) . groupBy (const $ not . null)
+
+-- | rpm expands macros in the @Summary@ and @%description@, so we escape every @%@
+-- as @%%@ to have rpm show the text literally.
+escapeMacros :: String -> String
+escapeMacros = concatMap (\c -> if c == '%' then "%%" else [c])
 
 rstrip :: (Char -> Bool) -> String -> String
 rstrip p = reverse . dropWhile p . reverse

@@ -25,7 +25,6 @@ Summary:        Examples for hPDB library
 License:        BSD-3-Clause
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-ExcludeArch:    %{ix86}
 BuildRequires:  ghc-AC-Vector-devel
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-GLUT-devel
@@ -45,8 +44,12 @@ BuildRequires:  ghc-template-haskell-devel
 BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-text-format-devel
 BuildRequires:  ghc-vector-devel
+ExcludeArch:    %{ix86}
 %if %{with ghc_prof}
 BuildRequires:  ghc-AC-Vector-prof
+BuildRequires:  ghc-GLUT-prof
+BuildRequires:  ghc-Octree-prof
+BuildRequires:  ghc-OpenGL-prof
 BuildRequires:  ghc-QuickCheck-prof
 BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bytestring-prof
@@ -57,12 +60,9 @@ BuildRequires:  ghc-hPDB-prof
 BuildRequires:  ghc-iterable-prof
 BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-template-haskell-prof
+BuildRequires:  ghc-text-format-prof
 BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-vector-prof
-BuildRequires:  ghc-Octree-prof
-BuildRequires:  ghc-text-format-prof
-BuildRequires:  ghc-GLUT-prof
-BuildRequires:  ghc-OpenGL-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-IfElse-devel

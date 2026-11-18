@@ -17,17 +17,15 @@
 
 
 %global pkg_name Clipboard
-%global pkgver %{pkg_name}-%{version}
-
 %bcond_with ghc_prof
-Name:           %{pkg_name}
+Name:           %pkg_name
 Version:        2.3.2.0
 Release:        0
+%global pkgver %pkg_name-%{version}
 Summary:        System clipboard interface
 License:        BSD-3-Clause
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-X11-devel
 BuildRequires:  ghc-base-devel
@@ -35,6 +33,7 @@ BuildRequires:  ghc-directory-devel
 BuildRequires:  ghc-rpm-macros >= 2.9.2
 BuildRequires:  ghc-unix-devel
 BuildRequires:  ghc-utf8-string-devel
+ExcludeArch:    %{ix86}
 %if %{with ghc_prof}
 BuildRequires:  ghc-X11-prof
 BuildRequires:  ghc-base-prof
@@ -82,22 +81,21 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
 
-%package -n ghc-%{pkg_name}-doc
+%package -n ghc-%pkg_name-doc
 Summary:        Haskell %{pkg_name} library documentation
-BuildArch:      noarch
 Requires:       ghc-filesystem
+BuildArch:      noarch
 
-%description -n ghc-%{pkg_name}-doc
+%description -n ghc-%pkg_name-doc
 This package provides the Haskell %{pkg_name} library documentation.
 
-
 %if %{with ghc_prof}
-%package -n ghc-%{pkg_name}-prof
+%package -n ghc-%pkg_name-prof
 Summary:        Haskell %{pkg_name} profiling library
-Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
-Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
+Requires:       ghc-%pkg_name-devel = %{version}-%{release}
+Supplements:    (ghc-%pkg_name-devel and ghc-prof)
 
-%description -n ghc-%{pkg_name}-prof
+%description -n ghc-%pkg_name-prof
 This package provides the Haskell %{pkg_name} profiling library.
 %endif
 
@@ -127,11 +125,11 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc README.md
 
-%files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
+%files -n ghc-%pkg_name-doc -f ghc-%pkg_name-doc.files
 %license license
 
 %if %{with ghc_prof}
-%files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%files -n ghc-%pkg_name-prof -f ghc-%pkg_name-prof.files
 %endif
 
 %changelog

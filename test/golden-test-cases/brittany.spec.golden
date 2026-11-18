@@ -17,18 +17,16 @@
 
 
 %global pkg_name brittany
-%global pkgver %{pkg_name}-%{version}
-
 %bcond_with ghc_prof
 %bcond_with tests
-Name:           %{pkg_name}
+Name:           %pkg_name
 Version:        0.9.0.0
 Release:        0
+%global pkgver %pkg_name-%{version}
 Summary:        Haskell source code formatter
 License:        AGPL-3.0-or-later
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-aeson-devel
@@ -63,6 +61,7 @@ BuildRequires:  ghc-transformers-devel
 BuildRequires:  ghc-uniplate-devel
 BuildRequires:  ghc-unsafe-devel
 BuildRequires:  ghc-yaml-devel
+ExcludeArch:    %{ix86}
 %if %{with ghc_prof}
 BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-base-prof
@@ -75,10 +74,12 @@ BuildRequires:  ghc-data-tree-print-prof
 BuildRequires:  ghc-deepseq-prof
 BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-extra-prof
-BuildRequires:  ghc-ghc-prof
+BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-ghc-boot-th-prof
 BuildRequires:  ghc-ghc-exactprint-prof
 BuildRequires:  ghc-ghc-paths-prof
+BuildRequires:  ghc-ghc-prof
+BuildRequires:  ghc-hspec-prof
 BuildRequires:  ghc-monad-memo-prof
 BuildRequires:  ghc-mtl-prof
 BuildRequires:  ghc-multistate-prof
@@ -93,8 +94,6 @@ BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-uniplate-prof
 BuildRequires:  ghc-unsafe-prof
 BuildRequires:  ghc-yaml-prof
-BuildRequires:  ghc-filepath-prof
-BuildRequires:  ghc-hspec-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-parsec-devel
@@ -130,22 +129,21 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
 
-%package -n ghc-%{pkg_name}-doc
+%package -n ghc-%pkg_name-doc
 Summary:        Haskell %{pkg_name} library documentation
-BuildArch:      noarch
 Requires:       ghc-filesystem
+BuildArch:      noarch
 
-%description -n ghc-%{pkg_name}-doc
+%description -n ghc-%pkg_name-doc
 This package provides the Haskell %{pkg_name} library documentation.
 
-
 %if %{with ghc_prof}
-%package -n ghc-%{pkg_name}-prof
+%package -n ghc-%pkg_name-prof
 Summary:        Haskell %{pkg_name} profiling library
-Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
-Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
+Requires:       ghc-%pkg_name-devel = %{version}-%{release}
+Supplements:    (ghc-%pkg_name-devel and ghc-prof)
 
-%description -n ghc-%{pkg_name}-prof
+%description -n ghc-%pkg_name-prof
 This package provides the Haskell %{pkg_name} profiling library.
 %endif
 
@@ -158,7 +156,7 @@ This package provides the Haskell %{pkg_name} profiling library.
 
 %install
 %ghc_lib_install
-%ghc_fix_rpath %{pkg_name}-%{version}
+%ghc_fix_rpath %pkg_name-%{version}
 
 %check
 %cabal_test
@@ -180,11 +178,11 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc ChangeLog.md README.md doc
 
-%files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
+%files -n ghc-%pkg_name-doc -f ghc-%pkg_name-doc.files
 %license LICENSE
 
 %if %{with ghc_prof}
-%files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%files -n ghc-%pkg_name-prof -f ghc-%pkg_name-prof.files
 %endif
 
 %changelog

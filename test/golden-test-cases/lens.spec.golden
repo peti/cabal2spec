@@ -17,18 +17,16 @@
 
 
 %global pkg_name lens
-%global pkgver %{pkg_name}-%{version}
-
 %bcond_with ghc_prof
 %bcond_with tests
-Name:           %{pkg_name}
+Name:           %pkg_name
 Version:        4.15.4
 Release:        0
+%global pkgver %pkg_name-%{version}
 Summary:        Lenses, Folds and Traversals
 License:        BSD-2-Clause
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-array-devel
 BuildRequires:  ghc-base-devel
@@ -62,12 +60,15 @@ BuildRequires:  ghc-transformers-devel
 BuildRequires:  ghc-unordered-containers-devel
 BuildRequires:  ghc-vector-devel
 BuildRequires:  ghc-void-devel
+ExcludeArch:    %{ix86}
 %if %{with ghc_prof}
+BuildRequires:  ghc-Cabal-prof
 BuildRequires:  ghc-array-prof
-BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-base-orphans-prof
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-bifunctors-prof
 BuildRequires:  ghc-bytestring-prof
+BuildRequires:  ghc-cabal-doctest-prof
 BuildRequires:  ghc-call-stack-prof
 BuildRequires:  ghc-comonad-prof
 BuildRequires:  ghc-containers-prof
@@ -88,13 +89,11 @@ BuildRequires:  ghc-tagged-prof
 BuildRequires:  ghc-template-haskell-prof
 BuildRequires:  ghc-text-prof
 BuildRequires:  ghc-th-abstraction-prof
-BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-transformers-compat-prof
+BuildRequires:  ghc-transformers-prof
 BuildRequires:  ghc-unordered-containers-prof
 BuildRequires:  ghc-vector-prof
 BuildRequires:  ghc-void-prof
-BuildRequires:  ghc-Cabal-prof
-BuildRequires:  ghc-cabal-doctest-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-HUnit-devel
@@ -161,8 +160,6 @@ using lenses can be found in the
 With some signatures simplified, the core of the hierarchy of lens-like
 constructions looks like:
 
-
-
 <<http://i.imgur.com/ALlbPRa.png>>
 
 <Hierarchy.png (Local Copy)>
@@ -227,22 +224,21 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
 
-%package -n ghc-%{pkg_name}-doc
+%package -n ghc-%pkg_name-doc
 Summary:        Haskell %{pkg_name} library documentation
-BuildArch:      noarch
 Requires:       ghc-filesystem
+BuildArch:      noarch
 
-%description -n ghc-%{pkg_name}-doc
+%description -n ghc-%pkg_name-doc
 This package provides the Haskell %{pkg_name} library documentation.
 
-
 %if %{with ghc_prof}
-%package -n ghc-%{pkg_name}-prof
+%package -n ghc-%pkg_name-prof
 Summary:        Haskell %{pkg_name} profiling library
-Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
-Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
+Requires:       ghc-%pkg_name-devel = %{version}-%{release}
+Supplements:    (ghc-%pkg_name-devel and ghc-prof)
 
-%description -n ghc-%{pkg_name}-prof
+%description -n ghc-%pkg_name-prof
 This package provides the Haskell %{pkg_name} profiling library.
 %endif
 
@@ -275,11 +271,11 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc AUTHORS.markdown CHANGELOG.markdown README.markdown examples
 
-%files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
+%files -n ghc-%pkg_name-doc -f ghc-%pkg_name-doc.files
 %license LICENSE
 
 %if %{with ghc_prof}
-%files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%files -n ghc-%pkg_name-prof -f ghc-%pkg_name-prof.files
 %endif
 
 %changelog

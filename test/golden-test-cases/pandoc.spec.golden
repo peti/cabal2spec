@@ -17,18 +17,16 @@
 
 
 %global pkg_name pandoc
-%global pkgver %{pkg_name}-%{version}
-
 %bcond_with ghc_prof
 %bcond_with tests
-Name:           %{pkg_name}
+Name:           %pkg_name
 Version:        2.2.1
 Release:        0
+%global pkgver %pkg_name-%{version}
 Summary:        Conversion between markup formats
 License:        GPL-2.0-or-later
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-ExcludeArch:    %{ix86}
 BuildRequires:  chrpath
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-Glob-devel
@@ -84,15 +82,17 @@ BuildRequires:  ghc-xml-devel
 BuildRequires:  ghc-yaml-devel
 BuildRequires:  ghc-zip-archive-devel
 BuildRequires:  ghc-zlib-devel
+ExcludeArch:    %{ix86}
 %if %{with ghc_prof}
+BuildRequires:  ghc-Cabal-prof
 BuildRequires:  ghc-Glob-prof
 BuildRequires:  ghc-HTTP-prof
 BuildRequires:  ghc-JuicyPixels-prof
 BuildRequires:  ghc-SHA-prof
-BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-aeson-pretty-prof
-BuildRequires:  ghc-base-prof
+BuildRequires:  ghc-aeson-prof
 BuildRequires:  ghc-base-compat-prof
+BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-base64-bytestring-prof
 BuildRequires:  ghc-binary-prof
 BuildRequires:  ghc-blaze-html-prof
@@ -108,8 +108,8 @@ BuildRequires:  ghc-doctemplates-prof
 BuildRequires:  ghc-exceptions-prof
 BuildRequires:  ghc-filepath-prof
 BuildRequires:  ghc-haddock-library-prof
-BuildRequires:  ghc-hslua-prof
 BuildRequires:  ghc-hslua-module-text-prof
+BuildRequires:  ghc-hslua-prof
 BuildRequires:  ghc-http-client-prof
 BuildRequires:  ghc-http-client-tls-prof
 BuildRequires:  ghc-http-types-prof
@@ -137,7 +137,6 @@ BuildRequires:  ghc-xml-prof
 BuildRequires:  ghc-yaml-prof
 BuildRequires:  ghc-zip-archive-prof
 BuildRequires:  ghc-zlib-prof
-BuildRequires:  ghc-Cabal-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-Diff-devel
@@ -193,22 +192,21 @@ Requires(postun): ghc-compiler = %{ghc_version}
 %description -n ghc-%{name}-devel
 This package provides the Haskell %{name} library development files.
 
-%package -n ghc-%{pkg_name}-doc
+%package -n ghc-%pkg_name-doc
 Summary:        Haskell %{pkg_name} library documentation
-BuildArch:      noarch
 Requires:       ghc-filesystem
+BuildArch:      noarch
 
-%description -n ghc-%{pkg_name}-doc
+%description -n ghc-%pkg_name-doc
 This package provides the Haskell %{pkg_name} library documentation.
 
-
 %if %{with ghc_prof}
-%package -n ghc-%{pkg_name}-prof
+%package -n ghc-%pkg_name-prof
 Summary:        Haskell %{pkg_name} profiling library
-Requires:       ghc-%{pkg_name}-devel = %{version}-%{release}
-Supplements:    (ghc-%{pkg_name}-devel and ghc-prof)
+Requires:       ghc-%pkg_name-devel = %{version}-%{release}
+Supplements:    (ghc-%pkg_name-devel and ghc-prof)
 
-%description -n ghc-%{pkg_name}-prof
+%description -n ghc-%pkg_name-prof
 This package provides the Haskell %{pkg_name} profiling library.
 %endif
 
@@ -221,7 +219,7 @@ This package provides the Haskell %{pkg_name} profiling library.
 
 %install
 %ghc_lib_install
-%ghc_fix_rpath %{pkg_name}-%{version}
+%ghc_fix_rpath %pkg_name-%{version}
 
 %check
 %cabal_test
@@ -390,11 +388,11 @@ This package provides the Haskell %{pkg_name} profiling library.
 %files -n ghc-%{name}-devel -f ghc-%{name}-devel.files
 %doc AUTHORS.md README.md changelog
 
-%files -n ghc-%{pkg_name}-doc -f ghc-%{pkg_name}-doc.files
+%files -n ghc-%pkg_name-doc -f ghc-%pkg_name-doc.files
 %license COPYING.md
 
 %if %{with ghc_prof}
-%files -n ghc-%{pkg_name}-prof -f ghc-%{pkg_name}-prof.files
+%files -n ghc-%pkg_name-prof -f ghc-%pkg_name-prof.files
 %endif
 
 %changelog

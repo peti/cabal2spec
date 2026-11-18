@@ -25,7 +25,6 @@ Summary:        Happy is a parser generator for Haskell
 License:        BSD-2-Clause
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-array-devel
 BuildRequires:  ghc-base-devel
@@ -34,14 +33,15 @@ BuildRequires:  ghc-directory-devel
 BuildRequires:  ghc-filepath-devel
 BuildRequires:  ghc-mtl-devel
 BuildRequires:  ghc-rpm-macros >= 2.9.2
+ExcludeArch:    %{ix86}
 %if %{with ghc_prof}
+BuildRequires:  ghc-Cabal-prof
 BuildRequires:  ghc-array-prof
 BuildRequires:  ghc-base-prof
 BuildRequires:  ghc-containers-prof
-BuildRequires:  ghc-mtl-prof
-BuildRequires:  ghc-Cabal-prof
 BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-filepath-prof
+BuildRequires:  ghc-mtl-prof
 %endif
 %if %{with tests}
 BuildRequires:  ghc-process-devel

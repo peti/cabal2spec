@@ -25,7 +25,6 @@ Summary:        Complete interactive development program for Haskell
 License:        BSD-3-Clause
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-array-devel
 BuildRequires:  ghc-base-devel
@@ -44,6 +43,7 @@ BuildRequires:  ghc-syb-devel
 BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-transformers-devel
 BuildRequires:  ghc-unix-devel
+ExcludeArch:    %{ix86}
 %if %{with ghc_prof}
 BuildRequires:  ghc-array-prof
 BuildRequires:  ghc-base-prof
@@ -51,9 +51,9 @@ BuildRequires:  ghc-bytestring-prof
 BuildRequires:  ghc-containers-prof
 BuildRequires:  ghc-directory-prof
 BuildRequires:  ghc-filepath-prof
-BuildRequires:  ghc-ghc-prof
 BuildRequires:  ghc-ghc-boot-th-prof
 BuildRequires:  ghc-ghc-paths-prof
+BuildRequires:  ghc-ghc-prof
 BuildRequires:  ghc-ghci-prof
 BuildRequires:  ghc-haskeline-prof
 BuildRequires:  ghc-process-prof

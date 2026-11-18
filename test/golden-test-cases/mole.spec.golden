@@ -25,7 +25,6 @@ Summary:        A glorified string replacement tool
 License:        MIT
 URL:            https://hackage.haskell.org/package/%{name}
 Source0:        https://hackage.haskell.org/package/%{name}-%{version}/%{name}-%{version}.tar.gz
-ExcludeArch:    %{ix86}
 BuildRequires:  ghc-Cabal-devel
 BuildRequires:  ghc-attoparsec-devel
 BuildRequires:  ghc-base-devel
@@ -52,6 +51,7 @@ BuildRequires:  ghc-text-devel
 BuildRequires:  ghc-time-devel
 BuildRequires:  ghc-transformers-devel
 BuildRequires:  ghc-unix-devel
+ExcludeArch:    %{ix86}
 %if %{with ghc_prof}
 BuildRequires:  ghc-attoparsec-prof
 BuildRequires:  ghc-base-prof
